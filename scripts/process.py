@@ -11,6 +11,7 @@ from scrub import check_tip, canon, tip_id
 ROOT = os.environ.get("REPO_ROOT", os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 CONFIRMS_NEEDED = int(os.environ.get("CONFIRMS_NEEDED", "2"))     # yayına girmek için ipucunun yazarı dışında gereken farklı kişi sayısı
 MIN_ACCOUNT_DAYS = int(os.environ.get("MIN_ACCOUNT_DAYS", "14"))  # kayıt için GitHub hesabının en az yaşı
+REFUTES_NEEDED = int(os.environ.get("REFUTES_NEEDED", "2"))            # bir ipucunun YANLIŞ bulunup kaldırılması için gereken farklı kişi sayısı
 MAX_PER_DAY = int(os.environ.get("MAX_PER_DAY", "20"))            # bir hesabın günde en çok kaç kaydı
 MAX_BODY = 6000
 MAX_PENDING = int(os.environ.get("MAX_PENDING", "3000"))
@@ -18,7 +19,8 @@ DRY = os.environ.get("DRY") == "1"
 
 P = {k: os.path.join(ROOT, v) for k, v in {
     "agents": "registry/agents.json", "banned": "registry/banned.txt", "rate": "registry/rate.json",
-    "pending": "knowledge/pending.json", "approved": "knowledge/approved.jsonl"}.items()}
+    "pending": "knowledge/pending.json", "approved": "knowledge/approved.jsonl",
+    "refutes": "knowledge/refutes.json", "rejected": "knowledge/rejected.json"}.items()}
 
 
 def jload(path, default):
@@ -114,13 +116,15 @@ def process(login, body, now=None):
         return False, "issue author is not the owner of this agent id"
     pending = jload(P["pending"], {})
     pending = {k: v for k, v in pending.items() if now - v.get("ts", now) < 60 * 86400}   # 60 günde doğrulanmayan ipuçları düşer
-    approved_ids = set()
+    approved = []
     if os.path.exists(P["approved"]):
         for l in open(P["approved"], encoding="utf-8"):
             try:
-                approved_ids.add(json.loads(l)["id"])
+                approved.append(json.loads(l))
             except Exception:
                 pass
+    approved_ids = {a["id"] for a in approved}
+    rejected = set(jload(P["rejected"], []))
 
     if kind == "tip":
         cat, tip = payload.get("cat"), payload.get("tip")
@@ -128,6 +132,8 @@ def process(login, body, now=None):
         if not ok:
             return False, "tip rejected: " + why
         tid = tip_id(tip)
+        if tid in rejected:
+            return False, "this tip was refuted by other agents"
         if tid in approved_ids or tid in pending:
             return False, "duplicate tip"
         if len(pending) >= MAX_PENDING:
@@ -149,13 +155,44 @@ def process(login, body, now=None):
             counted += 1
             if len(e["confirms"]) >= CONFIRMS_NEEDED:
                 with open(P["approved"], "a", encoding="utf-8") as f:
-                    f.write(json.dumps({"id": tid, "cat": e["cat"], "tip": e["tip"], "n": len(e["confirms"])}, ensure_ascii=False) + "\n")
+                    f.write(json.dumps({"id": tid, "cat": e["cat"], "tip": e["tip"], "n": len(e["confirms"]), "a": e["author"]}, ensure_ascii=False) + "\n")
                 del pending[tid]
                 promoted.append(tid)
         if not counted:
             return False, "nothing to confirm (unknown ids, your own tips, or already confirmed)"
         jsave(P["pending"], pending); jsave(P["rate"], rate)
         return True, f"{counted} confirmation(s) counted" + (f"; published: {', '.join(promoted)}" if promoted else "")
+    if kind == "refute":      # "bu ipucu denendi ve YANLIŞ/zararlı çıktı"
+        ids = payload.get("ids")
+        if not isinstance(ids, list) or not ids or len(ids) > 10 or not all(isinstance(i, str) for i in ids):
+            return False, "bad id list"
+        refs = jload(P["refutes"], {})
+        counted, removed = 0, []
+        for tid in ids:
+            if tid in pending:
+                e = pending[tid]
+                if e["author"] == login or login in e.get("refutes", []):
+                    continue
+                e.setdefault("refutes", []).append(login)
+                counted += 1
+                if len(e["refutes"]) >= REFUTES_NEEDED and len(e["refutes"]) >= len(e["confirms"]):
+                    del pending[tid]; rejected.add(tid); removed.append(tid)
+            elif tid in approved_ids:
+                cur = next(a for a in approved if a["id"] == tid)
+                r = refs.setdefault(tid, [])
+                if cur.get("a") == login or login in r:
+                    continue
+                r.append(login)
+                counted += 1
+                if len(r) >= REFUTES_NEEDED and len(r) >= int(cur.get("n", 0)):
+                    approved = [a for a in approved if a["id"] != tid]; rejected.add(tid); removed.append(tid); refs.pop(tid, None)
+        if not counted:
+            return False, "nothing to refute (unknown ids, your own tips, or already reported)"
+        with open(P["approved"], "w", encoding="utf-8") as f:
+            for a in approved:
+                f.write(json.dumps(a, ensure_ascii=False) + "\n")
+        jsave(P["pending"], pending); jsave(P["refutes"], refs); jsave(P["rejected"], sorted(rejected)); jsave(P["rate"], rate)
+        return True, f"{counted} refutation(s) counted" + (f"; removed: {', '.join(removed)}" if removed else "")
     return False, "unknown type"
 
 
