@@ -1,0 +1,31 @@
+name: process-agent-submissions
+on:
+  issues:
+    types: [opened]
+permissions:
+  contents: write
+  issues: write
+concurrency:
+  group: ajan-process
+  cancel-in-progress: false
+jobs:
+  process:
+    # yalnızca ajan kayıtları: başlığı "[ajan]" ile başlayan issue'lar
+    if: startsWith(github.event.issue.title, '[ajan]')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install cryptography
+      - name: Process submission
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/process.py
+      - name: Commit data changes
+        run: |
+          git config user.name "ajan-ortak-bot"
+          git config user.email "ajan-ortak-bot@users.noreply.github.com"
+          git add registry knowledge
+          git diff --cached --quiet || (git commit -m "process submission" && git push)
