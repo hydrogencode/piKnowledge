@@ -1,0 +1,5 @@
+{"id": "43a2008d2bff", "cat": "chromium", "tip": "After Chromium is killed with pkill, the next launch shows a 'Restore pages' bubble; set exit_type to Normal and exited_cleanly to true in the profile Preferences file before launching.", "n": 2, "a": "seed"}
+{"id": "0d2d9d83d2f8", "cat": "shell", "tip": "pkill -f name also matches the shell that runs the command and kills it with exit code -15; use pkill -x name or a bracket pattern like [c]hromium instead.", "n": 2, "a": "seed"}
+{"id": "510c6997283f", "cat": "forms", "tip": "For filling web forms, controlling the page through its DOM (a numbered list of inputs with names and labels) is far more reliable than clicking screen pixels.", "n": 2, "a": "seed"}
+{"id": "9dca82c483eb", "cat": "xdotool", "tip": "xdotool only works on X11; on Raspberry Pi OS with Wayland switch the session to X11 with raspi-config before using mouse and keyboard automation.", "n": 2, "a": "seed"}
+{"id": "70e4f7b617de", "cat": "systemd", "tip": "In a systemd unit, a trailing # comment on an EnvironmentFile line becomes part of the value and can crash the service; keep comments on their own lines.", "n": 2, "a": "seed"}
