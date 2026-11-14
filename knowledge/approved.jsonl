@@ -1100,3 +1100,173 @@
 {"id": "482059e24af3", "cat": "shell", "tip": "wait -n waits for the next background job to finish and returns its exit code, which lets a script run a limited number of parallel jobs.", "n": 0, "a": "seed-verified"}
 {"id": "b76d0e08bc31", "cat": "shell", "tip": "The built-in type -a name shows every place a command name is defined: alias, function, builtin and files on PATH.", "n": 0, "a": "seed-verified"}
 {"id": "e9b2e2cff617", "cat": "shell", "tip": "Use alias only for interactive shells; in scripts write a function because aliases are not expanded in non-interactive bash by default.", "n": 0, "a": "seed-verified"}
+{"id": "8b7dbb61eb7a", "cat": "git", "tip": "git switch -c name creates and switches to a new branch; git switch - jumps back to the previous branch, like cd -.", "n": 0, "a": "seed-verified"}
+{"id": "cc77fb83825c", "cat": "git", "tip": "git restore file discards unstaged changes in one file and git restore --staged file unstages it; both replace the old checkout and reset forms.", "n": 0, "a": "seed-verified"}
+{"id": "142dec38542f", "cat": "git", "tip": "git stash push -m \"note\" saves local changes with a label, and git stash list shows them so you can find the right one later.", "n": 0, "a": "seed-verified"}
+{"id": "56a96e9c90a7", "cat": "git", "tip": "git stash -u also stashes untracked files, which a plain git stash leaves behind.", "n": 0, "a": "seed-verified"}
+{"id": "0537238e417e", "cat": "git", "tip": "git log --oneline --graph --all shows the branch structure in a compact view; add --decorate to see branch and tag names.", "n": 0, "a": "seed-verified"}
+{"id": "43b21f7f4083", "cat": "git", "tip": "git diff --stat summarizes changes per file and git diff --name-only lists only the changed file names.", "n": 0, "a": "seed-verified"}
+{"id": "81695fa3193b", "cat": "git", "tip": "git diff --staged shows what is already added and will go into the next commit; plain git diff shows only the unstaged part.", "n": 0, "a": "seed-verified"}
+{"id": "304b3df288e2", "cat": "git", "tip": "git reset --soft HEAD~1 undoes the last commit but keeps the changes staged, which is the safe way to redo a commit message or split it.", "n": 0, "a": "seed-verified"}
+{"id": "48f3e72a84e0", "cat": "git", "tip": "git reflog lists where HEAD has been, so a commit lost by a reset or a rebase can usually be found there and restored with git reset or git branch.", "n": 0, "a": "seed-verified"}
+{"id": "d4f4d56cbc6c", "cat": "git", "tip": "git revert hash creates a new commit that undoes an older one, which is the safe choice for commits that are already pushed.", "n": 0, "a": "seed-verified"}
+{"id": "cd38a12cf799", "cat": "git", "tip": "git cherry-pick hash copies one commit from another branch onto the current branch.", "n": 0, "a": "seed-verified"}
+{"id": "af98f4e84848", "cat": "git", "tip": "git blame -L 10,20 file shows who last changed lines 10 to 20 and in which commit.", "n": 0, "a": "seed-verified"}
+{"id": "1601ee39519e", "cat": "git", "tip": "git log -S\"text\" finds commits that added or removed a given string, which is a quick way to find when something appeared or disappeared.", "n": 0, "a": "seed-verified"}
+{"id": "31c3392cc3ec", "cat": "git", "tip": "git log -p -- path shows the history of one file with every change, and git log --follow -- path keeps following it across renames.", "n": 0, "a": "seed-verified"}
+{"id": "0dc3689e23d8", "cat": "git", "tip": "git config --global init.defaultBranch main makes new repositories start on main instead of master.", "n": 0, "a": "seed-verified"}
+{"id": "1d84d72e0555", "cat": "git", "tip": "git config --global pull.rebase true makes git pull rebase your local commits on top of the remote ones instead of creating merge commits.", "n": 0, "a": "seed-verified"}
+{"id": "17e9ca071e31", "cat": "git", "tip": "git config --global alias.st \"status -sb\" defines a shortcut so git st prints a compact status with the branch name.", "n": 0, "a": "seed-verified"}
+{"id": "b0afaa481d13", "cat": "git", "tip": "git status -sb prints a short status and shows the branch with its ahead and behind counts in the first line.", "n": 0, "a": "seed-verified"}
+{"id": "9cb636186525", "cat": "git", "tip": "A .gitignore pattern with a trailing slash such as build/ ignores only directories, and a leading slash such as /build ignores only the one at the repository root.", "n": 0, "a": "seed-verified"}
+{"id": "ed703979f814", "cat": "git", "tip": "To stop tracking a file that was committed by mistake but keep it on disk, use git rm --cached file and add it to .gitignore.", "n": 0, "a": "seed-verified"}
+{"id": "e14bbd8b3c9c", "cat": "git", "tip": "git clean -n shows which untracked files git clean would delete; run it before git clean -f so nothing valuable disappears.", "n": 0, "a": "seed-verified"}
+{"id": "a651bf82a137", "cat": "git", "tip": "git shortlog -sn counts commits per author, sorted by number.", "n": 0, "a": "seed-verified"}
+{"id": "fa721e1fd8a5", "cat": "git", "tip": "git tag -a v1.0 -m \"release\" creates an annotated tag with a message; plain git tag v1.0 makes a lightweight one.", "n": 0, "a": "seed-verified"}
+{"id": "a8bb57610fcd", "cat": "git", "tip": "git describe --tags prints the nearest tag plus the number of commits since it, a handy automatic version string for builds.", "n": 0, "a": "seed-verified"}
+{"id": "940c91b77b0c", "cat": "git", "tip": "git rev-parse --short HEAD prints the short hash of the current commit, and git rev-parse --show-toplevel prints the repository root directory.", "n": 0, "a": "seed-verified"}
+{"id": "68bd04131bf6", "cat": "git", "tip": "git worktree add ../name branch checks out a second branch in another folder at the same time, so no stashing is needed to switch tasks.", "n": 0, "a": "seed-verified"}
+{"id": "b1e3403211af", "cat": "git", "tip": "git branch -d name deletes a merged branch and refuses to delete unmerged work; -D forces it.", "n": 0, "a": "seed-verified"}
+{"id": "f672d358b245", "cat": "git", "tip": "git branch -vv shows each local branch with the last commit and which remote branch it tracks.", "n": 0, "a": "seed-verified"}
+{"id": "2ddf687fa77f", "cat": "git", "tip": "Conflict markers are <<<<<<<, ======= and >>>>>>>; remove all three lines and keep the final text, then git add the file and continue.", "n": 0, "a": "seed-verified"}
+{"id": "8c674549ae2b", "cat": "git", "tip": "git grep -n text searches only tracked files and prints line numbers; it is faster than grep -r in large repositories and skips ignored files.", "n": 0, "a": "seed-verified"}
+{"id": "a9a8703e4315", "cat": "git", "tip": "git archive --format=zip -o out.zip HEAD packs the files of the current commit into a zip without the .git folder.", "n": 0, "a": "seed-verified"}
+{"id": "4f199e7f46e7", "cat": "git", "tip": "git remote -v lists remotes with their addresses; git remote set-url origin address changes the address of one.", "n": 0, "a": "seed-verified"}
+{"id": "7a0d35ce98b6", "cat": "git", "tip": "git push --force-with-lease is a safer forced push: it fails if someone else pushed in the meantime, where --force would overwrite their work.", "n": 0, "a": "seed-verified"}
+{"id": "c5012de88d86", "cat": "git", "tip": "git submodule update --init --recursive fetches submodules after a clone; git clone --recurse-submodules does it in one step.", "n": 0, "a": "seed-verified"}
+{"id": "70a7f425a0bf", "cat": "git", "tip": "git config user.email and user.name set per repository when run without --global, which is useful when work and personal projects share a computer.", "n": 0, "a": "seed-verified"}
+{"id": "db6d7067de04", "cat": "git", "tip": "A global ignore file keeps editor and system junk out of every repository: git config --global core.excludesfile path.", "n": 0, "a": "seed-verified"}
+{"id": "66be8a3bd5ce", "cat": "git", "tip": "git show hash:path prints a file as it was in an older commit without checking anything out.", "n": 0, "a": "seed-verified"}
+{"id": "b661776ceb0e", "cat": "git", "tip": "git diff branch1..branch2 compares two branches, and git diff branch1...branch2 shows only what branch2 changed since they split.", "n": 0, "a": "seed-verified"}
+{"id": "b8f15b6bfafe", "cat": "git", "tip": "git commit -v puts the full diff into the commit message editor so you can review exactly what you are committing.", "n": 0, "a": "seed-verified"}
+{"id": "105bd5096cb4", "cat": "git", "tip": "git log --format=\"%h %an %s\" prints a custom line per commit; %h is the short hash, %an the author and %s the subject.", "n": 0, "a": "seed-verified"}
+{"id": "c7c5fb95eff0", "cat": "git", "tip": "git config --get-regexp alias lists every alias you defined, and git help -a lists all commands.", "n": 0, "a": "seed-verified"}
+{"id": "226bc0ccd2e9", "cat": "git", "tip": "git check-ignore -v path tells which rule in which file ignores a path, the quickest way to debug an unexpected .gitignore.", "n": 0, "a": "seed-verified"}
+{"id": "a0210170591e", "cat": "git", "tip": "git clone --depth 1 address downloads only the latest commit, which saves time and space on a Raspberry Pi with a slow connection.", "n": 0, "a": "seed-verified"}
+{"id": "b619581d462c", "cat": "git", "tip": "git sparse-checkout lets you check out only some folders of a large repository.", "n": 0, "a": "seed-verified"}
+{"id": "86169639a864", "cat": "git", "tip": "Set git config --global credential.helper store only on trusted machines; it keeps credentials in a plain text file. Prefer a fine-grained access token with minimal rights.", "n": 0, "a": "seed-verified"}
+{"id": "0b70742d9b45", "cat": "git", "tip": "git log --graph --pretty=oneline --abbrev-commit prints a compact branch graph that fits small terminal windows.", "n": 0, "a": "seed-verified"}
+{"id": "1b93d983cb73", "cat": "files", "tip": "Use ls -lah to list files with sizes such as 4.0K and 1.2M instead of byte counts, and include hidden files.", "n": 0, "a": "seed-verified"}
+{"id": "bdd99f4c4a8d", "cat": "files", "tip": "du -h --max-depth=1 folder lists sizes one level deep, the quickest way to find what fills a disk.", "n": 0, "a": "seed-verified"}
+{"id": "e846242861c6", "cat": "files", "tip": "df -h shows free space per mounted filesystem; df -i shows inodes, which can run out even when space remains.", "n": 0, "a": "seed-verified"}
+{"id": "ea6b76e6d547", "cat": "files", "tip": "find . -name '*.log' -mtime +7 lists logs older than seven days; -mtime -1 means changed within the last day.", "n": 0, "a": "seed-verified"}
+{"id": "6a9f3927ae04", "cat": "files", "tip": "find . -type f -size +100M lists files larger than 100 megabytes; -size -1k finds tiny ones.", "n": 0, "a": "seed-verified"}
+{"id": "e1b211dbc843", "cat": "files", "tip": "find with -exec command {} + passes many files to one command call, which is faster than -exec command {} \\; that starts a command for each file.", "n": 0, "a": "seed-verified"}
+{"id": "526bd14e0ea8", "cat": "files", "tip": "find . -empty -type d lists empty directories; add -delete only after reading the list.", "n": 0, "a": "seed-verified"}
+{"id": "0af67ef51538", "cat": "files", "tip": "find . -newer reference lists files modified more recently than the reference file.", "n": 0, "a": "seed-verified"}
+{"id": "a9aa08c5935c", "cat": "files", "tip": "find -maxdepth 1 limits the search to one directory level; put it before other tests to avoid a warning.", "n": 0, "a": "seed-verified"}
+{"id": "db6cd75d1253", "cat": "files", "tip": "find . -name '*.txt' -not -path './node_modules/*' skips a whole folder while searching.", "n": 0, "a": "seed-verified"}
+{"id": "eb2bb48e3a46", "cat": "files", "tip": "rename can batch rename files, but it differs between systems; a for loop with ${f%.old}.new works everywhere.", "n": 0, "a": "seed-verified"}
+{"id": "247748e6ed98", "cat": "files", "tip": "cp -a copies a tree and keeps permissions, owners, timestamps and symlinks, the right choice for backups.", "n": 0, "a": "seed-verified"}
+{"id": "83c55d9021a5", "cat": "files", "tip": "rsync -a --delete source/ dest/ mirrors a folder; the trailing slash on the source copies its contents, not the folder itself.", "n": 0, "a": "seed-verified"}
+{"id": "6485e27a51b5", "cat": "files", "tip": "ln -s target linkname creates a symbolic link; the order is target first, name second, and a relative target is relative to the link's folder.", "n": 0, "a": "seed-verified"}
+{"id": "afb8e5e28e96", "cat": "files", "tip": "ln -sfn newtarget link replaces a symlink atomically, a simple way to switch a current release folder.", "n": 0, "a": "seed-verified"}
+{"id": "027cbb0420b3", "cat": "files", "tip": "stat -c '%a %U %s %y' file prints permissions in octal, owner, size and modification time in one line.", "n": 0, "a": "seed-verified"}
+{"id": "a37edf16825c", "cat": "files", "tip": "chmod u+x file adds execute for the owner only; chmod 600 file makes a file readable and writable by its owner only, as needed for private keys.", "n": 0, "a": "seed-verified"}
+{"id": "e3fd46ade956", "cat": "files", "tip": "chmod -R u=rwX,go=rX folder sets sensible modes for a tree: a capital X adds execute only to directories and files that already had it.", "n": 0, "a": "seed-verified"}
+{"id": "1901cb47185a", "cat": "files", "tip": "umask 022 makes new files 644 and new directories 755; umask 077 keeps new files private to you.", "n": 0, "a": "seed-verified"}
+{"id": "77b486ab6b70", "cat": "files", "tip": "truncate -s 10M file creates a sparse file of that size instantly, handy for testing disk full cases without waiting.", "n": 0, "a": "seed-verified"}
+{"id": "3c8ed592019f", "cat": "files", "tip": "tar -czf out.tar.gz folder creates a gzip archive and tar -xzf out.tar.gz extracts it; tar -tzf lists the contents without extracting.", "n": 0, "a": "seed-verified"}
+{"id": "c3fa87c45b11", "cat": "files", "tip": "tar -xzf archive.tar.gz -C target extracts into another folder; the folder must already exist.", "n": 0, "a": "seed-verified"}
+{"id": "bcc6a661404a", "cat": "files", "tip": "tar --exclude='*.log' -czf out.tar.gz folder leaves matching files out of an archive.", "n": 0, "a": "seed-verified"}
+{"id": "6ebf69534d29", "cat": "files", "tip": "gzip -k file keeps the original while compressing, and gzip -dc file.gz prints the content without creating a file.", "n": 0, "a": "seed-verified"}
+{"id": "da56c695cd40", "cat": "files", "tip": "zcat file.gz and zgrep pattern file.gz read compressed logs without unpacking them first.", "n": 0, "a": "seed-verified"}
+{"id": "a81e453aea0f", "cat": "files", "tip": "unzip -l archive.zip lists the contents of a zip file and unzip -d folder archive.zip extracts it into a chosen folder.", "n": 0, "a": "seed-verified"}
+{"id": "136f46c0c76b", "cat": "files", "tip": "md5sum and sha256sum print checksums; use sha256sum -c file to verify many files against a list.", "n": 0, "a": "seed-verified"}
+{"id": "7349b2d11811", "cat": "files", "tip": "file name tells what a file really is, whatever its extension says; file -i prints the MIME type.", "n": 0, "a": "seed-verified"}
+{"id": "457961144729", "cat": "files", "tip": "head -c 100 file prints the first 100 bytes and tail -c 100 the last 100; tail -n +2 prints from the second line on.", "n": 0, "a": "seed-verified"}
+{"id": "5a37a06ee831", "cat": "files", "tip": "wc -l counts lines, wc -w words and wc -c bytes; wc -L gives the length of the longest line.", "n": 0, "a": "seed-verified"}
+{"id": "1d335b9ff0c8", "cat": "files", "tip": "cat -A shows hidden characters: $ marks line ends and ^M marks Windows carriage returns, useful when a script fails on invisible characters.", "n": 0, "a": "seed-verified"}
+{"id": "439a9bd2e278", "cat": "files", "tip": "iconv -f ISO-8859-9 -t UTF-8 file converts a Turkish text file from an old encoding to UTF-8.", "n": 0, "a": "seed-verified"}
+{"id": "d2df7b206c9e", "cat": "files", "tip": "dos2unix may be missing; sed -i 's/\\r$//' file does the same job and removes Windows line endings.", "n": 0, "a": "seed-verified"}
+{"id": "38e2e3eb2c9d", "cat": "files", "tip": "sed -i.bak 's/old/new/g' file edits in place and keeps a backup copy named file.bak.", "n": 0, "a": "seed-verified"}
+{"id": "135bc8b135d6", "cat": "files", "tip": "sed -n '5,10p' file prints only lines 5 to 10, and sed -n '$p' prints only the last line.", "n": 0, "a": "seed-verified"}
+{"id": "4483522dabb6", "cat": "files", "tip": "sed '/pattern/d' file removes lines that contain a pattern, and sed '/^$/d' removes empty lines.", "n": 0, "a": "seed-verified"}
+{"id": "b3d2b1847117", "cat": "files", "tip": "In sed use another delimiter when the text has slashes: sed 's|/usr/bin|/opt/bin|g' avoids escaping every slash.", "n": 0, "a": "seed-verified"}
+{"id": "626015788cb9", "cat": "files", "tip": "sed -E enables extended regular expressions, so groups like (a|b)+ work without backslashes.", "n": 0, "a": "seed-verified"}
+{"id": "ab373323499f", "cat": "files", "tip": "grep -rn \"text\" folder searches all files below a folder and prints file names and line numbers; add -I to skip binary files.", "n": 0, "a": "seed-verified"}
+{"id": "8a0c39b8644e", "cat": "files", "tip": "grep -l lists only names of files that match and grep -L lists the ones that do not match.", "n": 0, "a": "seed-verified"}
+{"id": "e16b397aad11", "cat": "files", "tip": "grep -c counts matching lines per file; grep -o prints only the matching part of each line.", "n": 0, "a": "seed-verified"}
+{"id": "53245ed6a4b5", "cat": "files", "tip": "grep -w matches whole words only, so grep -w cat does not match category.", "n": 0, "a": "seed-verified"}
+{"id": "8530917cce57", "cat": "files", "tip": "grep -E 'a|b' matches either pattern, grep -v inverts the match and grep -i ignores case.", "n": 0, "a": "seed-verified"}
+{"id": "e6e7b9d2d084", "cat": "files", "tip": "grep -A2 -B1 pattern shows two lines after and one before each match; -C3 shows three on both sides.", "n": 0, "a": "seed-verified"}
+{"id": "67da83d14e2b", "cat": "files", "tip": "grep -P enables Perl regular expressions such as \\d and lookahead; not every build supports it, so test it before relying on it in scripts.", "n": 0, "a": "seed-verified"}
+{"id": "314bda8de57c", "cat": "files", "tip": "awk '{print $NF}' prints the last field of each line and awk '{print $(NF-1)}' the one before it.", "n": 0, "a": "seed-verified"}
+{"id": "b8a3df91ef1f", "cat": "files", "tip": "awk '{sum+=$1} END {print sum}' adds up the first column of a file.", "n": 0, "a": "seed-verified"}
+{"id": "a57e3eadf564", "cat": "files", "tip": "awk -F: '{print $1}' uses a colon as the field separator, as in many system files.", "n": 0, "a": "seed-verified"}
+{"id": "ef62a8938367", "cat": "files", "tip": "awk 'NR>1' file skips the first line, for example a header; awk 'NR==5' prints only line 5.", "n": 0, "a": "seed-verified"}
+{"id": "29f8eea1d237", "cat": "files", "tip": "awk '!seen[$0]++' removes duplicate lines without sorting and keeps the original order.", "n": 0, "a": "seed-verified"}
+{"id": "31b8535cca1f", "cat": "files", "tip": "awk '$3 > 100' file prints only lines whose third column is larger than 100.", "n": 0, "a": "seed-verified"}
+{"id": "ee32980da297", "cat": "files", "tip": "jq . file pretty prints JSON and jq -r '.name' prints a field without quotes; install it with apt for quick scripts.", "n": 0, "a": "seed-verified"}
+{"id": "70620835cc9a", "cat": "files", "tip": "jq -c . prints each JSON value on one line, which suits log files and line by line processing.", "n": 0, "a": "seed-verified"}
+{"id": "462c073f88f3", "cat": "files", "tip": "jq '.items[] | select(.ok)' filters array entries by a condition; jq 'length' counts them.", "n": 0, "a": "seed-verified"}
+{"id": "b51a4819523d", "cat": "files", "tip": "jq -n --arg v \"$value\" '{name: $v}' builds JSON safely from a shell variable, with correct quoting.", "n": 0, "a": "seed-verified"}
+{"id": "daf393e827ac", "cat": "python", "tip": "Use f-strings for formatting: f\"{value:.2f}\" gives two decimals, f\"{n:05d}\" pads with zeros and f\"{x!r}\" prints repr.", "n": 0, "a": "seed-verified"}
+{"id": "1fb02f80f50d", "cat": "python", "tip": "In Python 3.8 and later f\"{x=}\" prints the name and the value, a quick way to debug.", "n": 0, "a": "seed-verified"}
+{"id": "e58df6cc5b44", "cat": "python", "tip": "Use pathlib: Path(\"a\") / \"b.txt\" builds paths, .read_text() and .write_text() read and write files in one line.", "n": 0, "a": "seed-verified"}
+{"id": "946ad657e070", "cat": "python", "tip": "Path.mkdir(parents=True, exist_ok=True) creates a folder tree and does not fail when it already exists.", "n": 0, "a": "seed-verified"}
+{"id": "0d4031906fa5", "cat": "python", "tip": "Path.glob(\"*.txt\") and Path.rglob(\"*.txt\") find files in one folder or in a whole tree and return Path objects.", "n": 0, "a": "seed-verified"}
+{"id": "8b86c88230ce", "cat": "python", "tip": "Always pass encoding=\"utf-8\" to open(); the default depends on the system and breaks Turkish characters on some computers.", "n": 0, "a": "seed-verified"}
+{"id": "dceb8e9d0e1c", "cat": "python", "tip": "json.dumps(obj, ensure_ascii=False, indent=2) writes readable JSON and keeps non-English characters such as ş and ğ as they are.", "n": 0, "a": "seed-verified"}
+{"id": "11cba33766d8", "cat": "python", "tip": "Write a file atomically: write to a temporary name in the same folder, then os.replace(tmp, final); a crash never leaves a half written file.", "n": 0, "a": "seed-verified"}
+{"id": "f859f82c3420", "cat": "python", "tip": "collections.Counter(items).most_common(3) counts items and returns the three most frequent ones.", "n": 0, "a": "seed-verified"}
+{"id": "ac1e2866249c", "cat": "python", "tip": "collections.defaultdict(list) creates a missing key's list automatically, so d[k].append(x) works without checking.", "n": 0, "a": "seed-verified"}
+{"id": "7b32e1105a05", "cat": "python", "tip": "dict.get(key, default) avoids KeyError, and dict.setdefault(key, []) returns the value and inserts the default if missing.", "n": 0, "a": "seed-verified"}
+{"id": "9b291dcdb1c8", "cat": "python", "tip": "Merge dictionaries with a | b in Python 3.9 and later, or {**a, **b}; the right side wins on equal keys.", "n": 0, "a": "seed-verified"}
+{"id": "d2705919c651", "cat": "python", "tip": "sorted(items, key=lambda x: x[1], reverse=True) sorts by the second element, largest first; sort() on a list changes it in place.", "n": 0, "a": "seed-verified"}
+{"id": "e630cb573cc8", "cat": "python", "tip": "enumerate(items, start=1) gives numbered items in a loop, and zip(a, b) walks two lists together.", "n": 0, "a": "seed-verified"}
+{"id": "83cbc1d5696f", "cat": "python", "tip": "List comprehensions are shorter and faster than append loops: [x * 2 for x in items if x > 0].", "n": 0, "a": "seed-verified"}
+{"id": "624406401590", "cat": "python", "tip": "any(...) and all(...) with a generator expression stop at the first decisive element and need no list.", "n": 0, "a": "seed-verified"}
+{"id": "a2433a159073", "cat": "python", "tip": "argparse builds command line interfaces with help text for free: parser.add_argument(\"--count\", type=int, default=1).", "n": 0, "a": "seed-verified"}
+{"id": "9c0e5dfc8db8", "cat": "python", "tip": "python3 -m venv .venv creates an isolated environment; activate it with source .venv/bin/activate so pip installs do not touch system packages.", "n": 0, "a": "seed-verified"}
+{"id": "ff93e901b1d4", "cat": "python", "tip": "On Debian and Raspberry Pi OS, pip refuses system-wide installs with an externally-managed-environment error; use a venv, apt packages, or pipx.", "n": 0, "a": "seed-verified"}
+{"id": "56ab96fbc584", "cat": "python", "tip": "python3 -m http.server 8000 serves the current folder over HTTP, a quick way to move files between computers on a network.", "n": 0, "a": "seed-verified"}
+{"id": "9cfb84104c3f", "cat": "python", "tip": "python3 -m json.tool file validates and pretty prints a JSON file from the command line.", "n": 0, "a": "seed-verified"}
+{"id": "2a2ad2f78f4c", "cat": "python", "tip": "python3 -m timeit \"code\" measures how long a small snippet takes, with repeats chosen automatically.", "n": 0, "a": "seed-verified"}
+{"id": "13896cae509f", "cat": "python", "tip": "datetime.now(timezone.utc) gives an aware time; naive datetimes cause bugs when daylight saving or servers in other zones are involved.", "n": 0, "a": "seed-verified"}
+{"id": "5c10b1dc1fce", "cat": "python", "tip": "Use zoneinfo.ZoneInfo(\"Europe/Istanbul\") for time zones in Python 3.9 and later; no extra package is needed.", "n": 0, "a": "seed-verified"}
+{"id": "5caadf09f256", "cat": "python", "tip": "datetime.strptime(text, \"%Y-%m-%d\") parses a date and strftime(\"%d.%m.%Y\") formats it; fromisoformat parses ISO dates faster.", "n": 0, "a": "seed-verified"}
+{"id": "dbc5bf020979", "cat": "python", "tip": "random.choice picks one item and random.sample(items, k) picks k different items; use the secrets module for passwords and tokens.", "n": 0, "a": "seed-verified"}
+{"id": "edcc9b6e975e", "cat": "python", "tip": "hashlib.sha256(data).hexdigest() hashes bytes; encode text first with .encode(\"utf-8\").", "n": 0, "a": "seed-verified"}
+{"id": "d979f5af3695", "cat": "python", "tip": "Use sqlite3 from the standard library for small local databases: connect(\"file.db\"), execute with ? placeholders, commit.", "n": 0, "a": "seed-verified"}
+{"id": "78d436085d22", "cat": "python", "tip": "Never build SQL with f-strings or string joins; pass values as ? parameters so quotes cannot break or hijack the query.", "n": 0, "a": "seed-verified"}
+{"id": "97554cac9461", "cat": "python", "tip": "sqlite3 with PRAGMA journal_mode=WAL lets readers work while a writer writes, which helps small web apps.", "n": 0, "a": "seed-verified"}
+{"id": "87fc1fca058d", "cat": "python", "tip": "csv.DictReader reads rows as dictionaries using the header line; open the file with newline=\"\" as the csv module requires.", "n": 0, "a": "seed-verified"}
+{"id": "100cf19f120c", "cat": "python", "tip": "Use re.compile once for patterns used many times, and raw strings r\"\\d+\" so backslashes reach the regex engine unchanged.", "n": 0, "a": "seed-verified"}
+{"id": "b49c601cbf43", "cat": "python", "tip": "re.sub(pattern, repl, text) replaces matches and repl can be a function; re.fullmatch requires the whole string to match.", "n": 0, "a": "seed-verified"}
+{"id": "7e32be14855f", "cat": "python", "tip": "itertools.islice takes the first n items of any iterator and itertools.chain joins several iterables without copying them.", "n": 0, "a": "seed-verified"}
+{"id": "6667f0b7e8d7", "cat": "python", "tip": "threading is fine for waiting on network or disk; for heavy computing use multiprocessing, because the global interpreter lock blocks parallel Python code.", "n": 0, "a": "seed-verified"}
+{"id": "b858801a5f2a", "cat": "python", "tip": "concurrent.futures.ThreadPoolExecutor(max_workers=8).map(func, items) runs input/output heavy calls in parallel with very little code.", "n": 0, "a": "seed-verified"}
+{"id": "179f3c9d2e28", "cat": "python", "tip": "Use queue.Queue to pass work safely between threads; it needs no extra locks.", "n": 0, "a": "seed-verified"}
+{"id": "234b84b13790", "cat": "python", "tip": "signal.signal(signal.SIGTERM, handler) lets a program clean up when systemd stops it; without it the process just ends.", "n": 0, "a": "seed-verified"}
+{"id": "a0f5d46f0591", "cat": "python", "tip": "atexit.register(func) runs a function when the interpreter exits normally, a simple place to close files and save state.", "n": 0, "a": "seed-verified"}
+{"id": "85ae3d1998dd", "cat": "python", "tip": "Use __name__ == \"__main__\" to separate code that runs only when you start the file from code that is imported by others.", "n": 0, "a": "seed-verified"}
+{"id": "746620a50f75", "cat": "python", "tip": "python3 -X dev script.py turns on extra warnings and checks, and python3 -W error turns warnings into errors while testing.", "n": 0, "a": "seed-verified"}
+{"id": "d97f82c1b9c2", "cat": "python", "tip": "python3 -c \"import this\" prints the Zen of Python; python3 -c \"import sys; print(sys.version)\" shows the exact version in use.", "n": 0, "a": "seed-verified"}
+{"id": "6f1a7432a77a", "cat": "python", "tip": "str.removeprefix and str.removesuffix in Python 3.9 and later remove text only when it is really there, unlike strip which removes characters.", "n": 0, "a": "seed-verified"}
+{"id": "739802b590c8", "cat": "python", "tip": "str.split(maxsplit=1) splits only at the first separator; str.partition(\"=\") returns the three parts before, the separator and after.", "n": 0, "a": "seed-verified"}
+{"id": "beb5e02cecf0", "cat": "python", "tip": "Use \"\".join(parts) to build long strings; adding strings in a loop copies the text again each time.", "n": 0, "a": "seed-verified"}
+{"id": "e6d8b5d844f0", "cat": "python", "tip": "int(text, 16) parses hexadecimal and format(n, \"x\") or f\"{n:08b}\" prints hexadecimal or binary with padding.", "n": 0, "a": "seed-verified"}
+{"id": "4543de85d3a7", "cat": "python", "tip": "bytes.fromhex(\"ff00\") and data.hex() convert between bytes and hexadecimal text, useful for serial and USB protocols.", "n": 0, "a": "seed-verified"}
+{"id": "46063c3cb39e", "cat": "python", "tip": "struct.pack(\">HB\", 1, 2) builds binary messages with fixed layouts and struct.unpack reads them back.", "n": 0, "a": "seed-verified"}
+{"id": "61cd1e7a1828", "cat": "python", "tip": "Use socket.create_connection((host, port), timeout=5) for client connections; it tries every address of a host and applies the timeout.", "n": 0, "a": "seed-verified"}
+{"id": "a69e507fb38f", "cat": "python", "tip": "Set a default timeout on network calls: urllib.request.urlopen(url, timeout=10); without one a stalled server hangs the program forever.", "n": 0, "a": "seed-verified"}
+{"id": "4980b76118e6", "cat": "python", "tip": "pip install --user and pip list --outdated manage packages for one user; pip freeze > requirements.txt records exact versions of a project.", "n": 0, "a": "seed-verified"}
+{"id": "9b87c0f07156", "cat": "python", "tip": "pytest finds files named test_*.py and plain assert statements; pytest -x stops at the first failure and -k name runs matching tests.", "n": 0, "a": "seed-verified"}
+{"id": "c797d468d068", "cat": "python", "tip": "Use python3 -m py_compile file.py to check syntax without running the program.", "n": 0, "a": "seed-verified"}
+{"id": "dc0303794163", "cat": "python", "tip": "Use sys.exit(\"message\") to stop with a message on standard error and exit code 1; sys.exit(0) means success.", "n": 0, "a": "seed-verified"}
+{"id": "21d304630c9f", "cat": "python", "tip": "print(..., file=sys.stderr) keeps diagnostic messages out of the output that other programs read through a pipe.", "n": 0, "a": "seed-verified"}
+{"id": "813788d2a298", "cat": "python", "tip": "print(..., flush=True) or python3 -u forces output out immediately, which matters when a script's output is read live through a pipe or a log.", "n": 0, "a": "seed-verified"}
+{"id": "03c87826a906", "cat": "python", "tip": "shutil.which(\"tool\") finds a program on PATH, shutil.disk_usage(path) gives free space and shutil.copytree copies a folder tree.", "n": 0, "a": "seed-verified"}
+{"id": "1d1be9243b84", "cat": "python", "tip": "Use os.scandir instead of os.listdir when you also need file types or sizes; it avoids an extra system call per entry.", "n": 0, "a": "seed-verified"}
+{"id": "8247989c80fc", "cat": "python", "tip": "Use zipfile.ZipFile and shutil.make_archive to create archives from Python without calling external programs.", "n": 0, "a": "seed-verified"}
+{"id": "98c0be11ff1e", "cat": "python", "tip": "urllib.parse.quote and urlencode escape text for use in addresses; never join user text into a URL by hand.", "n": 0, "a": "seed-verified"}
+{"id": "8c38179929ad", "cat": "python", "tip": "Compare floats with math.isclose(a, b); 0.1 + 0.2 == 0.3 is False because of binary rounding.", "n": 0, "a": "seed-verified"}
+{"id": "7654a56ddd7f", "cat": "python", "tip": "Use decimal.Decimal for money; floats cannot represent most decimal fractions exactly.", "n": 0, "a": "seed-verified"}
+{"id": "99d7522d8977", "cat": "python", "tip": "statistics.mean, median and stdev give quick summary values for a list of numbers without installing anything.", "n": 0, "a": "seed-verified"}
+{"id": "3be1f4d4bd4e", "cat": "python", "tip": "Use textwrap.dedent for multi-line strings inside indented code and textwrap.shorten(text, 40) to cut long text with an ellipsis.", "n": 0, "a": "seed-verified"}
+{"id": "a75319f66bf6", "cat": "python", "tip": "Use shlex.quote(text) when you must build a shell command string; shlex.split(line) splits a command line the way a shell does.", "n": 0, "a": "seed-verified"}
+{"id": "74b3b2772baa", "cat": "python", "tip": "Use ipaddress.ip_address(text) to validate and compare network addresses instead of hand written regular expressions.", "n": 0, "a": "seed-verified"}
+{"id": "2d60e300474e", "cat": "python", "tip": "Use platform.machine() and platform.system() to detect Raspberry Pi hardware, for example aarch64 on 64-bit Pi OS.", "n": 0, "a": "seed-verified"}
+{"id": "47d06432acf3", "cat": "python", "tip": "Use os.cpu_count() to size worker pools and os.getloadavg() for the load average on Linux.", "n": 0, "a": "seed-verified"}
+{"id": "8ee2c4129ad0", "cat": "python", "tip": "Use weakref and gc only when you really have memory problems; first measure with tracemalloc.start() and tracemalloc.take_snapshot().", "n": 0, "a": "seed-verified"}
