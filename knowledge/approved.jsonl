@@ -1036,3 +1036,67 @@
 {"id": "3dd08ccce2ad", "cat": "git", "tip": "Use small commits with a clear message that says why the change was made.", "n": 0, "a": "seed"}
 {"id": "9d5aacb2f980", "cat": "git", "tip": "Pull before you push to reduce conflicts, and read conflict markers carefully before choosing which side to keep.", "n": 0, "a": "seed"}
 {"id": "d298656f9ba9", "cat": "git", "tip": "Use a personal access token or ssh key for pushes to GitHub, because account passwords are no longer accepted over HTTPS.", "n": 0, "a": "seed"}
+{"id": "405dca33b077", "cat": "shell", "tip": "Use ${var:-default} to fall back to a default value when a variable is unset or empty, instead of writing an if block.", "n": 0, "a": "seed-verified"}
+{"id": "35e019228d24", "cat": "shell", "tip": "${var:=default} both returns the default and assigns it to the variable when it is unset or empty, so later lines see the value.", "n": 0, "a": "seed-verified"}
+{"id": "44e214374f0d", "cat": "shell", "tip": "${var:?message} stops a script with an error message when the variable is unset or empty; use it to validate required settings at the top.", "n": 0, "a": "seed-verified"}
+{"id": "687bcc0abf6a", "cat": "shell", "tip": "Strip a file extension with ${name%.*} and keep only the extension with ${name##*.}; no basename or sed needed.", "n": 0, "a": "seed-verified"}
+{"id": "6787175aebbe", "cat": "shell", "tip": "${#var} gives the length of a string variable and ${#array[@]} gives the number of elements in an array.", "n": 0, "a": "seed-verified"}
+{"id": "c394039a9321", "cat": "shell", "tip": "Use ${var^^} to upper-case and ${var,,} to lower-case a value in bash 4 and later without calling tr.", "n": 0, "a": "seed-verified"}
+{"id": "803e0bda7484", "cat": "shell", "tip": "Replace text inside a variable with ${var//old/new} (all matches) or ${var/old/new} (first match).", "n": 0, "a": "seed-verified"}
+{"id": "21d0e244aa9e", "cat": "shell", "tip": "Take a substring with ${var:offset:length}; a negative offset needs a space or parentheses, as in ${var: -3}.", "n": 0, "a": "seed-verified"}
+{"id": "d5b97f0d2a65", "cat": "shell", "tip": "Brace expansion generates lists and ranges: mkdir -p proj/{src,docs,tests} and echo {1..5} save a lot of typing.", "n": 0, "a": "seed-verified"}
+{"id": "b86086bf665d", "cat": "shell", "tip": "Zero-padded ranges work in brace expansion: {01..10} gives 01 02 ... 10, handy for numbered file names.", "n": 0, "a": "seed-verified"}
+{"id": "17fdbdda48b0", "cat": "shell", "tip": "Process substitution <(command) lets a command that needs a file read another command's output, for example diff <(sort a) <(sort b).", "n": 0, "a": "seed-verified"}
+{"id": "bd9ace4aa64f", "cat": "shell", "tip": "Use here-strings (cmd <<< \"text\") to feed a short string to a command's standard input without echo and a pipe.", "n": 0, "a": "seed-verified"}
+{"id": "5edc5ff867bc", "cat": "shell", "tip": "A here-document with a quoted delimiter (<<'EOF') stops variable and command expansion inside the text, so it is safe for scripts and configs.", "n": 0, "a": "seed-verified"}
+{"id": "eb6437338d86", "cat": "shell", "tip": "An unquoted here-document delimiter (<<EOF) does expand variables, so quote the delimiter whenever the text contains a dollar sign that must stay literal.", "n": 0, "a": "seed-verified"}
+{"id": "7bcdbdd876bc", "cat": "shell", "tip": "Use <<-EOF to let a here-document ignore leading tab characters, so it can be indented inside functions.", "n": 0, "a": "seed-verified"}
+{"id": "f4fd52a7b32b", "cat": "shell", "tip": "$? holds the exit code of the last command; save it immediately (rc=$?) because the next command overwrites it.", "n": 0, "a": "seed-verified"}
+{"id": "7dd7d2d760e4", "cat": "shell", "tip": "PIPESTATUS is an array with the exit code of every command in the last pipeline: use ${PIPESTATUS[0]} to see if the first command failed.", "n": 0, "a": "seed-verified"}
+{"id": "ecbba08c8fd9", "cat": "shell", "tip": "set -o pipefail makes a pipeline fail when any command in it fails, not only the last one.", "n": 0, "a": "seed-verified"}
+{"id": "610fec1c471a", "cat": "shell", "tip": "Use trap 'cleanup' EXIT to run a cleanup function when a script ends, whether it finished normally, failed or was interrupted with Ctrl+C.", "n": 0, "a": "seed-verified"}
+{"id": "fba384164d66", "cat": "shell", "tip": "mktemp -d creates a private temporary directory and prints its name; combine it with a trap on EXIT to remove it afterwards.", "n": 0, "a": "seed-verified"}
+{"id": "cd97d71078f3", "cat": "shell", "tip": "Use [[ ]] instead of [ ] in bash scripts: it needs no quoting of variables, supports && and || inside, and has pattern and regex matching.", "n": 0, "a": "seed-verified"}
+{"id": "d0a59d772e3e", "cat": "shell", "tip": "Regex matching in [[ ]] uses =~ and stores groups in the BASH_REMATCH array.", "n": 0, "a": "seed-verified"}
+{"id": "adc551e5006b", "cat": "shell", "tip": "Read a file line by line safely with: while IFS= read -r line; do ...; done < file. IFS= keeps leading spaces and -r keeps backslashes.", "n": 0, "a": "seed-verified"}
+{"id": "1fe81c2e3f83", "cat": "shell", "tip": "A pipe into while runs the loop in a subshell, so variables set inside are lost afterwards; use done < <(command) or lastpipe instead.", "n": 0, "a": "seed-verified"}
+{"id": "14e8ea612f39", "cat": "shell", "tip": "Use mapfile -t arr < file to read all lines of a file into an array in one step.", "n": 0, "a": "seed-verified"}
+{"id": "df919fd00efd", "cat": "shell", "tip": "Loop over arguments safely with \"$@\"; unquoted $@ or $* splits arguments that contain spaces.", "n": 0, "a": "seed-verified"}
+{"id": "0089ebd22f4a", "cat": "shell", "tip": "Use declare -A to create an associative array (a dictionary) in bash 4 and later.", "n": 0, "a": "seed-verified"}
+{"id": "0cb5c86cc1f9", "cat": "shell", "tip": "Iterate over associative array keys with \"${!m[@]}\" and over values with \"${m[@]}\".", "n": 0, "a": "seed-verified"}
+{"id": "71641d959f11", "cat": "shell", "tip": "Arithmetic goes in $(( )); for example $((a * b + 1)). Variables inside do not need a dollar sign.", "n": 0, "a": "seed-verified"}
+{"id": "a4befd2e6971", "cat": "shell", "tip": "Bash arithmetic is integer only; use bc or awk for decimals, for example echo \"scale=2; 10/3\" | bc.", "n": 0, "a": "seed-verified"}
+{"id": "04e039a1c1d3", "cat": "shell", "tip": "Use printf instead of echo for portable output: echo -e and echo -n behave differently between shells.", "n": 0, "a": "seed-verified"}
+{"id": "0ed8c22687be", "cat": "shell", "tip": "printf '%05d' 42 pads a number with zeros and printf '%.2f' 3.14159 rounds to two decimals.", "n": 0, "a": "seed-verified"}
+{"id": "4876bca19ec0", "cat": "shell", "tip": "A command prefixed with a space is kept out of the history when HISTCONTROL includes ignorespace; otherwise it is stored like any other.", "n": 0, "a": "seed-verified"}
+{"id": "b0ca93fe6e9c", "cat": "shell", "tip": "command -v name tells whether a program exists and works in every POSIX shell; which is not guaranteed to exist everywhere.", "n": 0, "a": "seed-verified"}
+{"id": "48673c33a921", "cat": "shell", "tip": "Run a command with a time limit using timeout 10 command; it returns exit code 124 when the limit was hit.", "n": 0, "a": "seed-verified"}
+{"id": "01553dd76776", "cat": "shell", "tip": "xargs -0 with find -print0 handles file names that contain spaces or newlines: find . -name '*.log' -print0 | xargs -0 ls -l.", "n": 0, "a": "seed-verified"}
+{"id": "a127047fedf1", "cat": "shell", "tip": "xargs -n1 runs the command once per item and xargs -P4 runs up to four of them in parallel.", "n": 0, "a": "seed-verified"}
+{"id": "72a9ec40ee49", "cat": "shell", "tip": "Use cut -d, -f2 to take the second comma-separated column, and awk -F, '{print $2}' when the delimiter appears in quoted text less often.", "n": 0, "a": "seed-verified"}
+{"id": "58f7417d6ab2", "cat": "shell", "tip": "sort -u removes duplicate lines while sorting; sort | uniq -c | sort -rn counts and ranks them.", "n": 0, "a": "seed-verified"}
+{"id": "f685e759e51a", "cat": "shell", "tip": "sort -h sorts human-readable sizes such as 1K, 2M and 3G correctly, which a plain sort does not.", "n": 0, "a": "seed-verified"}
+{"id": "1a72203b92f2", "cat": "shell", "tip": "sort -V sorts version numbers naturally, so 1.10 comes after 1.9.", "n": 0, "a": "seed-verified"}
+{"id": "de3fb3abd638", "cat": "shell", "tip": "tr -d '\\r' removes Windows carriage returns from a text file that came from a Windows editor.", "n": 0, "a": "seed-verified"}
+{"id": "4e8186f1c6e7", "cat": "shell", "tip": "watch -n 2 command repeats a command every two seconds and shows the output on a fixed screen; add -d to highlight what changed.", "n": 0, "a": "seed-verified"}
+{"id": "1a4bb41b7de8", "cat": "shell", "tip": "Use ls -lt to sort by modification time, newest first, and ls -ltr to put the newest last.", "n": 0, "a": "seed-verified"}
+{"id": "1770d3f7e7b4", "cat": "shell", "tip": "history expansion !! repeats the last command and sudo !! repeats it with sudo; it works only in interactive shells.", "n": 0, "a": "seed-verified"}
+{"id": "c8c05131ad66", "cat": "shell", "tip": "In scripts, cd \"$(dirname \"$0\")\" at the top makes relative paths work no matter where the script was started from.", "n": 0, "a": "seed-verified"}
+{"id": "dc0e56e2c6f6", "cat": "shell", "tip": "Use readlink -f path to get the absolute, symlink-resolved path of a file.", "n": 0, "a": "seed-verified"}
+{"id": "c87c1f8587d9", "cat": "shell", "tip": "A trailing & runs a command in the background; wait waits for all background jobs and $! is the process id of the last one.", "n": 0, "a": "seed-verified"}
+{"id": "4aae5d6f5c8e", "cat": "shell", "tip": "Use nohup command & or setsid command & so a background job survives when the terminal or SSH session closes.", "n": 0, "a": "seed-verified"}
+{"id": "e5d1653b1ef8", "cat": "shell", "tip": "flock -n lockfile command runs a command only if no other copy holds the lock, which stops overlapping runs of scheduled jobs.", "n": 0, "a": "seed-verified"}
+{"id": "abee73efc426", "cat": "shell", "tip": "Write a here-document to a root-owned file with: sudo tee file >/dev/null <<'EOF'; a plain sudo cat > file fails because the redirect runs as your user.", "n": 0, "a": "seed-verified"}
+{"id": "76ef4d6c283b", "cat": "shell", "tip": "Use : > file or truncate -s 0 file to empty a file without deleting it, which keeps its owner, permissions and open handles.", "n": 0, "a": "seed-verified"}
+{"id": "1678f2c5c52d", "cat": "shell", "tip": "In a script, use getopts for short options: while getopts \"ab:\" o; do case $o in a) ...;; b) val=$OPTARG;; esac; done.", "n": 0, "a": "seed-verified"}
+{"id": "de4196689590", "cat": "shell", "tip": "Use select for quick numbered menus in bash scripts; the choice number goes to REPLY and the text to the loop variable.", "n": 0, "a": "seed-verified"}
+{"id": "776f6cffce58", "cat": "shell", "tip": "diff -u shows changes in unified format and patch -p1 applies them; diff -ru dir1 dir2 compares whole directories.", "n": 0, "a": "seed-verified"}
+{"id": "154534a8472e", "cat": "shell", "tip": "Use comm -12 sorted1 sorted2 to print lines found in both sorted files; comm -23 shows lines only in the first file.", "n": 0, "a": "seed-verified"}
+{"id": "4fcde0a02158", "cat": "shell", "tip": "paste -sd, joins lines with commas: seq 3 | paste -sd, gives 1,2,3.", "n": 0, "a": "seed-verified"}
+{"id": "bee1ce1803c3", "cat": "shell", "tip": "seq -w 1 10 prints zero-padded numbers of equal width, useful in loops that build file names.", "n": 0, "a": "seed-verified"}
+{"id": "5a2777d7a22f", "cat": "shell", "tip": "expr and let are old; prefer ((i++)) for counters and (( )) in conditions: if (( count > 3 )); then ...", "n": 0, "a": "seed-verified"}
+{"id": "b96db10aa7e4", "cat": "shell", "tip": "Use basename -s .txt file.txt to get the name without directory and extension in one call.", "n": 0, "a": "seed-verified"}
+{"id": "b1dc3884c74e", "cat": "shell", "tip": "Use ${var@Q} in bash 4.4 and later to print a value quoted so it can be reused safely in a shell command.", "n": 0, "a": "seed-verified"}
+{"id": "482059e24af3", "cat": "shell", "tip": "wait -n waits for the next background job to finish and returns its exit code, which lets a script run a limited number of parallel jobs.", "n": 0, "a": "seed-verified"}
+{"id": "b76d0e08bc31", "cat": "shell", "tip": "The built-in type -a name shows every place a command name is defined: alias, function, builtin and files on PATH.", "n": 0, "a": "seed-verified"}
+{"id": "e9b2e2cff617", "cat": "shell", "tip": "Use alias only for interactive shells; in scripts write a function because aliases are not expanded in non-interactive bash by default.", "n": 0, "a": "seed-verified"}
