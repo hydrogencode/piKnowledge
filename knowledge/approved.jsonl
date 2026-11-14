@@ -1564,3 +1564,97 @@
 {"id": "09de50a2d889", "cat": "general", "tip": "Use a staging copy for risky changes: test on a second SD card or a virtual machine, then repeat the steps on the real device.", "n": 0, "a": "seed"}
 {"id": "e507f9443100", "cat": "general", "tip": "Name things clearly: files, services, branches and variables with meaningful names save more time than comments.", "n": 0, "a": "seed"}
 {"id": "a2f514872cc2", "cat": "general", "tip": "Check the date of tutorials: commands and package names for Raspberry Pi OS changed with Bullseye and Bookworm, so old guides may not work.", "n": 0, "a": "seed"}
+{"id": "c9332e227c9f", "cat": "python", "tip": "enumerate(items, start=1) numbers items from one instead of zero, so you need no manual counter.", "n": 0, "a": "seed-verified"}
+{"id": "76aa9f7bfe31", "cat": "python", "tip": "dict.get(key, default) returns the default when the key is missing and never raises KeyError.", "n": 0, "a": "seed-verified"}
+{"id": "b99591639fa5", "cat": "python", "tip": "collections.defaultdict(list) creates a missing list on first access, so you can append without checking whether the key exists.", "n": 0, "a": "seed-verified"}
+{"id": "21c569615c50", "cat": "python", "tip": "collections.deque(maxlen=100) keeps only the last 100 items and drops the oldest automatically, a good fixed size log buffer.", "n": 0, "a": "seed-verified"}
+{"id": "754e88989dee", "cat": "python", "tip": "str.partition('=') splits only at the first separator and always returns three parts, safe for key=value lines where the value contains an equals sign.", "n": 0, "a": "seed-verified"}
+{"id": "b3472d402c98", "cat": "python", "tip": "f-strings can format numbers: f\"{x:.2f}\" gives two decimals, f\"{x:,}\" adds thousands separators and f\"{x:>8}\" right-aligns.", "n": 0, "a": "seed-verified"}
+{"id": "f988f961ba02", "cat": "python", "tip": "pathlib.Path('a') / 'b' joins paths on every system, and Path.read_text() and write_text() replace open with read.", "n": 0, "a": "seed-verified"}
+{"id": "d55a7ff60431", "cat": "python", "tip": "Path.glob('*.txt') lists matching files and rglob searches subfolders too.", "n": 0, "a": "seed-verified"}
+{"id": "7f2bb41a7fae", "cat": "python", "tip": "json.dumps(obj, ensure_ascii=False, indent=2) keeps non-English letters readable and formats the output for humans.", "n": 0, "a": "seed-verified"}
+{"id": "363cf4b403e4", "cat": "python", "tip": "json.dumps(obj, separators=(',', ':')) gives the smallest JSON without spaces.", "n": 0, "a": "seed-verified"}
+{"id": "fd7114224235", "cat": "python", "tip": "Read a JSON file with json.load(open(path, encoding='utf-8')) and always give the encoding; the default depends on the system.", "n": 0, "a": "seed"}
+{"id": "2640a8de0c4a", "cat": "python", "tip": "datetime.now(timezone.utc) gives an aware time; a plain datetime.now() has no zone and causes mistakes when you compare times.", "n": 0, "a": "seed-verified"}
+{"id": "7fb499bae86c", "cat": "python", "tip": "zoneinfo.ZoneInfo('Europe/Istanbul') gives a real time zone from the standard library, no extra package needed on Python 3.9 and later.", "n": 0, "a": "seed-verified"}
+{"id": "9cd6100602fd", "cat": "python", "tip": "datetime.fromisoformat('2026-01-02T03:04:05') parses ISO dates without extra packages, and .isoformat() writes them.", "n": 0, "a": "seed-verified"}
+{"id": "edc478cbf45d", "cat": "python", "tip": "timedelta(days=1) added to a date gives the next day; subtracting two datetimes gives a timedelta with total_seconds().", "n": 0, "a": "seed-verified"}
+{"id": "d5f03df368b9", "cat": "python", "tip": "time.monotonic() is the right clock to measure durations because it never jumps back when the system time changes; time.time() can.", "n": 0, "a": "seed-verified"}
+{"id": "cdd000661f37", "cat": "python", "tip": "time.perf_counter() gives the most exact timer for short code sections.", "n": 0, "a": "seed-verified"}
+{"id": "bcb6806dc161", "cat": "python", "tip": "Use with open(path) as f: so the file is closed even if an error occurs; iterate over f line by line for large files instead of f.read().", "n": 0, "a": "seed"}
+{"id": "ef3c97557cb9", "cat": "python", "tip": "Read configuration from environment variables with os.environ.get('NAME', 'default'); use int() on the value because it is always text.", "n": 0, "a": "seed-verified"}
+{"id": "023b65dbc7a0", "cat": "python", "tip": "Use logging.getLogger(__name__) in each module and configure logging once in the main program; avoid print for anything that should reach a log.", "n": 0, "a": "seed"}
+{"id": "66339a82384e", "cat": "python", "tip": "logging.exception('message') inside an except block logs the message with the full traceback.", "n": 0, "a": "seed"}
+{"id": "1e2866453a2e", "cat": "python", "tip": "RotatingFileHandler('app.log', maxBytes=1000000, backupCount=3) limits log files to about 4 MB in total, important on an SD card.", "n": 0, "a": "seed-verified"}
+{"id": "1027636cf3eb", "cat": "python", "tip": "itertools.islice(iterable, 5) takes the first five items of any iterator without loading everything.", "n": 0, "a": "seed-verified"}
+{"id": "25ba595de48c", "cat": "python", "tip": "itertools.chain.from_iterable(list_of_lists) flattens one level of nesting without a nested loop.", "n": 0, "a": "seed-verified"}
+{"id": "34f61c6a6715", "cat": "python", "tip": "itertools.batched(items, 3) splits into chunks of three in Python 3.12 and later; before that use a small loop with slicing.", "n": 0, "a": "seed"}
+{"id": "058632a779e5", "cat": "python", "tip": "any() and all() stop at the first decisive item, so any(x > 5 for x in big) is fast with a generator expression.", "n": 0, "a": "seed-verified"}
+{"id": "72ca8732c8cf", "cat": "python", "tip": "Use a set for membership tests on many items: x in my_set is constant time while x in my_list scans the whole list.", "n": 0, "a": "seed-verified"}
+{"id": "9e8fb088978c", "cat": "python", "tip": "Set operations: a & b is the intersection, a | b the union, a - b the difference and a ^ b items in only one of them.", "n": 0, "a": "seed-verified"}
+{"id": "9ede093049a4", "cat": "python", "tip": "dict merge with the | operator works in Python 3.9 and later: {**a, **b} does the same in older versions, and the right side wins.", "n": 0, "a": "seed-verified"}
+{"id": "a9dd0d8bdbfc", "cat": "python", "tip": "Dictionary comprehension builds a mapping in one line: {k: v for k, v in pairs if v}.", "n": 0, "a": "seed-verified"}
+{"id": "e9c2c54ad8d6", "cat": "python", "tip": "Type hints such as def f(x: int) -> str are not enforced at run time, but editors and tools such as mypy use them to find bugs.", "n": 0, "a": "seed"}
+{"id": "3b2ca443ff38", "cat": "python", "tip": "Catch specific exceptions; a bare except: also catches KeyboardInterrupt and hides bugs. Use except Exception at most.", "n": 0, "a": "seed"}
+{"id": "565e9059d54f", "cat": "python", "tip": "shutil.disk_usage('/') returns total, used and free bytes, handy to check space before writing large files.", "n": 0, "a": "seed-verified"}
+{"id": "2ee623a5df16", "cat": "python", "tip": "shutil.which('ffmpeg') returns the full path of a program or None, the right way to test whether a tool is installed.", "n": 0, "a": "seed-verified"}
+{"id": "eee3aa264712", "cat": "python", "tip": "secrets.token_urlsafe(32) creates a strong random token; never use the random module for passwords or keys.", "n": 0, "a": "seed-verified"}
+{"id": "45bf95436671", "cat": "python", "tip": "hmac.compare_digest(a, b) compares secrets in constant time and prevents timing attacks; do not use == for tokens.", "n": 0, "a": "seed-verified"}
+{"id": "3d2e7cf998e4", "cat": "python", "tip": "hashlib.sha256(data).hexdigest() gives a file or text fingerprint; read big files in chunks and call update for each chunk.", "n": 0, "a": "seed-verified"}
+{"id": "cfaaae02e7b4", "cat": "python", "tip": "hashlib.pbkdf2_hmac('sha256', password, salt, 600000) derives a key from a password; use a random salt and a high iteration count.", "n": 0, "a": "seed-verified"}
+{"id": "41e49704ed3d", "cat": "python", "tip": "uuid.uuid4().hex gives a random 32 character identifier that is safe to use as a file name or key.", "n": 0, "a": "seed-verified"}
+{"id": "16388e8dbee5", "cat": "python", "tip": "struct.pack('>I', 5) writes a number as four bytes in network order and struct.unpack reads it back, the tool for binary protocols.", "n": 0, "a": "seed-verified"}
+{"id": "d61fdb8c561b", "cat": "python", "tip": "int.to_bytes(4, 'big') and int.from_bytes(b, 'big') convert numbers and bytes without the struct module.", "n": 0, "a": "seed-verified"}
+{"id": "696593e3b6aa", "cat": "python", "tip": "str.encode('utf-8') makes bytes and bytes.decode('utf-8', errors='replace') never fails on bad input, which is useful for logs from devices.", "n": 0, "a": "seed-verified"}
+{"id": "2de26d3f1f74", "cat": "python", "tip": "unicodedata.normalize('NFC', text) makes equal looking Turkish and accented text compare equal; use casefold() instead of lower() for case insensitive compares.", "n": 0, "a": "seed-verified"}
+{"id": "77da8e5a6987", "cat": "python", "tip": "Turkish letters need care: 'I'.lower() gives i, not ı, in Python. Replace explicitly when you handle Turkish text: text.replace('I','ı').lower().", "n": 0, "a": "seed-verified"}
+{"id": "2e3e3e7cfa5a", "cat": "python", "tip": "re.sub(pattern, lambda m: ..., text) lets a function compute each replacement.", "n": 0, "a": "seed-verified"}
+{"id": "f1d5c62256dd", "cat": "python", "tip": "Use raw strings r'\\d+' for regular expressions so backslashes are not treated as escapes.", "n": 0, "a": "seed-verified"}
+{"id": "a021f2c84788", "cat": "python", "tip": "textwrap.dedent and textwrap.shorten clean multi line strings and shorten text to a width with an ellipsis.", "n": 0, "a": "seed-verified"}
+{"id": "5bcbcf02d4fc", "cat": "python", "tip": "Keep references to tasks created with asyncio.create_task; a task without a reference can be garbage collected before it finishes.", "n": 0, "a": "seed"}
+{"id": "df2a0a3378e6", "cat": "python", "tip": "sys.exit('message') prints the message to standard error and exits with code 1, a short way to end a script after an error.", "n": 0, "a": "seed-verified"}
+{"id": "e4d5ca8f99bb", "cat": "python", "tip": "Python's venv isolates packages per project: python3 -m venv .venv, then .venv/bin/pip install name. Use the full path to the venv python in systemd services.", "n": 0, "a": "seed"}
+{"id": "433e29b566a1", "cat": "python", "tip": "pip install --break-system-packages is needed on newer Debian based systems outside a venv; a venv or pipx avoids the flag completely.", "n": 0, "a": "seed"}
+{"id": "ad0e109826a4", "cat": "python", "tip": "pip freeze > requirements.txt records installed versions and pip install -r requirements.txt restores them; pin versions of programs that run unattended.", "n": 0, "a": "seed"}
+{"id": "e4567190cfbf", "cat": "python", "tip": "pip list --outdated shows packages with newer versions; update one at a time and test, rather than upgrading everything at once.", "n": 0, "a": "seed"}
+{"id": "94f57d0dcc73", "cat": "python", "tip": "python3 -m py_compile file.py checks syntax without running the program, a quick test before restarting a service.", "n": 0, "a": "seed-verified"}
+{"id": "80d23766f9a1", "cat": "python", "tip": "python3 -m timeit 'sum(range(100))' measures small snippets and chooses the number of loops for you.", "n": 0, "a": "seed-verified"}
+{"id": "ddb1147d272e", "cat": "python", "tip": "python3 -m cProfile -s cumtime script.py lists where a program spends time; start there before you change code for speed.", "n": 0, "a": "seed"}
+{"id": "4624fe19f797", "cat": "python", "tip": "python3 -m pdb script.py starts the debugger; breakpoint() inside code stops there, n goes to the next line and c continues.", "n": 0, "a": "seed"}
+{"id": "585aa10c0431", "cat": "python", "tip": "python3 -m venv --system-site-packages .venv makes a venv that can still use apt packages such as picamera2 and gpiozero on Raspberry Pi OS.", "n": 0, "a": "seed"}
+{"id": "e59c37220de7", "cat": "python", "tip": "unittest ships with Python: python3 -m unittest discover runs files named test_*.py, and self.assertEqual(a, b) shows both values on failure.", "n": 0, "a": "seed-verified"}
+{"id": "932ea511baff", "cat": "python", "tip": "Use assert only in tests; Python removes assert statements with the -O option, so never use them to validate user input.", "n": 0, "a": "seed"}
+{"id": "ab5945460292", "cat": "python", "tip": "Never use pickle.load on data you did not create; it can run code. Use JSON for data exchange.", "n": 0, "a": "seed"}
+{"id": "860708c27918", "cat": "python", "tip": "Use yaml.safe_load, never yaml.load without a loader, when you read YAML files.", "n": 0, "a": "seed"}
+{"id": "dbfd07551258", "cat": "python", "tip": "Open files with encoding='utf-8' on Windows too; its default code page can break Turkish characters.", "n": 0, "a": "seed"}
+{"id": "7ee025eb4201", "cat": "python", "tip": "print(..., flush=True) or python3 -u makes output appear at once in logs; otherwise output is buffered when not connected to a terminal, so systemd logs seem empty.", "n": 0, "a": "seed"}
+{"id": "367c584d0d85", "cat": "python", "tip": "Set PYTHONUNBUFFERED=1 in a service file to get log lines in the journal immediately.", "n": 0, "a": "seed"}
+{"id": "c0ccee5f27e2", "cat": "python", "tip": "A script named like a standard module, such as random.py or json.py, breaks imports of the real module; rename it.", "n": 0, "a": "seed"}
+{"id": "ac59e227e03a", "cat": "python", "tip": "if __name__ == '__main__': keeps code from running when the file is imported; put the program start there.", "n": 0, "a": "seed-verified"}
+{"id": "283d2bb2093b", "cat": "python", "tip": "sys.path and python3 -c 'import x; print(x.__file__)' show where a module is loaded from, the fastest way to find which copy is used.", "n": 0, "a": "seed-verified"}
+{"id": "ccba8c4ab627", "cat": "python", "tip": "List comprehension with a condition is faster and clearer than append in a loop: [x*2 for x in items if x > 0].", "n": 0, "a": "seed-verified"}
+{"id": "5ce0a6d2bf25", "cat": "python", "tip": "Generator expressions such as sum(x*x for x in data) do not build a list and use almost no memory.", "n": 0, "a": "seed-verified"}
+{"id": "3262e32aa6e1", "cat": "python", "tip": "Use ''.join(parts) to build long strings; adding strings in a loop with += is slow for large counts.", "n": 0, "a": "seed-verified"}
+{"id": "c445cc695397", "cat": "python", "tip": "str.startswith accepts a tuple: name.endswith(('.jpg', '.png')) checks several endings at once.", "n": 0, "a": "seed-verified"}
+{"id": "e01fce9ff748", "cat": "python", "tip": "Use round(x, 2) for display only; floats are inexact, so compare with math.isclose and use decimal.Decimal for money.", "n": 0, "a": "seed-verified"}
+{"id": "a11f7c3d4a90", "cat": "python", "tip": "divmod(a, b) returns quotient and remainder together, for example minutes and seconds from a number of seconds.", "n": 0, "a": "seed-verified"}
+{"id": "3b5001cee144", "cat": "python", "tip": "min(items, key=...) and max(items, key=...) return the whole item with the smallest or largest key; add default=None for empty lists.", "n": 0, "a": "seed-verified"}
+{"id": "1d626d343f2a", "cat": "python", "tip": "Slicing: items[::-1] reverses a list, items[-3:] gives the last three and items[::2] every second item.", "n": 0, "a": "seed-verified"}
+{"id": "3a9cd544515e", "cat": "python", "tip": "sys.getsizeof shows only the shallow size of an object; for real memory use tracemalloc or the memory column in top.", "n": 0, "a": "seed"}
+{"id": "0fff496379ac", "cat": "python", "tip": "urllib.parse.urlparse splits a URL and parse_qs reads the query; urlencode builds one with correct escaping.", "n": 0, "a": "seed-verified"}
+{"id": "8c5c688a73ad", "cat": "python", "tip": "urllib.parse.quote escapes text for use in a path, and unquote reverses it.", "n": 0, "a": "seed-verified"}
+{"id": "b7058fd722a0", "cat": "python", "tip": "With the requests library always pass timeout=10; without it a call can hang forever. Use raise_for_status() to turn HTTP errors into exceptions.", "n": 0, "a": "seed"}
+{"id": "2e37b17d04ae", "cat": "python", "tip": "requests.Session reuses connections and shared headers, which is much faster for many requests to the same server.", "n": 0, "a": "seed"}
+{"id": "33d854e225e7", "cat": "python", "tip": "Retry network calls with a loop and growing sleep, and only retry errors that can pass, such as timeouts and 503, never 400 or 401.", "n": 0, "a": "seed"}
+{"id": "c56b4e110c38", "cat": "python", "tip": "Check Content-Length or stream with iter_content when you download large files; do not hold them in memory.", "n": 0, "a": "seed"}
+{"id": "8b151bb2a691", "cat": "python", "tip": "http.server is for tests only; for real use pick aiohttp, Flask with a production server or another proper server.", "n": 0, "a": "seed"}
+{"id": "fa2d5fa4e743", "cat": "python", "tip": "platform.machine() returns aarch64 or armv7l on a Raspberry Pi, and platform.system() the operating system name.", "n": 0, "a": "seed-verified"}
+{"id": "55d708985e77", "cat": "python", "tip": "os.cpu_count() gives the number of cores, and os.getloadavg() the load of the last one, five and fifteen minutes on Linux.", "n": 0, "a": "seed-verified"}
+{"id": "c01404597fc8", "cat": "python", "tip": "os.stat(path).st_mtime gives the modification time; compare it with time.time() to find old files.", "n": 0, "a": "seed-verified"}
+{"id": "754037c3b565", "cat": "python", "tip": "Use zipfile and tarfile from the standard library; extract only trusted archives or check member names, because ../ in names can write outside the target folder.", "n": 0, "a": "seed-verified"}
+{"id": "ab55b0624776", "cat": "python", "tip": "gzip.open(path, 'rt') reads compressed text files like normal files, and gzip.compress(bytes) works in memory.", "n": 0, "a": "seed-verified"}
+{"id": "f7c5f27b56a5", "cat": "python", "tip": "zlib.compress and zlib.decompress shrink data in memory; level 1 is fast, level 9 is small.", "n": 0, "a": "seed-verified"}
+{"id": "dc125b56a9b2", "cat": "python", "tip": "Use super().__init__() in subclasses so the base class is initialized; forgetting it is a common source of missing attributes.", "n": 0, "a": "seed"}
+{"id": "767fd0f5767e", "cat": "python", "tip": "Use typing.Optional or the X | None syntax for values that may be missing, and check for None before you use them.", "n": 0, "a": "seed"}
+{"id": "bb96c6665a05", "cat": "python", "tip": "Prefer is None and is not None for None tests, and == for values; is on numbers and strings is unreliable.", "n": 0, "a": "seed-verified"}
+{"id": "d0c75eba0692", "cat": "python", "tip": "Keep functions short and give them one job; if you need and in the name, split it into two functions.", "n": 0, "a": "seed"}
