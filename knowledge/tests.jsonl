@@ -858,3 +858,73 @@
 {"id": "49c4eb127333", "cmd": "python3 -c \"import socket; print(socket.getservbyname('ntp','udp'))\"", "expect": "123"}
 {"id": "c2708f755994", "cmd": "python3 -c \"import socket; print(socket.getservbyname('syslog','udp'))\"", "expect": "514"}
 {"id": "a4999ce31361", "cmd": "python3 -c \"print('home/+/temperature'.split('/'))\"", "expect": "['home', '+', 'temperature']"}
+{"id": "611b6f99abcd", "cmd": "python3 -c \"\nfrom flask import Flask, request\na=Flask(__name__)\n@a.post('/')\ndef f(): return request.form['x']\nprint(a.test_client().post('/', data={'x':'hi'}).data)\"", "expect": "b'hi'"}
+{"id": "99d8fef5c2ec", "cmd": "python3 -c \"\nfrom flask import Flask\na=Flask(__name__)\n@a.post('/')\ndef f(): return 'p'\nc=a.test_client(); print(c.get('/').status_code, c.post('/').status_code)\"", "expect": "405 200"}
+{"id": "a8fe57656c1e", "cmd": "python3 -c \"\nfrom flask import Flask\na=Flask(__name__)\n@a.route('/x/')\ndef f(): return 'ok'\nprint(a.test_client().get('/x').status_code)\"", "expect": "308"}
+{"id": "508d4de6bb2c", "cmd": "python3 -c \"\nfrom flask import Flask, make_response\na=Flask(__name__)\n@a.route('/')\ndef f():\n    r=make_response('x', 201); r.headers['X-A']='1'; return r\nr=a.test_client().get('/'); print(r.status_code, r.headers['X-A'])\"", "expect": "201 1"}
+{"id": "ceb08e539353", "cmd": "python3 -c \"\nfrom flask import Flask\na=Flask(__name__)\n@a.route('/')\ndef f(): return 'x', 202, {'X-A': '1'}\nr=a.test_client().get('/'); print(r.status_code, r.headers['X-A'])\"", "expect": "202 1"}
+{"id": "243036174c43", "cmd": "python3 -c \"\nfrom flask import Flask, redirect, url_for\na=Flask(__name__)\n@a.post('/save')\ndef s(): return redirect(url_for('done'))\n@a.route('/done')\ndef done(): return 'ok'\nr=a.test_client().post('/save'); print(r.status_code, r.headers['Location'])\"", "expect": "302 /done"}
+{"id": "d9719c18e55c", "cmd": "python3 -c \"\nfrom flask import Flask, g\na=Flask(__name__)\n@a.before_request\ndef b(): g.v=5\n@a.route('/')\ndef f(): return str(g.v)\nprint(a.test_client().get('/').data)\"", "expect": "b'5'"}
+{"id": "2cdfe96aa394", "cmd": "python3 -c \"\nfrom flask import Flask, session\na=Flask(__name__); a.secret_key='k'\n@a.route('/')\ndef f():\n    session['n']=session.get('n',0)+1; return str(session['n'])\nc=a.test_client(); c.get('/'); print(c.get('/').data)\"", "expect": "b'2'"}
+{"id": "956a24786310", "cmd": "python3 -c \"\nfrom flask import Flask, flash, get_flashed_messages\na=Flask(__name__); a.secret_key='k'\nwith a.test_request_context():\n    flash('hi'); print(get_flashed_messages())\"", "expect": "['hi']"}
+{"id": "5221cd5be6dc", "cmd": "python3 -c \"\nfrom flask import Flask, abort\na=Flask(__name__)\n@a.route('/')\ndef f(): abort(403)\nprint(a.test_client().get('/').status_code)\"", "expect": "403"}
+{"id": "458559ac5b15", "cmd": "python3 -c \"\nfrom flask import Flask\na=Flask(__name__)\n@a.errorhandler(Exception)\ndef e(x): return 'oops', 500\n@a.route('/')\ndef f(): 1/0\nprint(a.test_client().get('/').data)\"", "expect": "b'oops'"}
+{"id": "a855ae95edff", "cmd": "python3 -c \"\nimport os\nos.environ['FLASK_FOO']='bar'\nfrom flask import Flask\na=Flask(__name__); a.config.from_prefixed_env(); print(a.config['FOO'])\"", "expect": "bar"}
+{"id": "7724854d7a52", "cmd": "python3 -c \"\nfrom flask import Flask, request\na=Flask(__name__); a.config['MAX_CONTENT_LENGTH']=10\n@a.post('/')\ndef f(): return str(len(request.get_data()))\nprint(a.test_client().post('/', data=b'x'*100).status_code)\"", "expect": "413"}
+{"id": "0134d94e253f", "cmd": "python3 -c \"\nfrom flask import Flask, render_template_string\na=Flask(__name__)\nwith a.app_context(): print(render_template_string('{{ x|default(\\\"none\\\") }}'))\"", "expect": "none"}
+{"id": "c477894bfefc", "cmd": "python3 -c \"\nfrom flask import Flask, render_template_string\na=Flask(__name__)\nwith a.app_context(): print(render_template_string('{{ d|tojson }}', d={'a':1}))\"", "expect": "{\"a\": 1}"}
+{"id": "1b5e57afc5c1", "cmd": "python3 -c \"\nfrom flask import Flask, render_template_string\na=Flask(__name__)\nwith a.app_context(): print(render_template_string('{{ x }}', x='<b>'))\"", "expect": "&lt;b&gt;"}
+{"id": "23c7fecaf55b", "cmd": "python3 -c \"\nfrom flask import Flask, render_template_string\na=Flask(__name__)\n@a.template_filter('rev')\ndef rev(s): return s[::-1]\nwith a.app_context(): print(render_template_string('{{ \\\"abc\\\"|rev }}'))\"", "expect": "cba"}
+{"id": "48becaaa04ef", "cmd": "python3 -c \"\nfrom flask import Flask, url_for\na=Flask(__name__)\n@a.route('/x')\ndef x(): return ''\nwith a.test_request_context('/'): print(url_for('x', _external=True))\"", "expect": "http://localhost/x"}
+{"id": "7ab0d6926075", "cmd": "python3 -c \"\nfrom flask import Flask, Blueprint, url_for\nbp=Blueprint('api', __name__, url_prefix='/api')\n@bp.route('/ping')\ndef p(): return 'pong'\na=Flask(__name__); a.register_blueprint(bp)\nprint(a.test_client().get('/api/ping').data)\"", "expect": "b'pong'"}
+{"id": "232ed9a1d5f2", "cmd": "python3 -c \"\nfrom flask import Flask\ndef create_app():\n    a=Flask(__name__); a.config['X']=1; return a\nprint(create_app().config['X'])\"", "expect": "1"}
+{"id": "b2103876f201", "cmd": "python3 -c \"\nfrom flask import Flask, session\na=Flask(__name__); a.secret_key='k'\n@a.post('/in')\ndef i(): session['u']=1; return ''\n@a.route('/me')\ndef me(): return 'in' if 'u' in session else 'out'\nc=a.test_client(); c.post('/in'); print(c.get('/me').data)\"", "expect": "b'in'"}
+{"id": "1f43049ba0c9", "cmd": "python3 -c \"\nfrom flask import Flask\na=Flask(__name__)\n@a.cli.command('hello')\ndef h(): print('hi')\nr=a.test_cli_runner().invoke(args=['hello']); print(r.output.strip())\"", "expect": "hi"}
+{"id": "79895ba7e4e7", "cmd": "python3 -c \"\nfrom flask import Flask, Response\na=Flask(__name__)\n@a.route('/')\ndef f():\n    def g():\n        yield 'a'; yield 'b'\n    return Response(g(), mimetype='text/plain')\nprint(a.test_client().get('/').data)\"", "expect": "b'ab'"}
+{"id": "92dd11c12c71", "cmd": "python3 -c \"\nfrom flask import Flask, Response\na=Flask(__name__)\n@a.route('/e')\ndef e(): return Response('data: x\\n\\n', mimetype='text/event-stream')\nr=a.test_client().get('/e'); print(r.mimetype)\"", "expect": "text/event-stream"}
+{"id": "1e1687ed24c1", "cmd": "python3 -c \"\nfrom flask import Flask, after_this_request\na=Flask(__name__)\n@a.route('/')\ndef f():\n    @after_this_request\n    def h(r): r.headers['X-D']='1'; return r\n    return 'x'\nprint(a.test_client().get('/').headers['X-D'])\"", "expect": "1"}
+{"id": "db2a811292fc", "cmd": "python3 -c \"\nfrom flask import Flask, send_file\na=Flask(__name__)\nopen('t.txt','w').write('hi')\n@a.route('/')\ndef f(): return send_file('t.txt', as_attachment=True, download_name='n.txt')\nr=a.test_client().get('/'); print(r.headers['Content-Disposition'])\"", "expect": "attachment; filename=n.txt"}
+{"id": "7de68cbf6dab", "cmd": "python3 -c \"\nfrom flask import Flask, jsonify\na=Flask(__name__); a.json.sort_keys=False\nwith a.app_context(): print(jsonify({'b':1,'a':2}).get_data(as_text=True).strip())\"", "expect": "{\"b\":1,\"a\":2}"}
+{"id": "d51b2cae54fe", "cmd": "python3 -c \"\nfrom flask import Flask, jsonify\na=Flask(__name__)\n@a.route('/')\ndef f(): return jsonify(error='bad'), 400\nr=a.test_client().get('/'); print(r.status_code, r.get_json()['error'])\"", "expect": "400 bad"}
+{"id": "b1db51b4f721", "cmd": "python3 -c \"\nfrom flask import Flask, request\na=Flask(__name__)\n@a.route('/')\ndef f(): return request.headers.get('x-name','none')\nprint(a.test_client().get('/', headers={'X-Name':'v'}).data)\"", "expect": "b'v'"}
+{"id": "5187ad76c978", "cmd": "python3 -c \"\nfrom flask import Flask, request\na=Flask(__name__)\n@a.post('/')\ndef f(): return str(request.is_json)\nprint(a.test_client().post('/', json={'a':1}).data)\"", "expect": "b'True'"}
+{"id": "fbaa6c0026cd", "cmd": "python3 -c \"\nfrom flask import Flask, make_response\na=Flask(__name__)\n@a.route('/')\ndef f():\n    r=make_response('x'); r.set_cookie('n','v',httponly=True,samesite='Lax'); return r\nprint('HttpOnly' in a.test_client().get('/').headers['Set-Cookie'])\"", "expect": "True"}
+{"id": "18778d22cf18", "cmd": "python3 -c \"\nfrom itsdangerous import URLSafeTimedSerializer as S\ns=S('k'); t=s.dumps({'a':1}); print(s.loads(t, max_age=60))\"", "expect": "{'a': 1}"}
+{"id": "7f7e9d2ed2ee", "cmd": "python3 -c \"import hmac; print(hmac.compare_digest('abc','abd'))\"", "expect": "False"}
+{"id": "c1d3e23ab470", "cmd": "python3 -c \"\nfrom werkzeug.security import generate_password_hash as g, check_password_hash as c\nh=g('pw'); print(c(h,'pw'), c(h,'no'))\"", "expect": "True False"}
+{"id": "a40312b4e5ec", "cmd": "python3 -c \"\nimport sqlite3\nc=sqlite3.connect(':memory:'); c.execute('create table t(id,owner)'); c.execute('insert into t values(1,\\\"a\\\")')\nprint(c.execute('select count(*) from t where id=? and owner=?', (1,'b')).fetchone()[0])\"", "expect": "0"}
+{"id": "00ea2ae1102f", "cmd": "python3 -c \"\nfrom flask import Flask, request, jsonify\na=Flask(__name__)\n@a.post('/')\ndef f():\n    n=request.get_json(silent=True) or {}\n    if not isinstance(n.get('name'), str) or len(n['name'])>10: return jsonify(error='name'), 400\n    return 'ok'\nprint(a.test_client().post('/', json={'name':'x'*20}).status_code)\"", "expect": "400"}
+{"id": "7a4667576e8a", "cmd": "python3 -c \"from markupsafe import escape; print(escape('<a>'))\"", "expect": "&lt;a&gt;"}
+{"id": "cba921860e7a", "cmd": "python3 -c \"\nfrom flask import Flask\na=Flask(__name__)\n@a.after_request\ndef h(r): r.headers['X-Content-Type-Options']='nosniff'; return r\n@a.route('/')\ndef f(): return 'x'\nprint(a.test_client().get('/').headers['X-Content-Type-Options'])\"", "expect": "nosniff"}
+{"id": "f2d2ed7d3e32", "cmd": "python3 -c \"\nfrom flask import Flask, request\nfrom werkzeug.middleware.proxy_fix import ProxyFix\na=Flask(__name__); a.wsgi_app=ProxyFix(a.wsgi_app, x_for=1)\n@a.route('/')\ndef f(): return request.remote_addr\nprint(a.test_client().get('/', headers={'X-Forwarded-For':'1.2.3.4'}).data)\"", "expect": "b'1.2.3.4'"}
+{"id": "487547b8f05f", "cmd": "python3 -c \"\nfrom flask import Flask\na=Flask(__name__)\n@a.get('/healthz')\ndef h(): return 'ok'\nprint(a.test_client().get('/healthz').data)\"", "expect": "b'ok'"}
+{"id": "adb9e8234c1d", "cmd": "python3 -c \"\nfrom flask import Flask\na=Flask(__name__)\n@a.route('/x')\ndef x(): return ''\nprint(sorted(r.rule for r in a.url_map.iter_rules()))\"", "expect": "['/static/<path:filename>', '/x']"}
+{"id": "a6400dd2276a", "cmd": "python3 -c \"\nfrom flask import Flask\na=Flask(__name__); print(a.static_url_path, a.static_folder.endswith('static'))\"", "expect": "/static True"}
+{"id": "beb441bc088f", "cmd": "python3 -c \"\nfrom flask import Flask\na=Flask(__name__); a.config['SEND_FILE_MAX_AGE_DEFAULT']=3600; print(a.config['SEND_FILE_MAX_AGE_DEFAULT'])\"", "expect": "3600"}
+{"id": "554e7b77ccbc", "cmd": "python3 -c \"\nfrom flask import Flask, current_app\nimport threading\na=Flask(__name__); out=[]\ndef w():\n    with a.app_context(): out.append(current_app.name)\nt=threading.Thread(target=w); t.start(); t.join(); print(out)\"", "expect": "['__main__']"}
+{"id": "e798e3461e10", "cmd": "python3 -c \"\nimport sqlite3\nc=sqlite3.connect(':memory:', timeout=10); c.row_factory=sqlite3.Row; c.execute('create table t(a)'); c.execute('insert into t values(7)'); print(c.execute('select a from t').fetchone()['a'])\"", "expect": "7"}
+{"id": "d79f95586dc5", "cmd": "python3 -c \"\nfrom flask import Flask\na=Flask(__name__)\n@a.route('/')\ndef f(): pass\nprint(a.test_client().get('/').status_code)\"", "expect": "500"}
+{"id": "920e3f07ca1d", "cmd": "apt-cache show bash | grep -c '^Package: bash'", "expect": "1"}
+{"id": "41578f6ac246", "cmd": "apt-cache search --names-only '^bash$' | cut -d' ' -f1", "expect": "bash"}
+{"id": "2f8b4baa4fb2", "cmd": "apt-cache rdepends bash | head -1", "expect": "bash"}
+{"id": "13e514a4ff71", "cmd": "apt-cache madison bash | head -1 | grep -c bash", "expect": "1"}
+{"id": "7b6c71264f93", "cmd": "apt-get --help | grep -c reinstall", "expect": "1"}
+{"id": "6f1349a98809", "cmd": "dpkg --help | grep -c -- '-I'", "expect": "1"}
+{"id": "70f9f5edf511", "cmd": "dpkg -s bash | grep Status", "expect": "Status: install ok installed"}
+{"id": "75742253524c", "cmd": "dpkg -V bash >/dev/null 2>&1; echo $?", "expect": "0"}
+{"id": "1647fe52b6fe", "cmd": "dpkg --get-selections | head -1 | grep -c install", "expect": "1"}
+{"id": "8c5d378cb07a", "cmd": "dpkg-divert --list >/dev/null 2>&1; echo $?", "expect": "0"}
+{"id": "5cc21948ef55", "cmd": "dpkg --print-foreign-architectures >/dev/null; echo $?", "expect": "0"}
+{"id": "ae6f549ef364", "cmd": "apt list --installed 2>/dev/null | grep -c '^bash/'", "expect": "1"}
+{"id": "6c209d8390e4", "cmd": "apt-mark showhold >/dev/null; echo $?", "expect": "0"}
+{"id": "ae4e2134a46d", "cmd": "apt-get --help | grep -c autoremove", "expect": "1"}
+{"id": "2d2da819f922", "cmd": "dpkg -l | grep -c '^rc' >/dev/null; echo ok", "expect": "ok"}
+{"id": "bb0a0435cda7", "cmd": "test -d /etc/apt/apt.conf.d && echo yes", "expect": "yes"}
+{"id": "c460f3fedee0", "cmd": "apt-config dump | grep -c 'APT::'", "expect": "1"}
+{"id": "319a448fed3a", "cmd": "apt show bash 2>/dev/null | grep -c 'Installed-Size'", "expect": "1"}
+{"id": "8c79dca5afda", "cmd": "apt-get --help | grep -c autoclean", "expect": "1"}
+{"id": "3bdc82580ead", "cmd": "du -s /var/lib/apt >/dev/null; echo $?", "expect": "0"}
+{"id": "309c636d5a7b", "cmd": "apt-get --help | grep -c update", "expect": "1"}
+{"id": "4c629276bb6e", "cmd": "ls /etc/apt >/dev/null; echo $?", "expect": "0"}
+{"id": "d2badc74d163", "cmd": "apt-cache policy nodejs >/dev/null; echo $?", "expect": "0"}
+{"id": "938f1be51fc0", "cmd": "apt-cache madison bash | cut -d'|' -f2 | head -1 | grep -c '[0-9]'", "expect": "1"}
