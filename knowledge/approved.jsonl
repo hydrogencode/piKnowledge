@@ -1731,11 +1731,11 @@
 {"id": "011a001bc36f", "cat": "shell", "tip": "date +%Y-%m-%d_%H-%M-%S makes a file name friendly time stamp; date -d '1 day ago' and date -d @1700000000 convert times.", "n": 0, "a": "seed-verified"}
 {"id": "a9908d10395c", "cat": "shell", "tip": "date +%s gives seconds since 1970; subtracting two values measures how long something took.", "n": 0, "a": "seed-verified"}
 {"id": "d9dc83185606", "cat": "shell", "tip": "sleep 0.5 accepts decimals on Linux, and timeout 10 command stops a command after ten seconds with exit code 124.", "n": 0, "a": "seed-verified"}
-{"id": "aaa6ad467e7b", "cat": "shell", "tip": "timeout -s KILL 5 command sends a hard kill if the program ignores the normal stop signal.", "n": 0, "a": "seed-verified"}
+{"id": "aaa6ad467e7b", "cat": "shell", "tip": "timeout -s KILL 5 command sends a hard kill if the program ignores the normal stop signal.", "n": 0, "a": "seed"}
 {"id": "c525238dc64c", "cat": "shell", "tip": "watch -n 2 command repeats a command every two seconds and shows the output in place; watch -d highlights changes.", "n": 0, "a": "seed-verified"}
 {"id": "e335eb30c854", "cat": "shell", "tip": "nohup command & keeps a program running after the terminal closes, but systemd services or tmux are better for anything important.", "n": 0, "a": "seed"}
 {"id": "56f3a1a2bc1b", "cat": "shell", "tip": "jobs, fg, bg and Ctrl+Z let you pause a program and continue it in the background; disown removes a job from the shell.", "n": 0, "a": "seed"}
-{"id": "e01f44e10f49", "cat": "shell", "tip": "ps aux | grep name also lists the grep itself; use pgrep -af name or the trick grep [n]ame to avoid it.", "n": 0, "a": "seed-verified"}
+{"id": "e01f44e10f49", "cat": "shell", "tip": "ps aux | grep name also lists the grep itself; use pgrep -af name or the trick grep [n]ame to avoid it.", "n": 0, "a": "seed"}
 {"id": "57e84de62fdc", "cat": "shell", "tip": "pgrep -f pattern lists process numbers and pkill -f pattern ends them; check with pgrep -af first.", "n": 0, "a": "seed"}
 {"id": "2a9d51d399b0", "cat": "shell", "tip": "lsof -p PID lists the files a program has open and lsof +D folder shows who uses a folder; useful when a disk will not unmount.", "n": 0, "a": "seed"}
 {"id": "bce73b99feb6", "cat": "shell", "tip": "strace -f -e trace=file program shows which files a program tries to open, a quick way to find a missing config or a permission problem.", "n": 0, "a": "seed"}
