@@ -736,3 +736,111 @@
 {"id": "2bb111c485d7", "cmd": "python3 -c \"import sys, threading; print(callable(sys.excepthook), callable(threading.excepthook))\"", "expect": "True True"}
 {"id": "89572905ef11", "cmd": "python3 -X faulthandler -c \"import faulthandler; print(faulthandler.is_enabled())\"", "expect": "True"}
 {"id": "fedd28776b75", "cmd": "python3 -c \"import gc; print(gc.collect()>=0)\"", "expect": "True"}
+{"id": "a83ad1d24821", "cmd": "python3 -c \"\ntry:\n    list(zip([1],[1,2],strict=True))\nexcept ValueError:\n    print('err')\"", "expect": "err"}
+{"id": "d6568401956c", "cmd": "python3 -c \"\nimport os,tempfile\nd=tempfile.mkdtemp(); p=d+'/f'\nopen(p+'.tmp','w').write('x'); os.replace(p+'.tmp',p)\nprint(open(p).read())\"", "expect": "x"}
+{"id": "c43bbd3e369c", "cmd": "python3 -c \"\nimport argparse\np=argparse.ArgumentParser(); p.add_argument('-v',action='store_true')\nprint(p.parse_args(['-v']).v)\"", "expect": "True"}
+{"id": "c601d9cec1d5", "cmd": "python3 -c \"\nfrom dataclasses import dataclass, field\n@dataclass\nclass A:\n    x: list = field(default_factory=list)\nprint(A())\"", "expect": "A(x=[])"}
+{"id": "d512fc54184a", "cmd": "python3 -c \"\ndef f(x=None):\n    x = [] if x is None else x\n    x.append(1); return x\nprint(f(), f())\"", "expect": "[1] [1]"}
+{"id": "1e8ab28ec02a", "cmd": "python3 -c \"\nfrom functools import lru_cache\n@lru_cache(maxsize=None)\ndef f(n): return n*2\nf(2); print(f.cache_info().hits, f(2), f.cache_info().hits)\"", "expect": "0 4 1"}
+{"id": "6a190ba68ccb", "cmd": "python3 -c \"\nimport itertools\nprint([(k,len(list(g))) for k,g in itertools.groupby(sorted('abab'))])\"", "expect": "[('a', 2), ('b', 2)]"}
+{"id": "ce990599cf9a", "cmd": "python3 -c \"\nitems=list(range(12))\nif (n:=len(items))>10: print(n)\"", "expect": "12"}
+{"id": "9c2c309a0225", "cmd": "python3 -c \"\nmatch 'go north'.split():\n    case ['go', d]: print(d)\"", "expect": "north"}
+{"id": "236e7a96540b", "cmd": "python3 -c \"\ntry:\n    int('x')\nexcept ValueError:\n    print('bad')\"", "expect": "bad"}
+{"id": "1818acb46b50", "cmd": "python3 -c \"\ntry:\n    try: 1/0\n    except ZeroDivisionError as e: raise ValueError('x') from e\nexcept ValueError as e: print(type(e.__cause__).__name__)\"", "expect": "ZeroDivisionError"}
+{"id": "7c3d059b272d", "cmd": "python3 -c \"\ntry: x=1\nexcept Exception: pass\nelse: print('ok')\nfinally: print('done')\"", "expect": "ok\ndone"}
+{"id": "21d1d874d87c", "cmd": "python3 -c \"\nimport contextlib\nwith contextlib.suppress(FileNotFoundError): open('/nonexistent_zz')\nprint('fine')\"", "expect": "fine"}
+{"id": "aa97a10ff90a", "cmd": "python3 -c \"\nimport contextlib\n@contextlib.contextmanager\ndef c():\n    print('in'); yield; print('out')\nwith c(): pass\"", "expect": "in\nout"}
+{"id": "0ee75ad40477", "cmd": "python3 -c \"\nimport tempfile,os\nwith tempfile.TemporaryDirectory() as d: print(os.path.isdir(d))\"", "expect": "True"}
+{"id": "007d19322efd", "cmd": "python3 -c \"\nimport csv,sys\ncsv.writer(sys.stdout, lineterminator='\\n').writerow(['a,b','c'])\"", "expect": "\"a,b\",c"}
+{"id": "391f60953693", "cmd": "python3 -c \"\nimport sqlite3\nc=sqlite3.connect(':memory:'); c.execute('create table t(a)'); c.execute('insert into t values(?)',(5,))\nprint(c.execute('select a from t').fetchone()[0])\"", "expect": "5"}
+{"id": "25a294646a9a", "cmd": "python3 -c \"\nimport sqlite3\nc=sqlite3.connect(':memory:'); c.row_factory=sqlite3.Row\nprint(c.execute('select 5 as a').fetchone()['a'])\"", "expect": "5"}
+{"id": "378e5da67093", "cmd": "python3 -c \"\nimport sqlite3,tempfile\nc=sqlite3.connect(tempfile.mkdtemp()+'/a.db'); print(c.execute('pragma journal_mode=wal').fetchone()[0])\"", "expect": "wal"}
+{"id": "1330d0c037da", "cmd": "python3 -c \"\nimport sqlite3\nc=sqlite3.connect(':memory:')\nwith c: c.execute('create table t(a)')\nprint('ok')\"", "expect": "ok"}
+{"id": "e9cd902113b7", "cmd": "python3 -c \"\nimport sqlite3\nc=sqlite3.connect(':memory:'); c.execute('create table t(a)'); c.executemany('insert into t values(?)',[(1,),(2,)])\nprint(c.execute('select count(*) from t').fetchone()[0])\"", "expect": "2"}
+{"id": "62f4e742e4d8", "cmd": "python3 -c \"\nimport threading\ne=threading.Event(); print(e.wait(0.01))\"", "expect": "False"}
+{"id": "7140efc7c683", "cmd": "python3 -c \"\nimport queue\nq=queue.Queue(); q.put(1); print(q.get())\"", "expect": "1"}
+{"id": "a32970d47c9f", "cmd": "python3 -c \"\nimport threading\nt=threading.Thread(target=lambda:None,daemon=True); print(t.daemon)\"", "expect": "True"}
+{"id": "3da1df567a00", "cmd": "python3 -c \"\nfrom concurrent.futures import ThreadPoolExecutor\nwith ThreadPoolExecutor(2) as ex: print(list(ex.map(lambda x:x*2,[1,2])))\"", "expect": "[2, 4]"}
+{"id": "3b4218d08c71", "cmd": "python3 -c \"\nimport threading\nl=threading.Lock()\nwith l: print('locked')\"", "expect": "locked"}
+{"id": "4d277f833702", "cmd": "python3 -c \"\nimport asyncio\nasync def m(): return 5\nprint(asyncio.run(m()))\"", "expect": "5"}
+{"id": "ae705c04330f", "cmd": "python3 -c \"\nimport asyncio\nasync def f(x): return x\nasync def m(): return await asyncio.gather(f(1),f(2))\nprint(asyncio.run(m()))\"", "expect": "[1, 2]"}
+{"id": "71e9b63e0e64", "cmd": "python3 -c \"\nimport asyncio\nasync def m():\n    try: await asyncio.wait_for(asyncio.sleep(1), 0.01)\n    except asyncio.TimeoutError: return 'late'\nprint(asyncio.run(m()))\"", "expect": "late"}
+{"id": "a32451a6834f", "cmd": "python3 -c \"\nimport asyncio\nprint(asyncio.run(asyncio.to_thread(lambda: 7)))\"", "expect": "7"}
+{"id": "c6fc775c0bde", "cmd": "python3 -c \"\nimport asyncio\nasync def m():\n    s=asyncio.Semaphore(1)\n    async with s: return 'in'\nprint(asyncio.run(m()))\"", "expect": "in"}
+{"id": "f426dda73f57", "cmd": "python3 -c \"\nimport asyncio\nasync def m():\n    q=asyncio.Queue(); await q.put(1); return await q.get()\nprint(asyncio.run(m()))\"", "expect": "1"}
+{"id": "14d43650f6e4", "cmd": "python3 -c \"\nimport signal; signal.signal(signal.SIGTERM, lambda s,f: None); print('set')\"", "expect": "set"}
+{"id": "6df62ac4f390", "cmd": "python3 -c \"\nimport atexit; atexit.register(print,'bye')\"", "expect": "bye"}
+{"id": "623b71517ba4", "cmd": "python3 -c \"\nfrom unittest import mock\nimport os\nwith mock.patch('os.getcwd', return_value='/x'): print(os.getcwd())\"", "expect": "/x"}
+{"id": "fb1a551a7edb", "cmd": "python3 -c \"\ndef g():\n    yield 1; yield 2\nprint(list(g()))\"", "expect": "[1, 2]"}
+{"id": "5bbba9dec0cb", "cmd": "python3 -c \"\nimport copy\na=[[1]]; b=copy.deepcopy(a); b[0].append(2); print(a)\"", "expect": "[[1]]"}
+{"id": "d79fb156feea", "cmd": "python3 -c \"\nimport socket\ns=socket.socket(); s.settimeout(1); print(s.gettimeout()); s.close()\"", "expect": "1.0"}
+{"id": "5a33e333b731", "cmd": "python3 -c \"\nimport socket\ns=socket.socket(); s.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1); print('ok'); s.close()\"", "expect": "ok"}
+{"id": "8e1574c935f6", "cmd": "python3 -c \"\nimport socket\ns=socket.socket(); s.bind(('127.0.0.1',0)); print(s.getsockname()[1]>0); s.close()\"", "expect": "True"}
+{"id": "5a210e3a092c", "cmd": "python3 -c \"\nimport os,tempfile\np=tempfile.mkdtemp()+'/s'; fd=os.open(p,os.O_CREAT|os.O_WRONLY,0o600); os.close(fd)\nprint(oct(os.stat(p).st_mode&0o777))\"", "expect": "0o600"}
+{"id": "1809fa694f8f", "cmd": "python3 -c \"\nimport os\nprint(any(True for _ in os.walk('.')))\"", "expect": "True"}
+{"id": "da801a7e197f", "cmd": "python3 -c \"\nimport fcntl,tempfile\nf=open(tempfile.mkdtemp()+'/l','w'); fcntl.flock(f,fcntl.LOCK_EX|fcntl.LOCK_NB); print('locked')\"", "expect": "locked"}
+{"id": "afc71fba758c", "cmd": "python3 -c \"\nb=bytearray(b'abcd'); m=memoryview(b)[1:3]; print(bytes(m))\"", "expect": "b'bc'"}
+{"id": "dfb7f0b7bb27", "cmd": "python3 -c \"\nimport enum\nclass C(enum.Enum):\n    A=enum.auto()\nprint(C.A.name)\"", "expect": "A"}
+{"id": "03d1e7dd0177", "cmd": "python3 -c \"\nclass A:\n    __slots__=('x',)\na=A(); a.x=1; print(a.x)\"", "expect": "1"}
+{"id": "64c0f8cd10f8", "cmd": "python3 -c \"\nclass A:\n    @property\n    def v(self): return 5\nprint(A().v)\"", "expect": "5"}
+{"id": "7f893550ff5d", "cmd": "python3 -c \"\nclass A:\n    @classmethod\n    def make(cls): return cls()\nprint(type(A.make()).__name__)\"", "expect": "A"}
+{"id": "7d5e821de786", "cmd": "python3 -c \"\nimport sqlite3\na=sqlite3.connect('a.db'); a.execute('create table t(x)'); a.commit()\nb=sqlite3.connect('b.db'); a.backup(b); print(b.execute('select count(*) from sqlite_master').fetchone()[0])\"", "expect": "1"}
+{"id": "eed53e3d0629", "cmd": "python3 -c \"\nimport sqlite3\nc=sqlite3.connect('a.db'); c.execute('create table t(x)'); print(c.execute('pragma integrity_check').fetchone()[0])\"", "expect": "ok"}
+{"id": "b664358f0969", "cmd": "python3 -c \"\nimport sqlite3\nc=sqlite3.connect('a.db'); c.execute('create table t(x)'); c.commit(); c.execute('vacuum'); print('ok')\"", "expect": "ok"}
+{"id": "0a12a82399a2", "cmd": "python3 -c \"\nimport sqlite3\nc=sqlite3.connect(':memory:'); c.execute('create table t(x)'); c.execute('create index i on t(x)'); print('i' in str(c.execute('explain query plan select * from t where x=1').fetchall()))\"", "expect": "True"}
+{"id": "b4e48d7136ce", "cmd": "echo a &&\necho b", "expect": "a"}
+{"id": "a4f4d4bc43ed", "cmd": "python3 -c \"\ntry: b'a'+'a'\nexcept TypeError: print('type')\"", "expect": "type"}
+{"id": "2c7956ce1c28", "cmd": "python3 -c \"\nfrom collections import deque\nd=deque(maxlen=3)\nfor v in [1,2,3,4]: d.append(v)\nprint(sum(d)/len(d))\"", "expect": "3.0"}
+{"id": "10216df308e0", "cmd": "python3 -c \"\na=[('a',2),('b',1),('c',2)]\na.sort(key=lambda x:x[1]); print(a)\"", "expect": "[('b', 1), ('a', 2), ('c', 2)]"}
+{"id": "ee4fb8f62194", "cmd": "python3 -c \"\na=[1,2,3,4]\nprint([x for x in a if x%2])\"", "expect": "[1, 3]"}
+{"id": "68fe4ddc79c6", "cmd": "python3 -c \"\nd={}\nfor k,v in [('a',1),('a',2)]: d.setdefault(k,[]).append(v)\nprint(d)\"", "expect": "{'a': [1, 2]}"}
+{"id": "712d90ae31bf", "cmd": "python3 -c \"\nd={'a':1,'b':2}\nfor k,v in list(d.items()):\n    if v==1: del d[k]\nprint(d)\"", "expect": "{'b': 2}"}
+{"id": "9dc85e35079c", "cmd": "python3 -c \"\ntry: {[1]:1}\nexcept TypeError: print('unhashable')\"", "expect": "unhashable"}
+{"id": "cf89cc5105d2", "cmd": "python3 -c \"\nclass A:\n    def __eq__(s,o): return True\ntry: {A()}\nexcept TypeError: print('no hash')\"", "expect": "no hash"}
+{"id": "d8fe74e192ce", "cmd": "python3 -c \"\nfor i in range(3):\n    if i==5: break\nelse: print('not found')\"", "expect": "not found"}
+{"id": "31ded484339d", "cmd": "python3 -c \"\nimport io\nf=io.StringIO('a\\nb\\n')\nwhile (l:=f.readline()): print(l.strip(), end=' ')\"", "expect": "a b"}
+{"id": "dc9bbde9ed2d", "cmd": "python3 -c \"\nimport functools\n@functools.cache\ndef f(n): return n+1\nprint(f(1))\"", "expect": "2"}
+{"id": "d5d2c158400f", "cmd": "python3 -c \"\nimport functools\ndef d(f):\n    @functools.wraps(f)\n    def w(*a): return f(*a)\n    return w\n@d\ndef g(): pass\nprint(g.__name__)\"", "expect": "g"}
+{"id": "7313bd10030c", "cmd": "python3 -c \"\ndef rep(n):\n    def deco(f):\n        def w(): return [f() for _ in range(n)]\n        return w\n    return deco\n@rep(2)\ndef g(): return 1\nprint(g())\"", "expect": "[1, 1]"}
+{"id": "b3c7eb26de07", "cmd": "python3 -c \"\ndef c():\n    n=0\n    def inc():\n        nonlocal n; n+=1; return n\n    return inc\nf=c(); f(); print(f())\"", "expect": "2"}
+{"id": "ce490bc8822c", "cmd": "python3 -c \"\ndef f(a, *, b): return a+b\nprint(f(1, b=2))\"", "expect": "3"}
+{"id": "3937bd1d350d", "cmd": "python3 -c \"\ndef f(a, /, b): return a+b\nprint(f(1, b=2))\"", "expect": "3"}
+{"id": "d75f04b8d6c6", "cmd": "python3 -c \"\ndef f(a,b): return a-b\nprint(f(*[5,3]), f(**{'a':9,'b':1}))\"", "expect": "2 8"}
+{"id": "d373c8a0d586", "cmd": "python3 -c \"\ndef f():\n    '''Does a thing.'''\nprint(f.__doc__)\"", "expect": "Does a thing."}
+{"id": "acfe1a873bce", "cmd": "python3 -c \"\nimport abc\nclass A(abc.ABC):\n    @abc.abstractmethod\n    def f(self): ...\ntry: A()\nexcept TypeError: print('abstract')\"", "expect": "abstract"}
+{"id": "ef9fabc0d97c", "cmd": "python3 -c \"\nclass A:\n    def __repr__(s): return 'A()'\nprint(A())\"", "expect": "A()"}
+{"id": "8fabcb0d4ec3", "cmd": "python3 -c \"\nfrom dataclasses import dataclass\n@dataclass(order=True)\nclass P: x: int\nprint(P(1)<P(2))\"", "expect": "True"}
+{"id": "c9e22ece0560", "cmd": "python3 -c \"\nfrom dataclasses import dataclass\n@dataclass(frozen=True)\nclass P: x: int\nprint({P(1): 'a'}[P(1)])\"", "expect": "a"}
+{"id": "f1e318e06722", "cmd": "python3 -c \"\nfrom dataclasses import dataclass, asdict, replace\n@dataclass\nclass P: x: int\nprint(asdict(replace(P(1), x=5)))\"", "expect": "{'x': 5}"}
+{"id": "8a2f65543d5c", "cmd": "python3 -c \"\nclass C:\n    def __enter__(s): return 1\n    def __exit__(s,*a): print('bye')\nwith C() as v: print(v)\"", "expect": "1\nbye"}
+{"id": "5123842552c8", "cmd": "python3 -c \"\ndef g():\n    yield from [1,2]\n    yield 3\nprint(list(g()))\"", "expect": "[1, 2, 3]"}
+{"id": "3c6919edb78d", "cmd": "python3 -c \"\ndef g():\n    x = yield 1\n    yield x*2\nit=g(); next(it); print(it.send(5))\"", "expect": "10"}
+{"id": "0d80be4d4169", "cmd": "python3 -c \"\nopen('f','x').close()\ntry: open('f','x')\nexcept FileExistsError: print('exists')\"", "expect": "exists"}
+{"id": "ae19a4cec009", "cmd": "python3 -c \"\nfrom pathlib import Path\np=Path('f'); p.write_text('hi', encoding='utf-8'); print(p.read_text(encoding='utf-8'))\"", "expect": "hi"}
+{"id": "11c6d30e6727", "cmd": "python3 -c \"\nfrom pathlib import Path\nPath('a.py').write_text('x'); print([p.name for p in Path('.').rglob('*.py')], Path('a.py').stat().st_size)\"", "expect": "['a.py'] 1"}
+{"id": "73f4d0f51d9f", "cmd": "python3 -c \"\nfrom pathlib import Path\nPath('nope').unlink(missing_ok=True); print('ok')\"", "expect": "ok"}
+{"id": "cf500d050298", "cmd": "python3 -c \"\nimport shutil,os\nos.mkdir('a'); open('a/f','w').write('x'); shutil.copytree('a','b'); print(os.listdir('b'))\"", "expect": "['f']"}
+{"id": "5baf943c6868", "cmd": "python3 -c \"\nimport shutil,os\nos.mkdir('a'); open('a/f','w').write('x'); print(os.path.basename(shutil.make_archive('z','zip','a')))\"", "expect": "z.zip"}
+{"id": "10d9610053b9", "cmd": "python3 -c \"\nimport os\nopen('f','w').close(); print([e.name for e in os.scandir('.') if e.is_file()])\"", "expect": "['f']"}
+{"id": "9928a0712303", "cmd": "python3 -c \"\nimport os\nopen('a','w').write('1'); open('b','w').write('2'); os.replace('a','b'); print(open('b').read())\"", "expect": "1"}
+{"id": "831163671bf9", "cmd": "python3 -c \"\nimport os\nf=open('a','w'); f.write('x'); f.flush(); os.fsync(f.fileno()); print('synced')\"", "expect": "synced"}
+{"id": "54ca593f732c", "cmd": "python3 -c \"\nimport threading\ne=threading.Event(); e.set(); print(e.wait(5))\"", "expect": "True"}
+{"id": "c509751aeb44", "cmd": "python3 -c \"\nfrom datetime import datetime,timezone\ntry: datetime.now() < datetime.now(timezone.utc)\nexcept TypeError: print('mixed')\"", "expect": "mixed"}
+{"id": "31bb259083d2", "cmd": "python3 -c \"\nimport threading\nt=threading.Timer(0.01, lambda: print('fired')); t.start(); t.join()\"", "expect": "fired"}
+{"id": "55f82365d91b", "cmd": "python3 -c \"\nimport threading\nt=threading.Thread(target=lambda: None); t.start(); t.join(); print(t.is_alive())\"", "expect": "False"}
+{"id": "3729e836a4a5", "cmd": "python3 -c \"\nfrom multiprocessing import Pool\ndef f(x): return x*x\nif __name__=='__main__':\n    with Pool(2) as p: print(p.map(f,[1,2,3]))\"", "expect": "[1, 4, 9]"}
+{"id": "1bba63f6ec63", "cmd": "python3 -c \"\nimport queue\nq=queue.Queue()\ntry: q.get(timeout=0.01)\nexcept queue.Empty: print('empty')\"", "expect": "empty"}
+{"id": "ff5698fe2687", "cmd": "python3 -c \"\nfrom concurrent.futures import ThreadPoolExecutor, as_completed\nwith ThreadPoolExecutor(2) as ex:\n    fs=[ex.submit(pow,2,i) for i in range(3)]\n    print(sorted(f.result() for f in as_completed(fs)))\"", "expect": "[1, 2, 4]"}
+{"id": "5ec0b7a621f6", "cmd": "python3 -c \"\nimport socket\ns=socket.socket(); s.bind(('127.0.0.1',0)); s.listen(); p=s.getsockname()[1]\nc=socket.create_connection(('127.0.0.1',p),timeout=2); print('connected'); c.close(); s.close()\"", "expect": "connected"}
+{"id": "08dab07d49c7", "cmd": "python3 -c \"\nimport socket\na,b=socket.socketpair(); a.sendall(b'hi'); print(b.recv(2))\"", "expect": "b'hi'"}
+{"id": "ff2eb884da5e", "cmd": "python3 -c \"\nimport socket\na,b=socket.socketpair(); b.sendall(b'x'); print(a.recv(1))\"", "expect": "b'x'"}
+{"id": "4f2e8b57bc47", "cmd": "python3 -c \"\nimport json\ntry: json.loads('{bad')\nexcept json.JSONDecodeError as e: print(e.lineno, e.colno)\"", "expect": "1 2"}
+{"id": "16ad48fa7ad3", "cmd": "python3 -c \"\nimport json,datetime\nprint(json.dumps({'d':datetime.date(2026,1,1)}, default=str))\"", "expect": "{\"d\": \"2026-01-01\"}"}
+{"id": "42652b9b0cad", "cmd": "python3 -c \"\nimport json\ntry: json.dumps(float('nan'), allow_nan=False)\nexcept ValueError: print('rejected')\"", "expect": "rejected"}
+{"id": "98021d4c032f", "cmd": "python3 -c \"\nimport configparser\nc=configparser.ConfigParser(); c.read_string('[a]\\nn=5'); print(c.getint('a','n'))\"", "expect": "5"}
+{"id": "0a9550404d76", "cmd": "python3 -c \"\nimport traceback\ntry: 1/0\nexcept ZeroDivisionError: print('ZeroDivisionError' in traceback.format_exc())\"", "expect": "True"}
+{"id": "767cd7092e52", "cmd": "python3 -c \"\nimport tracemalloc\ntracemalloc.start(); x=[0]*1000; s=tracemalloc.take_snapshot().statistics('lineno'); print(len(s)>0)\"", "expect": "True"}
+{"id": "d273c6a937df", "cmd": "python3 -c \"\nimport weakref\nclass A: pass\na=A(); r=weakref.ref(a); del a; print(r())\"", "expect": "None"}
+{"id": "8177e9198482", "cmd": "python3 -c \"\nclass A:\n    x=[]\na,b=A(),A(); a.x.append(1); print(b.x)\"", "expect": "[1]"}
+{"id": "981adeb40bdb", "cmd": "python3 -c \"\nclass A:\n    @property\n    def x(s): return s._x\n    @x.setter\n    def x(s,v):\n        if v<0: raise ValueError\n        s._x=v\na=A(); a.x=1; print(a.x)\"", "expect": "1"}
+{"id": "274ab437bdf4", "cmd": "python3 -c \"\nclass A: pass\nclass B(A): pass\nprint([c.__name__ for c in B.__mro__])\"", "expect": "['B', 'A', 'object']"}
