@@ -624,3 +624,9 @@
 {"id": "95536043534b", "cmd": "lscpu | grep -c Architecture", "expect": "1"}
 {"id": "cd8ca7843105", "cmd": "uname -m | grep -c '[a-z0-9_]'", "expect": "1"}
 {"id": "e76bf9c46ea4", "cmd": "grep -c '^NAME=' /etc/os-release", "expect": "1"}
+{"id": "393761f0230d", "cmd": "printf '[Unit]\\nRequires=zz-missing.service\\n[Service]\\nExecStart=/bin/true\\n' >u.service; systemd-analyze verify ./u.service 2>&1 | grep -c -i 'zz-missing'", "expect": "1"}
+{"id": "e427709d36ec", "cmd": "printf '[Service]\\nexecstart=/bin/true\\n' >u.service; systemd-analyze verify ./u.service 2>&1 | grep -c -i 'unknown key'", "expect": "1"}
+{"id": "45ea20164a15", "cmd": "systemd-analyze calendar \"Sat,Sun 22:00\" | grep -c 'Normalized form'", "expect": "1"}
+{"id": "8fd2fee87060", "cmd": "systemd-analyze timestamp \"2026-12-31 23:59:00\" | grep -c 'UTC'", "expect": "1"}
+{"id": "c0fa625ab773", "cmd": "systemd-escape -p /var/log", "expect": "var-log"}
+{"id": "429588ef0732", "cmd": "systemd-path system-state-private | grep -c '/'", "expect": "1"}
