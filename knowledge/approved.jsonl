@@ -6994,3 +6994,104 @@
 {"id": "aee2971279d8", "cat": "files", "tip": "gzip -k keeps the original file when compressing; plain gzip replaces it.", "n": 0, "a": "seed-verified"}
 {"id": "7773441da5f7", "cat": "files", "tip": "xz compresses better than gzip but is slower; use it for archives that are stored long, gzip for quick ones.", "n": 0, "a": "seed"}
 {"id": "ca287f834de8", "cat": "files", "tip": "sha256sum of a downloaded file compared with the published checksum proves the download is complete and unchanged.", "n": 0, "a": "seed"}
+{"id": "be1248dd4c28", "cat": "xdotool", "tip": "xdotool selectwindow lets a person click a window to get its id, useful when titles are ambiguous; avoid it in unattended scripts.", "n": 0, "a": "seed"}
+{"id": "769d77f9d1fb", "cat": "xdotool", "tip": "xdotool search returns window ids in creation order; when several match, take the last one for the newest window.", "n": 0, "a": "seed"}
+{"id": "112e5cdca206", "cat": "xdotool", "tip": "xdotool windowminimize and windowraise change a window's stacking without closing it.", "n": 0, "a": "seed"}
+{"id": "40de181c5a9a", "cat": "xdotool", "tip": "Send ctrl+l, type an address and press Return to navigate an open browser window with xdotool instead of starting a new browser.", "n": 0, "a": "seed"}
+{"id": "1696b34ba46b", "cat": "xdotool", "tip": "xdotool key --delay sets the pause between keys in a sequence, useful for slow programs that drop fast key presses.", "n": 0, "a": "seed"}
+{"id": "6f4c67e8dae8", "cat": "xdotool", "tip": "xdotool behave can run commands when a window gains focus, but a simple polling loop is easier to debug.", "n": 0, "a": "seed"}
+{"id": "363a36ebff89", "cat": "xdotool", "tip": "xdotool set_desktop and get_desktop switch and read the virtual desktop on window managers that support it.", "n": 0, "a": "seed"}
+{"id": "fcbd976f1030", "cat": "xdotool", "tip": "After a long xdotool type command, check the active window again; a popup during typing can steal the rest of the text.", "n": 0, "a": "seed"}
+{"id": "52f055a95f78", "cat": "xdotool", "tip": "Keep coordinates in real screen pixels for xdotool; convert from scaled screenshots by the ratio of real to image size.", "n": 0, "a": "seed"}
+{"id": "62cfa733ceb5", "cat": "xdotool", "tip": "Use xdotool mousemove --sync to wait until the pointer has really moved before the next action.", "n": 0, "a": "seed"}
+{"id": "64bb41a4f6c1", "cat": "xdotool", "tip": "xdotool click needs the pointer already over the target; combine mousemove and click in one command.", "n": 0, "a": "seed"}
+{"id": "496ac34bb867", "cat": "xdotool", "tip": "xdotool key super+d or ctrl+alt+d shows the desktop on some window managers; the shortcut differs between desktops.", "n": 0, "a": "seed"}
+{"id": "4a44fb68417b", "cat": "xdotool", "tip": "When xdotool reports BadWindow, the window closed or changed; search for it again instead of reusing the old id.", "n": 0, "a": "seed"}
+{"id": "50bdcff1ac12", "cat": "forms", "tip": "Read the whole form once before filling it, so you know which information is needed and can collect it first.", "n": 0, "a": "seed"}
+{"id": "adc28858fe3a", "cat": "forms", "tip": "When a value is unknown, leave optional fields empty rather than inventing data.", "n": 0, "a": "seed"}
+{"id": "a985016271f7", "cat": "forms", "tip": "Fields with an example value in grey are usually empty placeholders; the grey text is not a value and will not be submitted.", "n": 0, "a": "seed"}
+{"id": "97ca131b4d68", "cat": "forms", "tip": "A greyed out submit button usually means a required field or checkbox is still missing; look for the field marked with an error.", "n": 0, "a": "seed"}
+{"id": "fc32c67566d5", "cat": "forms", "tip": "Some forms validate a field only when you leave it; press Tab after typing to trigger the check and see errors early.", "n": 0, "a": "seed"}
+{"id": "12bf2543f6ff", "cat": "forms", "tip": "Forms that time out discard input; for long forms, keep the values in a note so they can be entered again quickly.", "n": 0, "a": "seed"}
+{"id": "e3da2d15dad4", "cat": "forms", "tip": "For address forms, choose country first; it changes the fields and formats for postcode and phone.", "n": 0, "a": "seed"}
+{"id": "3c114dad3805", "cat": "forms", "tip": "Do not submit forms that send money, sign contracts or publish content without a clear request for exactly that.", "n": 0, "a": "seed"}
+{"id": "f000c01ed9fc", "cat": "forms", "tip": "After submitting, look for a confirmation number or message and include it in the report.", "n": 0, "a": "seed"}
+{"id": "e48482f055ce", "cat": "chromium", "tip": "Chromium flags in chrome://flags change per profile; scripted runs with a clean profile will not have them.", "n": 0, "a": "seed"}
+{"id": "5c5881278d95", "cat": "chromium", "tip": "To open a local HTML file in Chromium, pass the absolute file path as the address; relative paths do not work.", "n": 0, "a": "seed"}
+{"id": "2f5a4d281b56", "cat": "chromium", "tip": "Chromium blocks pop up windows by default; a page that opens a new window may need the pop up allowed in the address bar icon.", "n": 0, "a": "seed"}
+{"id": "356bdf5bf687", "cat": "chromium", "tip": "Downloads in Chromium can ask where to save when that setting is on; turn it off in a dedicated automation profile.", "n": 0, "a": "seed"}
+{"id": "0991c91c751d", "cat": "chromium", "tip": "Chromium may show a profile selection window on start if several profiles exist; pass --profile-directory to skip it.", "n": 0, "a": "seed"}
+{"id": "d597b8f24ac0", "cat": "chromium", "tip": "Use chrome://downloads to see the real file name and status of downloads started by a page.", "n": 0, "a": "seed"}
+{"id": "db2e806e779b", "cat": "chromium", "tip": "Use chrome://settings/clearBrowserData with care; it signs the person out of sites if cookies are cleared.", "n": 0, "a": "seed"}
+{"id": "439100413835", "cat": "chromium", "tip": "The --incognito flag starts without cookies or saved logins, useful for testing what a new visitor sees.", "n": 0, "a": "seed"}
+{"id": "2d2c7723850a", "cat": "chromium", "tip": "On a Pi, Chromium videos play more smoothly at lower resolutions; choose 480p or 720p for long playback.", "n": 0, "a": "seed"}
+{"id": "5dc5c0618075", "cat": "browser", "tip": "Prefer address bar navigation to clicking through menus when you already know the exact page address.", "n": 0, "a": "seed"}
+{"id": "7cbc3c4e805c", "cat": "browser", "tip": "Bookmark or note page addresses that you will need again; finding them through search each time costs steps.", "n": 0, "a": "seed"}
+{"id": "f9974e7baf4a", "cat": "browser", "tip": "Read the page title and the main heading after navigating; they confirm you are on the expected page.", "n": 0, "a": "seed"}
+{"id": "9c32ad04c453", "cat": "browser", "tip": "Do not trust that a click navigated; compare the address and title before and after.", "n": 0, "a": "seed"}
+{"id": "880829db8f25", "cat": "browser", "tip": "When a page has a print or reader view, it often gives cleaner text for reading.", "n": 0, "a": "seed"}
+{"id": "8a95626dfb0c", "cat": "browser", "tip": "Tables on web pages can be read as rows from the DOM, which is more reliable than OCR on a screenshot.", "n": 0, "a": "seed"}
+{"id": "bcfc59fbd91a", "cat": "browser", "tip": "Forms on web pages can usually be submitted by pressing Enter in the last field.", "n": 0, "a": "seed"}
+{"id": "7a956cfce1d7", "cat": "browser", "tip": "Pages may show a different layout on small windows; maximize the browser window before reading or clicking.", "n": 0, "a": "seed"}
+{"id": "adfb6094f59e", "cat": "browser", "tip": "Videos on web pages often start muted or paused; check the player controls before assuming the video plays.", "n": 0, "a": "seed"}
+{"id": "dbbb0142b8d5", "cat": "browser", "tip": "Web apps save some settings only after a Save button; leaving the page without it discards changes.", "n": 0, "a": "seed"}
+{"id": "7d342d267e8f", "cat": "network", "tip": "Check what address a device has with hostname -I before trying to reach it from another machine.", "n": 0, "a": "seed"}
+{"id": "0521849d6b8c", "cat": "network", "tip": "A device that gets a new address from the router each boot is easier to reach with a DHCP reservation on the router.", "n": 0, "a": "seed"}
+{"id": "cdfc621d3721", "cat": "network", "tip": "Use ssh -o ConnectTimeout=5 in scripts so an unreachable host fails fast.", "n": 0, "a": "seed"}
+{"id": "6d750b205dd9", "cat": "network", "tip": "ssh-copy-id installs your public key on a server, after which password logins can be turned off.", "n": 0, "a": "seed"}
+{"id": "6bd8089002df", "cat": "network", "tip": "scp and rsync over ssh copy files between machines; rsync can resume and only sends changes.", "n": 0, "a": "seed"}
+{"id": "9e4ef1a8f3f5", "cat": "network", "tip": "ssh -L local:host:port forwards a remote port to your machine, a safe way to reach a web interface that listens only locally.", "n": 0, "a": "seed"}
+{"id": "8e0300ed2de1", "cat": "network", "tip": "Use a VPN such as WireGuard or Tailscale to reach a home Pi from outside without opening ports.", "n": 0, "a": "seed"}
+{"id": "229faa69ef3b", "cat": "network", "tip": "Captive portals in hotels and cafes block traffic until you accept terms in a browser; check for one when the internet seems down.", "n": 0, "a": "seed"}
+{"id": "f4db18e73a20", "cat": "network", "tip": "Mobile hotspots may block incoming connections and change addresses often; do not rely on them for servers.", "n": 0, "a": "seed"}
+{"id": "0e2f4dee84f0", "cat": "network", "tip": "DNS changes take time to spread; when a new domain does not resolve, test with the authoritative server or wait.", "n": 0, "a": "seed"}
+{"id": "cb5d85950d1f", "cat": "network", "tip": "IPv6 and IPv4 can behave differently; force one with ping -4 or curl -4 when debugging.", "n": 0, "a": "seed"}
+{"id": "6506c1e80914", "cat": "network", "tip": "MTU problems show as pages that start loading and then hang; they are rare at home but common with some VPNs.", "n": 0, "a": "seed"}
+{"id": "8e9b51fb35fa", "cat": "network", "tip": "Websocket connections through proxies need upgrade headers allowed; a proxy that drops them breaks live updates.", "n": 0, "a": "seed"}
+{"id": "5a05fea22d42", "cat": "network", "tip": "Keep alive pings on long lived connections stop routers from dropping idle connections.", "n": 0, "a": "seed"}
+{"id": "e395bf16b731", "cat": "network", "tip": "Rate limit retries with exponential backoff, waiting longer after each failure, so a broken server is not flooded.", "n": 0, "a": "seed"}
+{"id": "c91d53d8057c", "cat": "systemd", "tip": "Put helper programs used by a service at absolute paths; systemd does not use your shell's PATH.", "n": 0, "a": "seed"}
+{"id": "d3dca29c608e", "cat": "systemd", "tip": "Use ExecStartPre to run checks or create folders before the main program starts.", "n": 0, "a": "seed"}
+{"id": "d34ef1899f96", "cat": "systemd", "tip": "StartLimitIntervalSec and StartLimitBurst control how many restarts are allowed before systemd gives up.", "n": 0, "a": "seed"}
+{"id": "95c8a2be4b70", "cat": "systemd", "tip": "Use systemctl kill -s SIGUSR1 name to send a signal to a service, for example to reload its config.", "n": 0, "a": "seed"}
+{"id": "9cfc6d7d9d63", "cat": "systemd", "tip": "systemctl cat name prints the unit file and all its overrides, showing the configuration that is really used.", "n": 0, "a": "seed"}
+{"id": "2155bab5d959", "cat": "systemd", "tip": "systemctl show name -p MainPID shows the main process id of a service.", "n": 0, "a": "seed"}
+{"id": "00af57e89d6c", "cat": "systemd", "tip": "systemd-run --user --unit name command starts a temporary service, useful for long tasks that must survive the terminal.", "n": 0, "a": "seed"}
+{"id": "ac7ba657f90f", "cat": "systemd", "tip": "Use ProtectSystem and PrivateTmp in units for services that do not need to write system files.", "n": 0, "a": "seed"}
+{"id": "7e6fe925e489", "cat": "systemd", "tip": "Journal logs disappear at reboot when Storage=volatile; set Storage=persistent to keep them for debugging crashes.", "n": 0, "a": "seed"}
+{"id": "827acf8ea00d", "cat": "systemd", "tip": "journalctl -o cat prints only the messages without dates, which is handy to copy errors.", "n": 0, "a": "seed"}
+{"id": "4931f40c2b40", "cat": "raspberry-pi", "tip": "The Pi 4 can be overclocked in config.txt, but only with good cooling and a strong power supply; instability looks like random crashes.", "n": 0, "a": "seed"}
+{"id": "3492e53dffc6", "cat": "raspberry-pi", "tip": "GPU memory split matters little on Bookworm with the KMS driver; old gpu_mem advice from guides is often obsolete.", "n": 0, "a": "seed"}
+{"id": "b9e2a0d421b7", "cat": "raspberry-pi", "tip": "A battery powered Pi should log battery level and undervoltage events, so sudden shutdowns can be explained later.", "n": 0, "a": "seed"}
+{"id": "32b9523edf68", "cat": "raspberry-pi", "tip": "A 16x2 I2C LCD needs the i2c-tools to find its address and a library such as RPLCD or a small driver to write text.", "n": 0, "a": "seed"}
+{"id": "39a3b7b7bd68", "cat": "raspberry-pi", "tip": "RGB LEDs on GPIO need a resistor per colour; common anode and common cathode types need opposite logic levels.", "n": 0, "a": "seed"}
+{"id": "aefb7944fdfd", "cat": "raspberry-pi", "tip": "Use gpiozero's RGBLED class to fade a status LED from green to red with values between 0 and 1.", "n": 0, "a": "seed"}
+{"id": "31a2163ef897", "cat": "raspberry-pi", "tip": "Long wires to buttons pick up noise; enable debouncing in gpiozero with bounce_time to avoid double presses.", "n": 0, "a": "seed"}
+{"id": "5bec4b772414", "cat": "raspberry-pi", "tip": "Servos need their own 5 V supply; powering them from the Pi's pins causes brownouts and resets.", "n": 0, "a": "seed"}
+{"id": "c8e14164ca08", "cat": "raspberry-pi", "tip": "Use the hardware PWM pins and pigpio or lgpio for servos to avoid jitter from software PWM.", "n": 0, "a": "seed"}
+{"id": "e2767b13d994", "cat": "raspberry-pi", "tip": "Check the SD card's speed class; a slow card makes the whole desktop feel sluggish.", "n": 0, "a": "seed"}
+{"id": "dc8d0d366dea", "cat": "raspberry-pi", "tip": "Make an image backup of a working SD card before big changes, so the system can be restored quickly.", "n": 0, "a": "seed"}
+{"id": "4258dcd3847f", "cat": "raspberry-pi", "tip": "Use the Raspberry Pi Imager to write images; it verifies the write and can preconfigure the system.", "n": 0, "a": "seed"}
+{"id": "abfc2597d70f", "cat": "raspberry-pi", "tip": "A Pi in a case without airflow can overheat in direct sun or near heaters; watch the temperature in summer.", "n": 0, "a": "seed"}
+{"id": "302fef3f5b7d", "cat": "raspberry-pi", "tip": "Cold below freezing can stop a Pi or its battery from working; let it warm up before diagnosing other problems.", "n": 0, "a": "seed"}
+{"id": "8b9d7ce83558", "cat": "raspberry-pi", "tip": "USB 3 ports on a Pi 4 are the blue ones; SSDs and fast drives belong there.", "n": 0, "a": "seed"}
+{"id": "3b503e406ff3", "cat": "raspberry-pi", "tip": "Some USB 3 SSD adapters misbehave with UAS on a Pi; a quirk setting in cmdline.txt disables UAS for that adapter.", "n": 0, "a": "seed"}
+{"id": "e525ed117b05", "cat": "raspberry-pi", "tip": "Bluetooth and Wi-Fi share the same chip on a Pi; heavy Bluetooth audio can slow Wi-Fi.", "n": 0, "a": "seed"}
+{"id": "2138183ae8ee", "cat": "raspberry-pi", "tip": "The Pi's 3.3 V pins can supply only small currents; power displays and sensors that draw more from the 5 V pin or a separate supply.", "n": 0, "a": "seed"}
+{"id": "ec9084d5a20c", "cat": "apt", "tip": "apt history is in /var/log/apt/history.log; it shows what was installed or removed and when.", "n": 0, "a": "seed"}
+{"id": "c4a22c2b1723", "cat": "apt", "tip": "apt download name fetches a .deb without installing it, useful for offline installs.", "n": 0, "a": "seed"}
+{"id": "5f781097c320", "cat": "apt", "tip": "apt-cache rdepends name shows which packages depend on a package before you remove it.", "n": 0, "a": "seed"}
+{"id": "897aed6c1440", "cat": "apt", "tip": "apt-get changelog name shows what changed in a package version.", "n": 0, "a": "seed"}
+{"id": "35d1b8151c3a", "cat": "apt", "tip": "unattended-upgrades installs security updates automatically; check its log when something changed overnight.", "n": 0, "a": "seed"}
+{"id": "861f3d98fa6a", "cat": "apt", "tip": "Avoid mixing packages from other distributions or releases; it often breaks dependencies on the next upgrade.", "n": 0, "a": "seed"}
+{"id": "844c82205ad6", "cat": "apt", "tip": "Pin a third party repository at a lower priority so it cannot replace system packages unexpectedly.", "n": 0, "a": "seed"}
+{"id": "61540bf5cca6", "cat": "apt", "tip": "Purge removes a package and its configuration files; remove keeps the configuration.", "n": 0, "a": "seed"}
+{"id": "543d482dc9dd", "cat": "apt", "tip": "A package installed with pip globally can conflict with the apt version of the same module; prefer one source per module.", "n": 0, "a": "seed"}
+{"id": "289a2b1e705a", "cat": "general", "tip": "When the screen and the logs disagree, trust facts read by code, such as window titles and exit codes, over impressions from an image.", "n": 0, "a": "seed"}
+{"id": "32b81c2a7f78", "cat": "general", "tip": "Use the element list or accessibility data to find targets, and use the screenshot to judge whether the result looks right.", "n": 0, "a": "seed"}
+{"id": "47922d3f31da", "cat": "general", "tip": "Prefer the cheapest reliable check: a command exit code beats reading a screenshot, and a screenshot beats a guess.", "n": 0, "a": "seed"}
+{"id": "28466a0b140f", "cat": "general", "tip": "Keep a person's intent in mind: a request to make something work means a usable result, not a technically started process.", "n": 0, "a": "seed"}
+{"id": "a94e181ce3c8", "cat": "general", "tip": "When the task involves a device, check its power, temperature and connections early; hardware problems look like software bugs.", "n": 0, "a": "seed"}
+{"id": "5fbf1b3d8a82", "cat": "general", "tip": "Write down assumptions you made, so the person can correct them if they were wrong.", "n": 0, "a": "seed"}
+{"id": "d750e3f19876", "cat": "general", "tip": "If a task will clearly fail because of a missing requirement, say so early instead of trying many things that cannot work.", "n": 0, "a": "seed"}
+{"id": "e1519a86a9dc", "cat": "general", "tip": "Finish with the app or page the person asked about open and ready, and close anything left from testing.", "n": 0, "a": "seed"}
