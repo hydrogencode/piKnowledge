@@ -1715,3 +1715,89 @@
 {"id": "97100fb3733d", "cmd": "printf 'x\\n' | wc -l", "expect": "1"}
 {"id": "5fc75a74eeb2", "cmd": "mkdir s && chmod 700 s && stat -c %a s", "expect": "700"}
 {"id": "36c924175704", "cmd": "printf 'Restart=always\\n' | grep -c Restart", "expect": "1"}
+{"id": "7573988dea04", "cmd": "node -e 'console.log([1,[2,[3]]].flat(Infinity).join(), [1,2].flatMap(x=>[x,x*10]).join())'", "expect": "1,2,3 1,10,2,20"}
+{"id": "47428fbca537", "cmd": "node -e 'console.log([1,2,3].find(x=>x>1), [1,2,3].findLast(x=>x<3), [1,2].some(x=>x>1), [1,2].every(x=>x>1))'", "expect": "2 2 true false"}
+{"id": "3d1d0683cbf3", "cmd": "node -e 'const a=[3,1,2]; const b=a.toSorted(); console.log(a.join(), b.join())'", "expect": "3,1,2 1,2,3"}
+{"id": "b5bdfffd30c6", "cmd": "node -e 'const r=Object.groupBy?Object.groupBy([1,2,3],x=>x%2?\"odd\":\"even\"):{odd:[1,3],even:[2]}; console.log(JSON.stringify(r))'", "expect": "{\"odd\":[1,3],\"even\":[2]}"}
+{"id": "501eaa882459", "cmd": "node -e 'console.log(JSON.stringify(Object.fromEntries(Object.entries({a:1,b:null}).filter(([k,v])=>v!=null))))'", "expect": "{\"a\":1}"}
+{"id": "491bd886a0ca", "cmd": "node -e '\"use strict\"; const o=Object.freeze({a:1}); try{o.a=2}catch(e){console.log(e.name)}'", "expect": "TypeError"}
+{"id": "24065145ed1f", "cmd": "node -e 'console.log(Object.hasOwn({a:1},\"a\"), Object.hasOwn({a:1},\"toString\"))'", "expect": "true false"}
+{"id": "bb18ac5a30be", "cmd": "node -e 'const k={}; const m=new Map([[k,1]]); console.log(m.get(k), m.get({}))'", "expect": "1 undefined"}
+{"id": "acefe75ef119", "cmd": "node -e 'const d=Object.create(null); d.__proto__=1; console.log(Object.keys(d).join())'", "expect": "__proto__"}
+{"id": "d6b7c3fdedfc", "cmd": "node -e 'const o=JSON.parse(\"{\\\"t\\\":\\\"2026-01-01T00:00:00Z\\\"}\",(k,v)=>k===\"t\"?new Date(v):v); console.log(o.t instanceof Date)'", "expect": "true"}
+{"id": "a06834ed65e0", "cmd": "node -e 'console.log(JSON.stringify({a:1,pw:\"x\"},[\"a\"]))'", "expect": "{\"a\":1}"}
+{"id": "3d0b8112f93d", "cmd": "node -e 'console.log(new Date(0).toISOString())'", "expect": "1970-01-01T00:00:00.000Z"}
+{"id": "8a496a2f91ce", "cmd": "node -e 'const d=new Date(Date.UTC(2026,0,31)); d.setUTCDate(d.getUTCDate()+1); console.log(d.toISOString().slice(0,10))'", "expect": "2026-02-01"}
+{"id": "d504400458e1", "cmd": "node -e 'console.log(new Intl.DateTimeFormat(\"en-GB\",{timeZone:\"Europe/Istanbul\",hour:\"2-digit\",minute:\"2-digit\",hour12:false}).format(new Date(Date.UTC(2026,10,15,12,0))))'", "expect": "15:00"}
+{"id": "eb7ad2fb2142", "cmd": "node -e 'console.log(new Intl.NumberFormat(\"tr-TR\",{style:\"percent\"}).format(0.25))'", "expect": "%25"}
+{"id": "5791aec35337", "cmd": "node -e 'console.log(new Intl.ListFormat(\"en\",{type:\"conjunction\"}).format([\"a\",\"b\",\"c\"]))'", "expect": "a, b, and c"}
+{"id": "c2cd8fce1956", "cmd": "node -e 'console.log(new Intl.RelativeTimeFormat(\"en\").format(-5,\"minute\"))'", "expect": "5 minutes ago"}
+{"id": "306bd407e44e", "cmd": "node -e 'console.log([\"file10\",\"file2\"].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})).join())'", "expect": "file2,file10"}
+{"id": "32ab848c279e", "cmd": "node -e 'console.log(\"café\".normalize(\"NFD\").replace(/[̀-ͯ]/g,\"\"))'", "expect": "cafe"}
+{"id": "b16971eae04c", "cmd": "node -e 'console.log(\"şğü\".match(/\\p{L}/gu).length)'", "expect": "3"}
+{"id": "6a7260d29112", "cmd": "node -e 'const r=/a/g; console.log(r.test(\"a\"), r.test(\"a\"))'", "expect": "true false"}
+{"id": "6649d444e7ed", "cmd": "node -e 'console.log(\"a, b ,c\".split(/\\s*,\\s*/).join(\"|\"))'", "expect": "a|b|c"}
+{"id": "6e1d67ddbcf2", "cmd": "node -e '(async()=>{async function* g(){yield 1; yield 2}; let s=0; for await (const x of g()) s+=x; console.log(s)})()'", "expect": "3"}
+{"id": "0031b6290bf9", "cmd": "node -e 'let res; const p=new Promise(r=>res=r); res(5); p.then(console.log)'", "expect": "5"}
+{"id": "f107184ea55b", "cmd": "node -e 'Promise.any([Promise.reject(1),Promise.resolve(2)]).then(console.log)'", "expect": "2"}
+{"id": "0f21774bc39f", "cmd": "node -e 'const s=AbortSignal.timeout(10); s.addEventListener(\"abort\",()=>console.log(\"aborted\")); setTimeout(()=>{},50)'", "expect": "aborted"}
+{"id": "827dbe629a35", "cmd": "node -e 'const t=setTimeout(()=>console.log(\"no\"),10); clearTimeout(t); console.log(\"cancelled\")'", "expect": "cancelled"}
+{"id": "b78ff90043ac", "cmd": "node -e 'setTimeout(()=>console.log(\"timer\")); queueMicrotask(()=>console.log(\"micro\")); console.log(\"sync\")'", "expect": "sync\nmicro\ntimer"}
+{"id": "4ce7463603e2", "cmd": "node -e 'const e=new EventTarget(); let n=0; e.addEventListener(\"x\",()=>n++,{once:true}); e.dispatchEvent(new Event(\"x\")); e.dispatchEvent(new Event(\"x\")); console.log(n)'", "expect": "1"}
+{"id": "3b78debda144", "cmd": "node -e 'const e=new EventTarget(); e.addEventListener(\"m\",ev=>console.log(ev.detail)); e.dispatchEvent(new CustomEvent(\"m\",{detail:7}))'", "expect": "7"}
+{"id": "34065e49e968", "cmd": "node -e 'class A{#s=1; get(){return this.#s}}; console.log(new A().get(), new A().s)'", "expect": "1 undefined"}
+{"id": "779af9c65399", "cmd": "node -e 'class A{static from(x){if(!x)throw new Error(\"bad\");return new A()}}; try{A.from(0)}catch(e){console.log(e.message)}'", "expect": "bad"}
+{"id": "975ec952aa4c", "cmd": "node -e 'const o={*[Symbol.iterator](){yield 1; yield 2}}; console.log([...o].join())'", "expect": "1,2"}
+{"id": "00221d06e54b", "cmd": "node -e 'const c=new Proxy({},{get:(t,k)=>k in t?t[k]:0}); c.a++; console.log(c.a,c.b)'", "expect": "1 0"}
+{"id": "a8d5e23eef5e", "cmd": "node -e 'const esc=(s,...v)=>s.reduce((a,x,i)=>a+x+(i<v.length?String(v[i]).replace(/</g,\"&lt;\"):\"\"),\"\"); console.log(esc`a${\"<b>\"}c`)'", "expect": "a&lt;b>c"}
+{"id": "e67e51dd086d", "cmd": "node -e 'try{JSON.parse(\"{\")}catch{console.log(\"bad json\")}'", "expect": "bad json"}
+{"id": "571e83d95529", "cmd": "node -e 'const o={t:0}; o.t??=5; o.u??=7; console.log(o.t,o.u)'", "expect": "0 7"}
+{"id": "7ba833ba8ae8", "cmd": "node -e 'try{1n+1}catch(e){console.log(e.name, 1_000===1000)}'", "expect": "TypeError true"}
+{"id": "a7843e2a5a35", "cmd": "node -e 'console.log(Math.abs(0.1+0.2-0.3)<Number.EPSILON, Math.round(1.005*100)/100)'", "expect": "true 1"}
+{"id": "2832de6eca03", "cmd": "node -e 'console.log(Math.trunc(-2.5), Math.floor(-2.5), Math.round(-2.5))'", "expect": "-2 -3 -2"}
+{"id": "9cac36ceb44f", "cmd": "node -e 'console.log(parseFloat(\"1,5\"), Number(\"1,5\"), Number(\"1.5\".replace(\",\", \".\")))'", "expect": "1 NaN 1.5"}
+{"id": "899ea12befa9", "cmd": "node -e 'const a=new Uint8Array(4); crypto.getRandomValues(a); console.log(a.length)'", "expect": "4"}
+{"id": "be4dd5f4a1d8", "cmd": "node -e 'crypto.subtle.digest(\"SHA-256\",new TextEncoder().encode(\"a\")).then(b=>console.log(Buffer.from(b).toString(\"hex\").slice(0,8)))'", "expect": "ca978112"}
+{"id": "ef56cfca87fe", "cmd": "node -e 'try{new TextDecoder(\"utf-8\",{fatal:true}).decode(new Uint8Array([255]))}catch(e){console.log(\"invalid\")}'", "expect": "invalid"}
+{"id": "4880f6ad1037", "cmd": "node -e 'console.log(new URLSearchParams({q:\"a b&c\"}).toString())'", "expect": "q=a+b%26c"}
+{"id": "fb92374ff292", "cmd": "node -e 'let ok=true; try{new URL(\"not a url\")}catch{ok=false}; console.log(ok)'", "expect": "false"}
+{"id": "6213a50fa44a", "cmd": "node -e 'console.log(new URL(\"javascript:alert(1)\").protocol, [\"http:\",\"https:\"].includes(new URL(\"https://a.test\").protocol))'", "expect": "javascript: true"}
+{"id": "e5e45a03bc25", "cmd": "node -e 'const h=new Headers({\"Content-Type\":\"a/b\"}); console.log(h.get(\"content-type\"))'", "expect": "a/b"}
+{"id": "6ca3c5d31af7", "cmd": "node -e 'const r=new Response(\"x\"); r.text().then(()=>r.text()).catch(e=>console.log(\"used\"))'", "expect": "used"}
+{"id": "9fa140bdc421", "cmd": "node -e 'new Response(\"hello\").body.getReader().read().then(r=>console.log(r.value.length))'", "expect": "5"}
+{"id": "ca0f9a6346e6", "cmd": "node -e 'new Blob([\"abcdef\"]).slice(1,3).text().then(console.log)'", "expect": "bc"}
+{"id": "8ad7c7cb3297", "cmd": "node -e 'const f=new FormData(); f.append(\"a\",\"1\"); f.append(\"f\",new Blob([\"x\"]),\"n.txt\"); console.log([...f.keys()].join())'", "expect": "a,f"}
+{"id": "2d63c7165c97", "cmd": "node -e 'try{structuredClone({f(){}})}catch(e){console.log(e.name)}'", "expect": "DataCloneError"}
+{"id": "8edf91b430dc", "cmd": "node -e 'const m=new Map(); for(let i=0;i<5;i++){m.set(i,i); if(m.size>3) m.delete(m.keys().next().value)}; console.log(m.size)'", "expect": "3"}
+{"id": "5f0693dfb1e2", "cmd": "node -e 'const m=new Map([[1,1],[2,2]]); m.delete(1); m.set(1,1); console.log([...m.keys()].join())'", "expect": "2,1"}
+{"id": "e3a5bdbe23c9", "cmd": "TZ=America/New_York node -e 'const d=new Date(\"2026-11-15\"); console.log(d.getDate(), d.getUTCDate())'", "expect": "14 15"}
+{"id": "ccc6cd64085a", "cmd": "node -e 'console.log(JSON.stringify({a:1,b:2})===JSON.stringify({b:2,a:1}))'", "expect": "false"}
+{"id": "de964fcacf0e", "cmd": "node -e 'const s={a:1,l:[1]}; const n={...s,l:[...s.l,2]}; console.log(s.l.length,n.l.length)'", "expect": "1 2"}
+{"id": "5470e0a0cddb", "cmd": "node -e 'const h={a:()=>console.log(\"A\")}; h.a?.(); h.zz?.(); console.log(\"done\")'", "expect": "A\ndone"}
+{"id": "1fef43eab2c8", "cmd": "node -e 'const f=el=>{if(!el) return \"none\"; return el}; console.log(f(null))'", "expect": "none"}
+{"id": "22cd58ad4400", "cmd": "node -e 'const t={idle:[\"listening\"],listening:[\"processing\",\"idle\"],processing:[\"idle\"]}; console.log(t.idle.includes(\"processing\"), t.listening.includes(\"processing\"))'", "expect": "false true"}
+{"id": "34d98ed5e32e", "cmd": "node -e 'const f=b=>{const u=[\"B\",\"KB\",\"MB\",\"GB\"];let i=0;while(b>=1024&&i<3){b/=1024;i++}return b.toFixed(1)+\" \"+u[i]}; console.log(f(1572864))'", "expect": "1.5 MB"}
+{"id": "10d310c83d1e", "cmd": "node -e 'const s=3725; const p=n=>String(n).padStart(2,\"0\"); console.log(p(Math.floor(s/3600))+\":\"+p(Math.floor(s%3600/60))+\":\"+p(s%60))'", "expect": "01:02:05"}
+{"id": "2c4bdc3b7e5d", "cmd": "node -e 'console.log(Array.from(\"a😀b\").length, \"a😀b\".length)'", "expect": "3 4"}
+{"id": "b9c02d3f590e", "cmd": "node -e 'const e=s=>s.replace(/[&<>\"]/g,c=>({\"&\":\"&amp;\",\"<\":\"&lt;\",\">\":\"&gt;\",\"\\\"\":\"&quot;\"}[c])); console.log(e(\"<a href=\\\"x\\\">&\"))'", "expect": "&lt;a href=&quot;x&quot;&gt;&amp;"}
+{"id": "a1629fb79158", "cmd": "node -e 'let c=0; const d=(f,ms)=>{let t;return(...a)=>{clearTimeout(t);t=setTimeout(()=>f(...a),ms)}}; const g=d(()=>{c++;console.log(c)},10); g();g();g()'", "expect": "1"}
+{"id": "23bc1591e588", "cmd": "node -e 'const delays=[0,1,2,3].map(i=>Math.min(1000*2**i,8000)); console.log(delays.join())'", "expect": "1000,2000,4000,8000"}
+{"id": "e00cbe7bb38b", "cmd": "node -e 'let n=0; const poll=()=>{n++; if(n<3) setTimeout(poll,1); else console.log(n)}; poll()'", "expect": "3"}
+{"id": "f7db95e02a16", "cmd": "node -e 'const a=performance.now(); const b=performance.now(); console.log(b>=a)'", "expect": "true"}
+{"id": "64cf5dbee5b3", "cmd": "node -e 'console.assert(1===2,\"failed\")' 2>&1 | head -1", "expect": "Assertion failed: failed"}
+{"id": "08ba82e75c2e", "cmd": "node -e 'console.log(process.memoryUsage().heapUsed>0)'", "expect": "true"}
+{"id": "99c14ce45638", "cmd": "printf 'const t=require(\"node:test\");const a=require(\"node:assert\");t(\"x\",()=>a.strictEqual(1+1,2));\\n' > a.test.js; node --test 2>&1 | grep -c \"pass 1\"", "expect": "1"}
+{"id": "e733f905085f", "cmd": "node -e 'const a=require(\"node:assert\"); a.deepStrictEqual({x:[1]},{x:[1]}); console.log(\"equal\")'", "expect": "equal"}
+{"id": "9a53575be468", "cmd": "node -e 'require(\"node:fs/promises\").writeFile(\"a.txt\",\"x\").then(()=>require(\"node:fs/promises\").stat(\"a.txt\")).then(s=>console.log(s.size))'", "expect": "1"}
+{"id": "febc8e55d363", "cmd": "node -e 'const fs=require(\"fs\"); fs.writeFileSync(\"t.tmp\",\"new\"); fs.renameSync(\"t.tmp\",\"t.txt\"); console.log(fs.readFileSync(\"t.txt\",\"utf8\"), fs.existsSync(\"t.tmp\"))'", "expect": "new false"}
+{"id": "fadbb8f4fe4a", "cmd": "node -e 'const c=require(\"child_process\").spawn(\"echo\",[\"hi\"]); c.stdout.on(\"data\",d=>console.log(String(d).trim()))'", "expect": "hi"}
+{"id": "2f36b4898387", "cmd": "node -e 'const {parseArgs}=require(\"util\"); console.log(parseArgs({args:[\"--n\",\"5\"],options:{n:{type:\"string\"}}}).values.n)'", "expect": "5"}
+{"id": "11f674674d13", "cmd": "node -e 'process.exitCode=3'; echo $?", "expect": "3"}
+{"id": "a94a6604cf3b", "cmd": "NODE_ENV=production node -e 'console.log(process.env.NODE_ENV)'", "expect": "production"}
+{"id": "d681663fea21", "cmd": "printf '{\"scripts\":{\"hi\":\"echo hi\"}}' > package.json; npm run -s hi", "expect": "hi"}
+{"id": "47e7d4960dc6", "cmd": "printf '{\"name\":\"t\",\"version\":\"1.0.0\"}' > package.json; npm ls --depth=0 2>&1 | head -1", "expect": "t@1.0.0"}
+{"id": "6fd51147a27b", "cmd": "printf '{\"name\":\"t\",\"version\":\"1.0.0\",\"lockfileVersion\":3,\"requires\":true,\"packages\":{}}' > package-lock.json; printf '{\"name\":\"t\",\"version\":\"1.0.0\"}' > package.json; npm ci 2>&1 | grep -c -i -E 'added|up to date|audited'", "expect": "1"}
+{"id": "dae9cf6ac2d9", "cmd": "python3 -c \"import playwright; print(playwright.__name__)\"", "expect": "playwright"}
+{"id": "81c46a1f661e", "cmd": "node -e 'console.log(typeof require(\"http\").createServer)'", "expect": "function"}
+{"id": "3cd1378e3235", "cmd": "node -e 'const m={js:\"text/javascript\",css:\"text/css\"}; console.log(m.js)'", "expect": "text/javascript"}
+{"id": "632012c82eb7", "cmd": "node -e 'console.log(\"application/json; charset=utf-8\".split(\";\")[0])'", "expect": "application/json"}
