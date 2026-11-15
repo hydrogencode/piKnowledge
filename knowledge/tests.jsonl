@@ -844,3 +844,21 @@
 {"id": "8177e9198482", "cmd": "python3 -c \"\nclass A:\n    x=[]\na,b=A(),A(); a.x.append(1); print(b.x)\"", "expect": "[1]"}
 {"id": "981adeb40bdb", "cmd": "python3 -c \"\nclass A:\n    @property\n    def x(s): return s._x\n    @x.setter\n    def x(s,v):\n        if v<0: raise ValueError\n        s._x=v\na=A(); a.x=1; print(a.x)\"", "expect": "1"}
 {"id": "274ab437bdf4", "cmd": "python3 -c \"\nclass A: pass\nclass B(A): pass\nprint([c.__name__ for c in B.__mro__])\"", "expect": "['B', 'A', 'object']"}
+{"id": "0a8099d01f4b", "cmd": "python3 -c \"import ipaddress as i; print(i.ip_network('10.0.0.0/24').num_addresses-2, i.ip_network('10.0.0.0/30').num_addresses-2)\"", "expect": "254 2"}
+{"id": "0288ab0fa8f2", "cmd": "python3 -c \"import ipaddress as i; n=i.ip_network('192.168.1.0/24'); print(i.ip_address('192.168.1.9') in n, i.ip_address('192.168.2.9') in n)\"", "expect": "True False"}
+{"id": "08a246158da6", "cmd": "python3 -c \"import ipaddress as i; print(i.ip_address('::1').is_loopback, i.ip_address('fe80::1').is_link_local)\"", "expect": "True True"}
+{"id": "1e639e82bc0a", "cmd": "python3 -c \"import socket; print(socket.getservbyname('ssh'), socket.getservbyname('https'))\"", "expect": "22 443"}
+{"id": "8b374d335aa1", "cmd": "python3 -c \"import socket; print(socket.getservbyname('domain'), socket.getservbyname('http'))\"", "expect": "53 80"}
+{"id": "c9c26cf904ac", "cmd": "python3 -c \"import socket; print(socket.SOCK_STREAM.name, socket.SOCK_DGRAM.name)\"", "expect": "SOCK_STREAM SOCK_DGRAM"}
+{"id": "ced0edf7133d", "cmd": "printf '127.0.0.1 localhost\\n' >h; getent --help >/dev/null 2>&1; grep -c localhost h", "expect": "1"}
+{"id": "e7bcf837fb2a", "cmd": "python3 -c \"import http; print(http.HTTPStatus(429).phrase, http.HTTPStatus(502).phrase)\"", "expect": "Too Many Requests Bad Gateway"}
+{"id": "eb877b3a9890", "cmd": "python3 -c \"import http; print([m.name for m in http.HTTPMethod][:3])\"", "expect": "['CONNECT', 'DELETE', 'GET']"}
+{"id": "b8460d1bf06d", "cmd": "python3 -c \"import http; print(http.HTTPStatus(308).phrase)\"", "expect": "Permanent Redirect"}
+{"id": "f4dc541c8399", "cmd": "python3 -c \"import http; print(http.HTTPStatus(304).phrase)\"", "expect": "Not Modified"}
+{"id": "3d369bc19e60", "cmd": "python3 -c \"\nimport zlib\nd=b'a'*1000; print(len(zlib.compress(d))<100)\"", "expect": "True"}
+{"id": "1553ff230e0b", "cmd": "python3 -c \"print(format(255,'x'))\"", "expect": "ff"}
+{"id": "e1a5ecfa56fc", "cmd": "python3 -c \"print('data: hello\\n\\n'.encode())\"", "expect": "b'data: hello\\n\\n'"}
+{"id": "821273715122", "cmd": "python3 -c \"print(int('ff',16))\"", "expect": "255"}
+{"id": "49c4eb127333", "cmd": "python3 -c \"import socket; print(socket.getservbyname('ntp','udp'))\"", "expect": "123"}
+{"id": "c2708f755994", "cmd": "python3 -c \"import socket; print(socket.getservbyname('syslog','udp'))\"", "expect": "514"}
+{"id": "a4999ce31361", "cmd": "python3 -c \"print('home/+/temperature'.split('/'))\"", "expect": "['home', '+', 'temperature']"}
