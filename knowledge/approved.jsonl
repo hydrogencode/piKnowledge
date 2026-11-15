@@ -3456,3 +3456,7 @@
 {"id": "bd0640610388", "cat": "browser", "tip": "Playwright can print a page to PDF in Chromium with page.pdf(path='x.pdf'), useful for reports built as HTML.", "n": 0, "a": "seed-verified"}
 {"id": "029cdc1e197f", "cat": "browser", "tip": "Playwright can set the time zone and language of a test page: new_context(locale='tr-TR', timezone_id='Europe/Istanbul'), to test date and number formats.", "n": 0, "a": "seed-verified"}
 {"id": "4e31661e03bc", "cat": "browser", "tip": "Playwright can fake the position with new_context(geolocation=..., permissions=['geolocation']) and the clock with page.clock, so time based features are testable.", "n": 0, "a": "seed-verified"}
+{"id": "69da7ea71c38", "cat": "git", "tip": "git config init.defaultBranch main sets the name of the first branch in new repositories, avoiding a master and main mismatch with GitHub.", "n": 0, "a": "seed-verified"}
+{"id": "02cb7adeb1dd", "cat": "files", "tip": "sqlite3 file.db '.backup copy.db' makes a safe copy while the database is in use, unlike copying the file, which can catch a half written state.", "n": 0, "a": "seed-verified"}
+{"id": "bdf1998d4f8c", "cat": "files", "tip": "CREATE INDEX on the columns used in WHERE and JOIN speeds up queries; EXPLAIN QUERY PLAN shows whether an index is used.", "n": 0, "a": "seed-verified"}
+{"id": "0a1f63e342d7", "cat": "files", "tip": "LIMIT and OFFSET page results, but a high OFFSET is slow; use WHERE id > last_id ORDER BY id LIMIT n for long lists.", "n": 0, "a": "seed-verified"}
