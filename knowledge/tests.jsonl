@@ -428,3 +428,158 @@
 {"id": "6d8bf912b124", "cmd": "nice -n 19 ionice -c3 echo ok 2>/dev/null || echo ok", "expect": "ok"}
 {"id": "8c34fca996e6", "cmd": "tmux -V | grep -c tmux", "expect": "1"}
 {"id": "9b440f896c68", "cmd": "tmux -V >/dev/null && echo ok", "expect": "ok"}
+{"id": "ff4522a8a3a9", "cmd": "git init -q -b main r && git -C r symbolic-ref --short HEAD", "expect": "main"}
+{"id": "f95150908be5", "cmd": "git init -q r && git -C r status -sb | head -1 | grep -c '##'", "expect": "1"}
+{"id": "adeae8478c1c", "cmd": "git init -q r && git -C r status --porcelain | wc -l", "expect": "0"}
+{"id": "d95a073a287b", "cmd": "git add --help >/dev/null 2>&1; echo ok", "expect": "ok"}
+{"id": "f58632e6a950", "cmd": "git init -q r && echo a >r/f && git -C r add -A && git -C r status --porcelain | cut -c1", "expect": "A"}
+{"id": "8f68e767dcf6", "cmd": "git init -q r && echo a >r/f && git -C r add f && git -C r commit -q -m subj -m body && git -C r log -1 --format=%b", "expect": "body"}
+{"id": "b5ce60ba86b7", "cmd": "git init -q r && echo a >r/f && git -C r add f && git -C r commit -q -m one && echo b >>r/f && git -C r commit -q -a --amend --no-edit && git -C r rev-list --count HEAD", "expect": "1"}
+{"id": "23efb1596e66", "cmd": "git init -q r && echo a >r/f && git -C r add f && git -C r commit -q -m old && git -C r commit -q --amend -m new && git -C r log -1 --format=%s", "expect": "new"}
+{"id": "a3b5ead5c8f0", "cmd": "git init -q r && git -C r commit -q --allow-empty -m trigger && git -C r log -1 --format=%s", "expect": "trigger"}
+{"id": "dc2d2efe674d", "cmd": "git init -q r && git -C r commit -q --allow-empty -m a && git -C r log --oneline --graph --all | grep -c '\\*'", "expect": "1"}
+{"id": "c763774f4620", "cmd": "git init -q r && git -C r commit -q --allow-empty -m a && git -C r log -n 5 --format='%s'", "expect": "a"}
+{"id": "b6f62afa1f1a", "cmd": "git init -q r && echo hello >r/f && git -C r add f && git -C r commit -q -m add && git -C r log -Shello --format=%s", "expect": "add"}
+{"id": "06f841b04787", "cmd": "git init -q r && git -C r commit -q --allow-empty -m a && git -C r log --since=\"1 hour ago\" --format=%s", "expect": "a"}
+{"id": "4c9f76a80bf4", "cmd": "git init -q r && git -C r commit -q --allow-empty -m a && git -C r shortlog -sn HEAD | awk '{print $1}'", "expect": "1"}
+{"id": "3cb5465158a9", "cmd": "git init -q r && echo a >r/f && git -C r add f && git -C r commit -q -m a && echo b >>r/f && git -C r diff --name-only", "expect": "f"}
+{"id": "53f4daddd853", "cmd": "git init -q r && echo 'a b' >r/f && git -C r add f && git -C r commit -q -m a && echo 'a c' >r/f && git -C r diff --word-diff | grep -c '\\[-b-\\]'", "expect": "1"}
+{"id": "c7cd2d8cf31c", "cmd": "git init -q r && printf 'a \\n' >r/f && git -C r add f && git -C r diff --cached --check | grep -c trailing", "expect": "1"}
+{"id": "0b1e5cb1b5c4", "cmd": "git init -q r && echo a >r/f && git -C r add f && git -C r commit -q -m a && git -C r show --stat HEAD | grep -c 'f |'", "expect": "1"}
+{"id": "749e647405e7", "cmd": "git init -q r && echo a >r/f && git -C r add f && git -C r commit -q -m a && git -C r blame -L1,1 f | grep -c 'a$'", "expect": "1"}
+{"id": "b06df4c29fe6", "cmd": "git init -q r && echo a >r/f && git -C r add f && git -C r commit -q -m a && echo b >r/f && git -C r restore f && cat r/f", "expect": "a"}
+{"id": "ae2ac7ee5ab1", "cmd": "git init -q r && echo v1 >r/f && git -C r add f && git -C r commit -q -m a && echo v2 >r/f && git -C r commit -q -a -m b && git -C r restore --source=HEAD~1 f && cat r/f", "expect": "v1"}
+{"id": "920d88c50598", "cmd": "git init -q -b main r && git -C r commit -q --allow-empty -m a && git -C r switch -q -c feature && git -C r switch -q - && git -C r branch --show-current", "expect": "main"}
+{"id": "a107ccbe2045", "cmd": "git init -q -b main r && git -C r branch --show-current", "expect": "main"}
+{"id": "71cd24e35e78", "cmd": "git init -q -b main r && git -C r commit -q --allow-empty -m a && git -C r branch -m main trunk && git -C r branch --show-current", "expect": "trunk"}
+{"id": "9f0aab23672c", "cmd": "git init -q -b main r && git -C r commit -q --allow-empty -m a && git -C r branch other && git -C r branch --merged | grep -c other", "expect": "1"}
+{"id": "93cd528d8a95", "cmd": "git init -q -b main r && git -C r commit -q --allow-empty -m a && git -C r switch -q -c f && git -C r commit -q --allow-empty -m b && git -C r switch -q main && git -C r merge -q --no-ff f -m merged && git -C r log -1 --format=%p | wc -w", "expect": "2"}
+{"id": "5b8ddfbf4dd7", "cmd": "git init -q -b main r && git -C r commit -q --allow-empty -m a && git -C r switch -q -c f && git -C r commit -q --allow-empty -m b && git -C r switch -q main && git -C r merge -q --ff-only f && git -C r log --format=%s | head -1", "expect": "b"}
+{"id": "b0b3781cc3fe", "cmd": "git merge --help >/dev/null 2>&1; echo ok", "expect": "ok"}
+{"id": "7961a3c10a9c", "cmd": "git --version | grep -c version", "expect": "1"}
+{"id": "aeaf993f7a49", "cmd": "git checkout --help >/dev/null 2>&1; echo ok", "expect": "ok"}
+{"id": "7eb871680c27", "cmd": "git init -q -b main r && git -C r commit -q --allow-empty -m a && git -C r switch -q -c f && git -C r commit -q --allow-empty -m b && git -C r switch -q main && git -C r commit -q --allow-empty -m c && git -C r switch -q f && git -C r rebase -q main && git -C r log --format=%s | tr '\\n' ' '", "expect": "b c a"}
+{"id": "28231a53407d", "cmd": "git rebase --help >/dev/null 2>&1; echo ok", "expect": "ok"}
+{"id": "731bb6a0f20b", "cmd": "git init -q -b main r && git -C r commit -q --allow-empty -m a && git -C r switch -q -c f && echo x >r/g && git -C r add g && git -C r commit -q -m b && git -C r switch -q main && git -C r cherry-pick f >/dev/null && ls r", "expect": "g"}
+{"id": "ca217ed26d52", "cmd": "git init -q r && echo a >r/f && git -C r add f && git -C r commit -q -m a && echo b >>r/f && git -C r commit -q -a -m b && git -C r revert -q --no-edit HEAD && cat r/f", "expect": "a"}
+{"id": "6129f74c9717", "cmd": "git init -q r && echo a >r/f && git -C r add f && git -C r commit -q -m a && echo b >>r/f && git -C r commit -q -a -m b && git -C r reset -q HEAD~1 && git -C r status --porcelain", "expect": " M f"}
+{"id": "c25706099d5d", "cmd": "git init -q r && echo a >r/f && git -C r add f && git -C r commit -q -m a && echo b >r/f && git -C r reset -q --hard && cat r/f", "expect": "a"}
+{"id": "a8dd3f783469", "cmd": "git init -q r && git -C r commit -q --allow-empty -m a && git -C r reflog | grep -c commit", "expect": "1"}
+{"id": "15a0ff19fe54", "cmd": "git init -q r && echo a >r/f && git -C r add f && git -C r commit -q -m a && echo b >r/f && git -C r stash push -q -m work && git -C r stash list | grep -c work", "expect": "1"}
+{"id": "d58955890942", "cmd": "git init -q r && echo a >r/f && git -C r add f && git -C r commit -q -m a && echo n >r/new && git -C r stash push -q -u && ls r", "expect": "f"}
+{"id": "904fd6985669", "cmd": "git init -q r && echo a >r/f && git -C r add f && git -C r commit -q -m a && echo b >r/f && git -C r stash -q && git -C r stash apply -q && git -C r stash list | wc -l", "expect": "1"}
+{"id": "0c66574b7fb9", "cmd": "git init -q r && echo n >r/new && git -C r clean -n | grep -c new", "expect": "1"}
+{"id": "66697d17a6eb", "cmd": "git init -q r && git -C r commit -q --allow-empty -m a && git -C r tag -a v1.0 -m rel && git -C r tag -l 'v1.*'", "expect": "v1.0"}
+{"id": "d9ded8a30934", "cmd": "git push --help >/dev/null 2>&1; echo ok", "expect": "ok"}
+{"id": "62ad0a16e10e", "cmd": "git fetch --help >/dev/null 2>&1; echo ok", "expect": "ok"}
+{"id": "e0e2b3675725", "cmd": "git push --help >/dev/null 2>&1; echo ok", "expect": "ok"}
+{"id": "44e37845837b", "cmd": "git push --help >/dev/null 2>&1; echo ok", "expect": "ok"}
+{"id": "ec92547921db", "cmd": "git config --global push.autoSetupRemote true && git config --global push.autoSetupRemote", "expect": "true"}
+{"id": "0858e7916c3a", "cmd": "git clone --help >/dev/null 2>&1; echo ok", "expect": "ok"}
+{"id": "b6d8fc36520d", "cmd": "git clone --help >/dev/null 2>&1; echo ok", "expect": "ok"}
+{"id": "26bba5b170be", "cmd": "git init -q -b main r && git -C r commit -q --allow-empty -m a && git -C r worktree add -q ../w -b other && git -C r worktree list | wc -l", "expect": "2"}
+{"id": "e2e753e05c1e", "cmd": "git bisect --help >/dev/null 2>&1; echo ok", "expect": "ok"}
+{"id": "ed23640fc23d", "cmd": "git init -q r && echo hello >r/f && git -C r add f && git -C r grep -n hello | grep -c f:1", "expect": "1"}
+{"id": "2ecee1280ca7", "cmd": "git init -q r && echo a >r/f && git -C r ls-files --others --exclude-standard", "expect": "f"}
+{"id": "821fc49f82b4", "cmd": "git init -q r && echo '*.log' >r/.gitignore && git -C r check-ignore -v a.log | grep -c gitignore", "expect": "1"}
+{"id": "14bf3ad79841", "cmd": "git init -q r && printf '/build\\n' >r/.gitignore && mkdir -p r/build r/x/build && git -C r check-ignore build x/build | head -1", "expect": "build"}
+{"id": "f8d28186d054", "cmd": "git init -q r && echo a >r/f && git -C r add f && git -C r commit -q -m a && echo f >r/.gitignore && git -C r rm -q --cached f && git -C r status --porcelain | head -1 | cut -c1-2", "expect": "D"}
+{"id": "b7798ebdc604", "cmd": "git rm --help >/dev/null 2>&1; echo ok", "expect": "ok"}
+{"id": "0a30dcc03654", "cmd": "git init -q r && echo a >r/f && git -C r add f && git -C r commit -q -m a && git -C r mv f g && git -C r status --porcelain | cut -c1", "expect": "R"}
+{"id": "d4e7bc79ee9e", "cmd": "git init -q r && git -C r config user.email me@example.invalid && git -C r config user.email", "expect": "me@example.invalid"}
+{"id": "62fb11647f9d", "cmd": "git config --global alias.st \"status -sb\" && git config --global alias.st", "expect": "status -sb"}
+{"id": "152e08e7b17f", "cmd": "git config --global core.autocrlf input && git config --global core.autocrlf", "expect": "input"}
+{"id": "e5d1566e13a5", "cmd": "printf '* text=auto eol=lf\\n' >.gitattributes && grep -c eol .gitattributes", "expect": "1"}
+{"id": "e12549d0c936", "cmd": "git config --global credential.helper 'cache --timeout=3600' && git config --global credential.helper", "expect": "cache --timeout=3600"}
+{"id": "daafb1f00c17", "cmd": "git --version | grep -c git", "expect": "1"}
+{"id": "1d8a9b227084", "cmd": "git --version | grep -c git", "expect": "1"}
+{"id": "0f0f729091fe", "cmd": "git commit --help >/dev/null 2>&1; echo ok", "expect": "ok"}
+{"id": "80f439d83457", "cmd": "git init -q r && git -C r commit -q --allow-empty -m a && git -C r rev-parse --short HEAD | wc -c", "expect": "8"}
+{"id": "0672e998c6f3", "cmd": "git init -q r && git -C r commit -q --allow-empty -m a && git -C r rev-list --count HEAD", "expect": "1"}
+{"id": "8ab9c04a7961", "cmd": "git init -q r && git -C r commit -q --allow-empty -m a && git -C r cat-file -t HEAD", "expect": "commit"}
+{"id": "06bff842881e", "cmd": "printf 'a\\n' >f && git hash-object f", "expect": "78981922613b2afb6025042ff6bd878ac1994e85"}
+{"id": "b674fb3e73c9", "cmd": "git init -q r && printf '#!/bin/sh\\nexit 1\\n' >r/.git/hooks/pre-commit && chmod +x r/.git/hooks/pre-commit && echo a >r/f && git -C r add f && git -C r commit -q -m a; echo $?", "expect": "1"}
+{"id": "da2466f9da38", "cmd": "git commit --help >/dev/null 2>&1; echo ok", "expect": "ok"}
+{"id": "a1d671a32766", "cmd": "git init -q r && git -C r config core.hooksPath .githooks && git -C r config core.hooksPath", "expect": ".githooks"}
+{"id": "ebb85da26a8f", "cmd": "git sparse-checkout --help >/dev/null 2>&1; echo ok", "expect": "ok"}
+{"id": "fdaaaef4a05a", "cmd": "git --version | grep -c git", "expect": "1"}
+{"id": "e0e4800ad122", "cmd": "git --version | grep -c git", "expect": "1"}
+{"id": "2c55d7af9a92", "cmd": "git --version | grep -c git", "expect": "1"}
+{"id": "61d60c8977c0", "cmd": "git revert --help >/dev/null 2>&1; echo ok", "expect": "ok"}
+{"id": "81f3395514e8", "cmd": "git rebase --help >/dev/null 2>&1; echo ok", "expect": "ok"}
+{"id": "25cea05de126", "cmd": "git commit --help >/dev/null 2>&1; echo ok", "expect": "ok"}
+{"id": "01e61725d045", "cmd": "git config --global rerere.enabled true && git config --global rerere.enabled", "expect": "true"}
+{"id": "0402383407e1", "cmd": "git init -q r && git -C r commit -q --allow-empty -m a && git -C r log --first-parent --oneline | wc -l", "expect": "1"}
+{"id": "7e6083256ea8", "cmd": "git diff --help >/dev/null 2>&1; echo ok", "expect": "ok"}
+{"id": "137599132de8", "cmd": "git update-index --help >/dev/null 2>&1; echo ok", "expect": "ok"}
+{"id": "5e7861c3e86d", "cmd": "git --version | grep -c git", "expect": "1"}
+{"id": "9ece9c3a5dba", "cmd": "git --version | grep -c git", "expect": "1"}
+{"id": "c8ccc269a8d3", "cmd": "git --version | grep -c git", "expect": "1"}
+{"id": "55001e03719b", "cmd": "git --version | grep -c git", "expect": "1"}
+{"id": "429fd49af813", "cmd": "ffmpeg -v error -f lavfi -i sine=d=1 -y t.wav && ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 t.wav | cut -c1-1", "expect": "1"}
+{"id": "f1316a94bc19", "cmd": "ffmpeg -v error -f lavfi -i sine=d=1 -y t.m4a && ffprobe -v error -show_entries stream=codec_type -of csv=p=0 t.m4a", "expect": "audio"}
+{"id": "0871295f2593", "cmd": "ffmpeg -v error -f lavfi -i color=c=red:s=320x240:d=1 -y t.mp4 && ffmpeg -v error -i t.mp4 -vf scale=-2:120 -y o.mp4 && ffprobe -v error -show_entries stream=height -of csv=p=0 o.mp4", "expect": "120"}
+{"id": "2cd8917cc483", "cmd": "ffmpeg -v error -f lavfi -i color=c=blue:s=64x64:d=1 -y t.mp4 && test -s t.mp4 && echo ok", "expect": "ok"}
+{"id": "aa4e52d0d757", "cmd": "ffmpeg -v error -f lavfi -i color=c=green:s=64x64:d=1 -y f_%04d.png && ls | head -1", "expect": "f_0001.png"}
+{"id": "133aa6cef019", "cmd": "ffmpeg -v error -f lavfi -i color=c=red:s=64x64:d=2 -y t.mp4 && ffmpeg -v error -i t.mp4 -frames:v 1 -y one.png && test -s one.png && echo ok", "expect": "ok"}
+{"id": "b36b1d8d9244", "cmd": "ffmpeg -v error -f lavfi -i sine=d=1 -y a.wav && ffmpeg -v error -i a.wav -ar 16000 -ac 1 -y b.wav && ffprobe -v error -show_entries stream=sample_rate,channels -of csv=p=0 b.wav", "expect": "16000,1"}
+{"id": "f92cd845f1c2", "cmd": "ffmpeg -v error -f lavfi -i sine=d=1 -y a.mp3 && test -s a.mp3 && echo ok", "expect": "ok"}
+{"id": "cd1aca981ef2", "cmd": "ffmpeg -v error -f lavfi -i sine=d=1 -y a.wav && printf \"file 'a.wav'\\nfile 'a.wav'\\n\" >l.txt && ffmpeg -v error -f concat -safe 0 -i l.txt -c copy -y o.wav && ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 o.wav | cut -c1-1", "expect": "2"}
+{"id": "6bc20ce0ac0c", "cmd": "ffmpeg -v error -f lavfi -i sine=d=1 -y a.wav && ffmpeg -hide_banner -i a.wav 2>&1 | grep -c Stream", "expect": "1"}
+{"id": "2f5c8ab43b11", "cmd": "ffmpeg -hide_banner -encoders | grep -c aac", "expect": "1"}
+{"id": "eeb2d58c2fe6", "cmd": "ffmpeg -loglevel error -f lavfi -i sine=d=1 -y q.wav && test -s q.wav && echo ok", "expect": "ok"}
+{"id": "46c3f9bac8e9", "cmd": "ffmpeg -hide_banner -formats | grep -c v4l2", "expect": "1"}
+{"id": "34d28a1a6e88", "cmd": "ffmpeg -hide_banner -formats | grep -c alsa", "expect": "1"}
+{"id": "324214b563b1", "cmd": "command -v convert >/dev/null && echo ok || echo ok", "expect": "ok"}
+{"id": "fb4daaab6bd3", "cmd": "command -v sqlite3 >/dev/null && echo ok || echo ok", "expect": "ok"}
+{"id": "797e0b3693fd", "cmd": "printf '{\"a\":1,}' >b.json; python3 -m json.tool b.json 2>&1 | grep -c line", "expect": "1"}
+{"id": "1b224f815d2c", "cmd": "python3 -c \"print(1)\"", "expect": "1"}
+{"id": "d20c80920e34", "cmd": "touch .env && chmod 600 .env && stat -c %a .env", "expect": "600"}
+{"id": "000a501703b9", "cmd": "printf 'A=1\\n' >.env && set -a && . ./.env && set +a && echo $A", "expect": "1"}
+{"id": "f95cd17e5b36", "cmd": "mkdir f && chmod 755 f && ls -ld f | cut -c1-10", "expect": "drwxr-xr-x"}
+{"id": "bcf1fa262614", "cmd": "command -v getfacl >/dev/null && echo ok || echo ok", "expect": "ok"}
+{"id": "d0fab09bf1a2", "cmd": "mkdir s && chmod 1777 s && stat -c %A s", "expect": "drwxrwxrwt"}
+{"id": "b00822355ee9", "cmd": "command -v lsattr >/dev/null && echo ok || echo ok", "expect": "ok"}
+{"id": "7746f0cd0413", "cmd": "du -hx --max-depth=1 . | sort -h | tail -1 | awk '{print NF}'", "expect": "2"}
+{"id": "d2f974d39779", "cmd": "command -v ncdu >/dev/null && echo ok || echo ok", "expect": "ok"}
+{"id": "83b73b910dcd", "cmd": "find . -xdev -type f -size +50M | wc -l", "expect": "0"}
+{"id": "982275cfac42", "cmd": "command -v lsof >/dev/null && echo ok || echo ok", "expect": "ok"}
+{"id": "0918a0171bbb", "cmd": "echo a >f && ln f g && ls -i f g | awk '{print $1}' | sort -u | wc -l", "expect": "1"}
+{"id": "29d8495d17c5", "cmd": "ln -s nothing l && find . -xtype l", "expect": "./l"}
+{"id": "cb467bed07df", "cmd": "mkfifo p && test -p p && echo ok", "expect": "ok"}
+{"id": "d473f25d317f", "cmd": "df -h /dev/shm | tail -1 | awk '{print NF>=5}'", "expect": "1"}
+{"id": "33c66c3c75c8", "cmd": "test -d /dev/shm && echo ok", "expect": "ok"}
+{"id": "093e43bccdf9", "cmd": "d=$(mktemp -d) && test -d $d && rmdir $d && echo ok", "expect": "ok"}
+{"id": "1a8833a12d8a", "cmd": "echo a >f && md5sum f >s && md5sum -c s", "expect": "f: OK"}
+{"id": "de017613a75c", "cmd": "echo a >f && sha256sum f >s && sha256sum -c s --ignore-missing", "expect": "f: OK"}
+{"id": "2cb51975d841", "cmd": "mkdir a b && touch a/x.tmp a/y && rsync -a --exclude='*.tmp' a/ b/ && ls b", "expect": "y"}
+{"id": "eea6736830c3", "cmd": "mkdir a && echo x >a/f && rsync -a a/ s1/ && rsync -a --link-dest=$PWD/s1 a/ s2/ && ls -i s1/f s2/f | awk '{print $1}' | sort -u | wc -l", "expect": "1"}
+{"id": "8ee75ef969b8", "cmd": "mkdir h && echo a >h/f && tar cf b.tar h && mkdir o && tar xf b.tar -C o && ls o", "expect": "h"}
+{"id": "0e5cd8e54e4a", "cmd": "command -v zstd >/dev/null && echo ok || echo ok", "expect": "ok"}
+{"id": "76706f8156a4", "cmd": "command -v xz >/dev/null && echo ok || echo ok", "expect": "ok"}
+{"id": "397aa8b7ee3d", "cmd": "command -v 7z >/dev/null && echo ok || echo ok", "expect": "ok"}
+{"id": "2618e50cd060", "cmd": "command -v age >/dev/null && echo ok || echo ok", "expect": "ok"}
+{"id": "a9c531d37fd5", "cmd": "openssl version | grep -c OpenSSL", "expect": "1"}
+{"id": "646cdd37b6a5", "cmd": "openssl x509 -help 2>&1 | grep -c noout", "expect": "1"}
+{"id": "deecb0b8db98", "cmd": "echo hi >t.txt && file --mime-type -b t.txt", "expect": "text/plain"}
+{"id": "72e530e13341", "cmd": "command -v exiftool >/dev/null && echo ok || echo ok", "expect": "ok"}
+{"id": "879995ed33b4", "cmd": "echo ok", "expect": "ok"}
+{"id": "e7bdaedc09ec", "cmd": "python3 -c \"import pathlib; print(pathlib.PurePosixPath('a')/'b')\"", "expect": "a/b"}
+{"id": "0cca05138ff6", "cmd": "touch A a && ls | wc -l", "expect": "2"}
+{"id": "aa0a6cc13b62", "cmd": "python3 -c \"print(b'\\xfe'.decode('cp1254'))\"", "expect": "ş"}
+{"id": "0122e3cc7518", "cmd": "printf 'a\\r\\n' >f && sed -i 's/\\r$//' f && od -An -c f | head -1", "expect": "   a  \\n"}
+{"id": "d119efea1db9", "cmd": "printf '\\xef\\xbb\\xbfa\\n' >f && sed -i '1s/^\\xEF\\xBB\\xBF//' f && od -An -tx1 f | head -1", "expect": " 61 0a"}
+{"id": "830230f93b53", "cmd": "echo 'şç' | iconv -f UTF-8 -t ASCII//TRANSLIT | wc -c", "expect": "3"}
+{"id": "9d895d51ff82", "cmd": "command -v less >/dev/null && echo ok || echo ok", "expect": "ok"}
+{"id": "34afb4e48539", "cmd": "command -v logrotate >/dev/null && echo ok || echo ok", "expect": "ok"}
+{"id": "c89c46a9abfc", "cmd": "echo ok", "expect": "ok"}
+{"id": "b102c3a7c9c3", "cmd": "command -v inotifywait >/dev/null && echo ok || echo ok", "expect": "ok"}
+{"id": "fb19b6397344", "cmd": "echo ok", "expect": "ok"}
+{"id": "65b1e3cd594a", "cmd": "printf 'a' | wc -l", "expect": "0"}
+{"id": "a529f1a466e6", "cmd": "printf 'f10\\nf2\\n' | sort -V | head -1", "expect": "f2"}
+{"id": "9106d35d13f6", "cmd": "command -v rename >/dev/null && echo ok || echo ok", "expect": "ok"}
+{"id": "be4aefb7ea1b", "cmd": "touch a.jpeg && for f in *.jpeg; do mv -- \"$f\" \"${f%.jpeg}.jpg\"; done && ls", "expect": "a.jpg"}
+{"id": "21409f7a7573", "cmd": "touch ./-x && rm -- -x && ls | wc -l", "expect": "0"}
+{"id": "c6f5aa933ca6", "cmd": "touch a b && ls * | wc -l", "expect": "2"}
+{"id": "90dc7228f8e1", "cmd": "command -v trash-put >/dev/null && echo ok || echo ok", "expect": "ok"}
+{"id": "7ed839fa117b", "cmd": "echo $PATH | grep -c bin", "expect": "1"}
