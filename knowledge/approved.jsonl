@@ -6306,3 +6306,288 @@
 {"id": "fcaaf144e1f3", "cat": "python", "tip": "Use pathlib Path objects with the / operator to join paths; it is portable and clearer than string concatenation.", "n": 0, "a": "seed-verified"}
 {"id": "0b128f0d4d02", "cat": "python", "tip": "os.path.expanduser turns ~ into the home folder; Python does not expand ~ in paths automatically.", "n": 0, "a": "seed-verified"}
 {"id": "dfed35a4a235", "cat": "python", "tip": "Path.resolve makes a path absolute and removes .. parts; use it before checking that a user given path stays inside an allowed folder.", "n": 0, "a": "seed-verified"}
+{"id": "7bdec84b39f2", "cat": "shell", "tip": "Use mktemp -d for scratch folders instead of fixed names under /tmp; fixed names collide between runs and with other users.", "n": 0, "a": "seed-verified"}
+{"id": "b622892f0655", "cat": "shell", "tip": "Clean up temporary files on exit with trap 'rm' style cleanup on EXIT in scripts; the trap also runs when the script fails.", "n": 0, "a": "seed-verified"}
+{"id": "01e4ccf6839d", "cat": "shell", "tip": "In bash, [[ ]] does not split words or expand globs in variables, so [[ -n $var ]] is safe even when var contains spaces.", "n": 0, "a": "seed-verified"}
+{"id": "45b9b6becf83", "cat": "shell", "tip": "Compare numbers with (( a > b )) or -gt, not with > inside [ ]; there > is a file redirection and creates a file named after the number.", "n": 0, "a": "seed-verified"}
+{"id": "31f54dce6c3c", "cat": "shell", "tip": "$(( )) does integer arithmetic in bash; for decimals use awk or bc.", "n": 0, "a": "seed-verified"}
+{"id": "ae3319e196d8", "cat": "shell", "tip": "Use arrays for lists of file names with spaces: files=( *.txt ) and then \"${files[@]}\" keeps each name whole.", "n": 0, "a": "seed-verified"}
+{"id": "7a6962ca9c0c", "cat": "shell", "tip": "shopt -s nullglob makes a pattern with no matches expand to nothing instead of the literal pattern text.", "n": 0, "a": "seed-verified"}
+{"id": "312984118f57", "cat": "shell", "tip": "Use a here document with a quoted delimiter, <<'EOF', when the text contains $ signs that must not be expanded.", "n": 0, "a": "seed-verified"}
+{"id": "f2c43deac1e7", "cat": "shell", "tip": "Redirect both output and errors to a file with > file 2>&1; the order matters, 2>&1 > file sends errors to the terminal.", "n": 0, "a": "seed-verified"}
+{"id": "1abdff8912eb", "cat": "shell", "tip": "${PIPESTATUS[@]} holds the exit code of every command in the last bash pipeline.", "n": 0, "a": "seed-verified"}
+{"id": "19887a18dc9b", "cat": "shell", "tip": "command -v name is the portable way to test whether a program exists; which is not always installed and behaves differently.", "n": 0, "a": "seed"}
+{"id": "8c192f704411", "cat": "shell", "tip": "type name tells you whether a word is an alias, a function, a builtin or a file, which explains surprising command behaviour.", "n": 0, "a": "seed-verified"}
+{"id": "53a44aa379ac", "cat": "shell", "tip": "Use timeout 30 command to stop a command that might hang; the exit code 124 means it was stopped by the timeout.", "n": 0, "a": "seed-verified"}
+{"id": "af968e7f67ce", "cat": "shell", "tip": "xargs -P 4 runs up to four commands in parallel, a quick way to speed up many independent jobs.", "n": 0, "a": "seed-verified"}
+{"id": "0f4e2c1e8b94", "cat": "shell", "tip": "sort -u removes duplicate lines, and uniq only removes adjacent duplicates, so sort before uniq.", "n": 0, "a": "seed-verified"}
+{"id": "de2b1b8a30d8", "cat": "shell", "tip": "sort -n sorts numbers by value and sort -h understands sizes like 5K and 2M from du -h.", "n": 0, "a": "seed-verified"}
+{"id": "ae2e6ae830aa", "cat": "shell", "tip": "cut -d, -f2 takes the second comma separated field; for files with quoted commas use a real CSV tool instead.", "n": 0, "a": "seed-verified"}
+{"id": "2b5ffe7bdab9", "cat": "shell", "tip": "awk splits on runs of spaces by default; awk '{print $NF}' prints the last field of each line.", "n": 0, "a": "seed-verified"}
+{"id": "7aafdd15c8e8", "cat": "shell", "tip": "awk can sum a column without a loop: awk '{s+=$2} END {print s}'.", "n": 0, "a": "seed-verified"}
+{"id": "0727342dc4b3", "cat": "shell", "tip": "sed -n '10,20p' prints only lines 10 to 20 of a file, handy for reading part of a long file.", "n": 0, "a": "seed-verified"}
+{"id": "e54138eb5912", "cat": "shell", "tip": "sed -i.bak edits a file in place and keeps a backup copy; without a suffix the original is lost.", "n": 0, "a": "seed-verified"}
+{"id": "e090596ff9d7", "cat": "shell", "tip": "Use a different delimiter in sed when the text contains slashes: sed 's|/old/path|/new/path|'.", "n": 0, "a": "seed-verified"}
+{"id": "21228ee053ce", "cat": "shell", "tip": "grep -r pattern folder searches recursively; add --include='*.py' to limit file types and -n for line numbers.", "n": 0, "a": "seed-verified"}
+{"id": "92e506a38da7", "cat": "shell", "tip": "grep -F searches for a fixed string, so dots and brackets in the search text are not treated as patterns.", "n": 0, "a": "seed-verified"}
+{"id": "5971702b7f54", "cat": "shell", "tip": "grep -q only sets the exit code without printing, ideal in if statements.", "n": 0, "a": "seed-verified"}
+{"id": "62a71db71170", "cat": "shell", "tip": "grep -v removes matching lines and grep -c counts them instead of printing.", "n": 0, "a": "seed-verified"}
+{"id": "79707bcf3e4b", "cat": "shell", "tip": "grep -o prints only the matched part of each line, useful to extract numbers or ids.", "n": 0, "a": "seed-verified"}
+{"id": "831cd3adf0f4", "cat": "shell", "tip": "grep -A 3 and -B 3 show lines after and before each match, which gives context around errors in logs.", "n": 0, "a": "seed-verified"}
+{"id": "bf663dacb9b8", "cat": "shell", "tip": "tr -d '\\r' removes Windows line endings that break shell scripts with errors like command not found or bad interpreter.", "n": 0, "a": "seed-verified"}
+{"id": "ccf831da5f23", "cat": "shell", "tip": "A script saved with Windows line endings fails with /bin/bash^M: bad interpreter; file reports it as with CRLF line terminators.", "n": 0, "a": "seed-verified"}
+{"id": "aa4460e25308", "cat": "shell", "tip": "wc -l counts newline characters, so a last line without a final newline is not counted.", "n": 0, "a": "seed-verified"}
+{"id": "6526f0ac5f46", "cat": "shell", "tip": "head -c and tail -c take bytes instead of lines, useful for peeking at binary files.", "n": 0, "a": "seed-verified"}
+{"id": "3e929fdc7d2e", "cat": "shell", "tip": "tail -n +2 prints everything from line 2, which skips a header line.", "n": 0, "a": "seed-verified"}
+{"id": "c0da256babe7", "cat": "shell", "tip": "tee writes output to a file and to the screen at the same time; tee -a appends.", "n": 0, "a": "seed-verified"}
+{"id": "ab0676a15350", "cat": "shell", "tip": "Use date +%F for a sortable date and date +%s for seconds since 1970 in file names and logs.", "n": 0, "a": "seed-verified"}
+{"id": "537e03084d61", "cat": "shell", "tip": "date -d can do date arithmetic in GNU date, such as date -d 'yesterday' +%F or date -d '+3 days'.", "n": 0, "a": "seed-verified"}
+{"id": "32b8b0ed5496", "cat": "shell", "tip": "seq -w pads numbers with zeros to the same width, useful for file names that should sort correctly.", "n": 0, "a": "seed-verified"}
+{"id": "b0e35e798503", "cat": "shell", "tip": "Brace expansion creates lists without a loop: mkdir -p project/{src,tests,docs}.", "n": 0, "a": "seed-verified"}
+{"id": "e7c1fcec80f5", "cat": "shell", "tip": "${var:-default} uses a default when the variable is empty or unset, without changing the variable.", "n": 0, "a": "seed-verified"}
+{"id": "81f1cc7f53be", "cat": "shell", "tip": "${#var} gives the length of a string and ${var:0:3} its first three characters.", "n": 0, "a": "seed-verified"}
+{"id": "23d6e20ae90f", "cat": "shell", "tip": "Remove a file extension with ${f%.*} and get only the file name with ${f##*/}.", "n": 0, "a": "seed-verified"}
+{"id": "a59d32c8c898", "cat": "shell", "tip": "local inside a bash function keeps a variable from leaking into the rest of the script.", "n": 0, "a": "seed-verified"}
+{"id": "c3680b44d600", "cat": "shell", "tip": "Functions return a number with return; to return text, print it and capture it with $(...).", "n": 0, "a": "seed-verified"}
+{"id": "789466876296", "cat": "shell", "tip": "Exit code 127 means command not found and 126 means the file exists but is not executable.", "n": 0, "a": "seed-verified"}
+{"id": "bbe79ef9c99d", "cat": "shell", "tip": "Exit codes above 128 mean the process was killed by a signal: 137 is SIGKILL (often out of memory) and 143 is SIGTERM.", "n": 0, "a": "seed-verified"}
+{"id": "34454dd8c264", "cat": "shell", "tip": "Use nohup or setsid to start a program that must keep running after the terminal closes, and redirect its output to a log file.", "n": 0, "a": "seed-verified"}
+{"id": "587630bc42cc", "cat": "shell", "tip": "$! holds the process id of the last background job; save it to stop or wait for that job later.", "n": 0, "a": "seed-verified"}
+{"id": "41fe629021ad", "cat": "shell", "tip": "wait without arguments waits for all background jobs of the script, a simple way to run steps in parallel and join them.", "n": 0, "a": "seed-verified"}
+{"id": "def15abb95be", "cat": "shell", "tip": "kill sends SIGTERM by default so programs can clean up; use kill -9 only when a program ignores SIGTERM.", "n": 0, "a": "seed"}
+{"id": "d4011160acef", "cat": "shell", "tip": "pgrep -x name matches the exact process name; pgrep -f matches the whole command line and can match your own grep or shell.", "n": 0, "a": "seed-verified"}
+{"id": "3fa8ad44119e", "cat": "shell", "tip": "ps -eo pid,etime,cmd --sort=-%mem shows processes with their running time, sorted by memory use.", "n": 0, "a": "seed"}
+{"id": "ce6c88e8c92b", "cat": "shell", "tip": "lsof -i :8080 or ss -ltnp shows which process listens on a port before you start a server on it.", "n": 0, "a": "seed"}
+{"id": "17074ecc5b89", "cat": "shell", "tip": "Use flock to stop two copies of a cron script running at the same time: flock -n on a lock file makes the second copy exit at once when the lock is taken.", "n": 0, "a": "seed"}
+{"id": "a97918cec21b", "cat": "shell", "tip": "watch -n 2 command reruns a command every two seconds; for scripts use a loop with sleep instead, because watch needs a terminal.", "n": 0, "a": "seed"}
+{"id": "757be66b47c3", "cat": "shell", "tip": "Run a long command inside tmux or screen over ssh, so it survives a dropped connection.", "n": 0, "a": "seed"}
+{"id": "ecb1a1e4e793", "cat": "shell", "tip": "ctrl+r searches your bash history backwards; type part of an earlier command to find it.", "n": 0, "a": "seed"}
+{"id": "47094f02adbe", "cat": "shell", "tip": "history | grep word finds earlier commands; !number reruns one, but check it first when it changes files.", "n": 0, "a": "seed"}
+{"id": "ea3e92cfc2ef", "cat": "shell", "tip": "Use realpath to turn a relative path into an absolute one before saving it in a config file.", "n": 0, "a": "seed-verified"}
+{"id": "d2993a876c95", "cat": "shell", "tip": "Check a script for common mistakes with shellcheck; it finds unquoted variables, wrong tests and portability problems.", "n": 0, "a": "seed"}
+{"id": "b282c0104ec7", "cat": "shell", "tip": "bash -n followed by the script name checks the syntax of a script without running it.", "n": 0, "a": "seed-verified"}
+{"id": "a95d6e510233", "cat": "shell", "tip": "bash -x followed by the script name prints each command before it runs, which shows exactly where a script goes wrong.", "n": 0, "a": "seed-verified"}
+{"id": "bfca58614e55", "cat": "shell", "tip": "env -i runs a command with an empty environment, useful to reproduce how a program behaves under cron or systemd.", "n": 0, "a": "seed-verified"}
+{"id": "d914f1edb1c9", "cat": "shell", "tip": "Cron runs jobs with a minimal PATH; use full paths to programs in cron lines or set PATH at the top of the cron table.", "n": 0, "a": "seed"}
+{"id": "351132b52b7c", "cat": "shell", "tip": "Percent signs in a cron table line mean newline to cron; escape them as \\% in date formats.", "n": 0, "a": "seed"}
+{"id": "718d696492de", "cat": "shell", "tip": "Test a cron line by running the exact command with env -i first; most cron failures come from a different PATH, HOME or working directory.", "n": 0, "a": "seed"}
+{"id": "0efcce346fc7", "cat": "shell", "tip": "Use systemd timers instead of cron when you want logs in the journal and automatic retries after the Pi was switched off.", "n": 0, "a": "seed"}
+{"id": "2fef2e681105", "cat": "shell", "tip": "Do not parse ls output in scripts; file names with spaces or newlines break it. Use globs or find instead.", "n": 0, "a": "seed"}
+{"id": "fb58172518ce", "cat": "shell", "tip": "Use test -s file to check that a file exists and is not empty.", "n": 0, "a": "seed-verified"}
+{"id": "e6fa897157d6", "cat": "shell", "tip": "[ -e path ] is true for files and folders, -f only for regular files and -d only for folders.", "n": 0, "a": "seed-verified"}
+{"id": "163450796571", "cat": "shell", "tip": "Compare file contents with cmp -s for a silent yes or no answer, or diff -u to see the changes.", "n": 0, "a": "seed-verified"}
+{"id": "4c1ae693f693", "cat": "shell", "tip": "diff -u old new produces a unified diff that is easy to read and can be applied with patch.", "n": 0, "a": "seed-verified"}
+{"id": "a5d1015e3fcd", "cat": "shell", "tip": "Use md5sum or sha256sum with -c to check many files against a saved list of checksums.", "n": 0, "a": "seed-verified"}
+{"id": "d092f4551d78", "cat": "shell", "tip": "column -t aligns whitespace separated text into a readable table.", "n": 0, "a": "seed"}
+{"id": "3a7aef13c562", "cat": "shell", "tip": "numfmt --to=iec turns byte counts into human readable sizes like 1.5K or 2.0M.", "n": 0, "a": "seed-verified"}
+{"id": "6551abaea216", "cat": "shell", "tip": "Quote the right side of = in [[ ]] when you want a literal comparison; unquoted it is a glob pattern.", "n": 0, "a": "seed"}
+{"id": "c8a7b7e25925", "cat": "shell", "tip": "Use =~ in [[ ]] for regular expressions and read the captured groups from BASH_REMATCH.", "n": 0, "a": "seed-verified"}
+{"id": "f5af7d703269", "cat": "shell", "tip": "Use case statements to match a value against several patterns; it is clearer than a chain of if tests.", "n": 0, "a": "seed-verified"}
+{"id": "c6eba3b02d9f", "cat": "shell", "tip": "getopts parses short options like -v -o file in bash scripts without external tools.", "n": 0, "a": "seed-verified"}
+{"id": "bcd7e732bbe4", "cat": "shell", "tip": "Use read -p with a default or skip prompts entirely in scripts that an agent runs; interactive prompts make automation hang.", "n": 0, "a": "seed"}
+{"id": "e13bc3a9682d", "cat": "shell", "tip": "yes | command answers every prompt with y; use the program's own -y or --assume-yes option instead when it has one.", "n": 0, "a": "seed"}
+{"id": "e0f8aba0e2ce", "cat": "shell", "tip": "Keep scripts idempotent: check whether a step was already done before doing it, so running the script twice is safe.", "n": 0, "a": "seed-verified"}
+{"id": "067542b2b89a", "cat": "shell", "tip": "Append a line to a config file only when it is missing with grep -qxF line file || echo line >> file.", "n": 0, "a": "seed-verified"}
+{"id": "122cda168b5d", "cat": "shell", "tip": "sudo with a redirect does not work as expected because the shell opens the file before sudo runs; use echo text | sudo tee file instead.", "n": 0, "a": "seed"}
+{"id": "6200a41e61f4", "cat": "shell", "tip": "sudo -n true checks whether sudo works without a password prompt, which scripts and agents need.", "n": 0, "a": "seed"}
+{"id": "a9596ddc9dfa", "cat": "shell", "tip": "Long running downloads should use wget -c or curl -C - to resume after a broken connection instead of starting again.", "n": 0, "a": "seed"}
+{"id": "8489be7c1ece", "cat": "shell", "tip": "curl -f makes curl fail on HTTP errors like 404 instead of saving the error page as if it were the file.", "n": 0, "a": "seed"}
+{"id": "41d760a57bdd", "cat": "shell", "tip": "curl -L follows redirects; without it you may save a small redirect page instead of the real download.", "n": 0, "a": "seed"}
+{"id": "21154b1d9fc1", "cat": "shell", "tip": "curl -sS hides the progress bar but still shows errors, a good default in scripts.", "n": 0, "a": "seed"}
+{"id": "77e177e3f4b4", "cat": "shell", "tip": "curl -w '%{http_code}' prints the HTTP status, so a script can check whether a request succeeded.", "n": 0, "a": "seed"}
+{"id": "89fc45a4665e", "cat": "shell", "tip": "Use dos2unix or sed -i 's/\\r$//' to fix Windows line endings in files copied from a Windows computer.", "n": 0, "a": "seed-verified"}
+{"id": "b3d98d7712f3", "cat": "files", "tip": "Use rsync -a source/ dest/ to copy folders with permissions and times; the trailing slash on the source copies its contents, not the folder itself.", "n": 0, "a": "seed-verified"}
+{"id": "1a0902bbcb31", "cat": "files", "tip": "rsync --dry-run shows what would change before a sync that might overwrite or delete files.", "n": 0, "a": "seed"}
+{"id": "0903d226cd04", "cat": "files", "tip": "cp -a keeps permissions, owners and timestamps, which matters when copying configuration or project folders.", "n": 0, "a": "seed-verified"}
+{"id": "fb60e4528158", "cat": "files", "tip": "cp -n never overwrites an existing file, a safe choice when merging folders.", "n": 0, "a": "seed-verified"}
+{"id": "d232b5461f4b", "cat": "files", "tip": "mv into a folder that does not exist renames the file instead of moving it; create the folder first or end the target with a slash to get an error.", "n": 0, "a": "seed-verified"}
+{"id": "a974bf7d4480", "cat": "files", "tip": "Before deleting, move files into a trash folder with a date; it gives a way back if the wrong files were chosen.", "n": 0, "a": "seed"}
+{"id": "717c23156055", "cat": "files", "tip": "find . -mtime +30 lists files older than 30 days; check the list before adding a delete action.", "n": 0, "a": "seed-verified"}
+{"id": "1e82c89aeb03", "cat": "files", "tip": "find -newer reference finds files changed after the reference file, useful to see what a command just created.", "n": 0, "a": "seed-verified"}
+{"id": "bda0bbf92487", "cat": "files", "tip": "find -size +100M finds big files; du -sh * | sort -h shows which folders use the most space.", "n": 0, "a": "seed-verified"}
+{"id": "5df64ba26651", "cat": "files", "tip": "du -sh folder shows the total size of a folder; df -h shows free space per file system.", "n": 0, "a": "seed"}
+{"id": "895cd4f4d9ce", "cat": "files", "tip": "ncdu gives an interactive view of disk use, but in scripts use du -xh --max-depth=1 | sort -h.", "n": 0, "a": "seed"}
+{"id": "8a824f13d2c4", "cat": "files", "tip": "tar -czf archive.tar.gz folder creates a compressed archive; tar -tzf lists it and tar -xzf extracts it.", "n": 0, "a": "seed-verified"}
+{"id": "82770c728d9e", "cat": "files", "tip": "tar -C folder -xf archive extracts into another folder without changing into it.", "n": 0, "a": "seed-verified"}
+{"id": "7f1c207c57c1", "cat": "files", "tip": "unzip -o overwrites without asking and unzip -n never overwrites; both avoid a prompt that would make a script hang.", "n": 0, "a": "seed"}
+{"id": "5c18c590073b", "cat": "files", "tip": "zip -r archive.zip folder includes subfolders; without -r only the folder entry is stored.", "n": 0, "a": "seed-verified"}
+{"id": "4578572294f7", "cat": "files", "tip": "7z x handles 7z, rar and many other formats that unzip cannot open; install p7zip-full on Debian.", "n": 0, "a": "seed"}
+{"id": "c19d44e198d2", "cat": "files", "tip": "Check what is inside an archive before extracting it, so files do not scatter into the current folder.", "n": 0, "a": "seed"}
+{"id": "2c1f0848323f", "cat": "files", "tip": "ln -s target link creates a symbolic link; readlink -f link shows where it points.", "n": 0, "a": "seed-verified"}
+{"id": "e886f8e3e9ed", "cat": "files", "tip": "A symbolic link with a relative target is resolved from the link's own folder, not from the current folder.", "n": 0, "a": "seed-verified"}
+{"id": "43ffc6a2cc09", "cat": "files", "tip": "chmod +x makes a script executable; chmod 600 makes a file readable only by its owner, right for files with secrets.", "n": 0, "a": "seed-verified"}
+{"id": "a162c5d869ca", "cat": "files", "tip": "chmod 755 is a common mode for folders and programs: the owner can write, everyone can read and enter or run.", "n": 0, "a": "seed-verified"}
+{"id": "fe252c2c8b6a", "cat": "files", "tip": "umask decides the default permissions of new files; umask 077 makes new files private to their owner.", "n": 0, "a": "seed-verified"}
+{"id": "68d0f3c6f507", "cat": "files", "tip": "Files created with sudo belong to root; fix ownership afterwards with sudo chown user:user file so the normal user can edit them.", "n": 0, "a": "seed"}
+{"id": "dcf87a97b8f3", "cat": "files", "tip": "Execute permission on a folder means the right to enter it; without it you cannot reach files inside even if they are readable.", "n": 0, "a": "seed"}
+{"id": "83a574fc2be5", "cat": "files", "tip": "file name reports the real type of a file from its contents, independent of its extension.", "n": 0, "a": "seed-verified"}
+{"id": "4eee685de028", "cat": "files", "tip": "truncate -s 0 file empties a log file that a running program keeps open; deleting it would not free the space until the program closes it.", "n": 0, "a": "seed-verified"}
+{"id": "5aa1df2d0c0c", "cat": "files", "tip": "split -b 50M big.file part_ cuts a large file into pieces and cat part_* > big.file joins them again.", "n": 0, "a": "seed-verified"}
+{"id": "21d1d8097868", "cat": "files", "tip": "Use iconv to convert text files from Windows Turkish (CP1254) or Latin encodings to UTF-8.", "n": 0, "a": "seed-verified"}
+{"id": "fb726a179f71", "cat": "files", "tip": "Hidden files start with a dot and are not matched by *; use ls -a to see them and include .??* or dotglob when copying.", "n": 0, "a": "seed-verified"}
+{"id": "736568d14193", "cat": "files", "tip": "Copy a folder including hidden files with cp -a src/. dest/; src/* misses dot files.", "n": 0, "a": "seed-verified"}
+{"id": "f3c04b1de745", "cat": "files", "tip": "basename of a path ending in a slash is the folder name; strip trailing slashes when building new paths from it.", "n": 0, "a": "seed-verified"}
+{"id": "2141a3394202", "cat": "files", "tip": "File names are case sensitive on Linux: Photo.JPG and photo.jpg are different files.", "n": 0, "a": "seed-verified"}
+{"id": "e577cc3cd2f9", "cat": "files", "tip": "Avoid spaces and special characters in names of files that scripts handle; use letters, digits, dashes and underscores.", "n": 0, "a": "seed"}
+{"id": "36f1daecdbcd", "cat": "files", "tip": "Keep backups of important configuration before editing: cp file file.bak or a dated copy.", "n": 0, "a": "seed"}
+{"id": "2df18f67d590", "cat": "files", "tip": "Write config changes to a new file and move it into place, so a crash halfway does not leave a broken config.", "n": 0, "a": "seed"}
+{"id": "50dfe879db4b", "cat": "files", "tip": "inotifywait from inotify-tools waits for file changes, which lets scripts react to new files without polling.", "n": 0, "a": "seed"}
+{"id": "a56b475e92a9", "cat": "files", "tip": "The trash of the desktop file manager lives in ~/.local/share/Trash; deleting with rm does not go there.", "n": 0, "a": "seed"}
+{"id": "7bd5cc63436a", "cat": "files", "tip": "USB drives appear under /media/user/label on Raspberry Pi OS; check with lsblk and df before writing to them.", "n": 0, "a": "seed"}
+{"id": "0078fdcb4e9b", "cat": "files", "tip": "FAT formatted USB drives cannot store files larger than 4 GB or Linux permissions; use exFAT or ext4 for big files.", "n": 0, "a": "seed"}
+{"id": "b81c540b4209", "cat": "files", "tip": "Unmount a USB drive with umount or the eject button before unplugging, so buffered writes are not lost.", "n": 0, "a": "seed"}
+{"id": "d0947ffe8e38", "cat": "files", "tip": "sync writes all buffered data to disk; run it before cutting the power of a Raspberry Pi to avoid SD card corruption.", "n": 0, "a": "seed"}
+{"id": "8378b059d219", "cat": "git", "tip": "git status --short gives a compact list of changed files; ?? marks untracked ones and M marks modified ones.", "n": 0, "a": "seed-verified"}
+{"id": "1e68ec6d4281", "cat": "git", "tip": "git add -p lets you stage parts of a file, so one commit contains only one logical change.", "n": 0, "a": "seed"}
+{"id": "f5fce30fab35", "cat": "git", "tip": "Write commit messages with a short summary line under about 50 characters, then a blank line and the details.", "n": 0, "a": "seed"}
+{"id": "4ac777cfc21b", "cat": "git", "tip": "git commit --amend changes the last commit; only amend commits that you have not pushed yet.", "n": 0, "a": "seed-verified"}
+{"id": "17aa46a4d28b", "cat": "git", "tip": "git log --oneline --graph --all shows the branch structure in a compact form.", "n": 0, "a": "seed-verified"}
+{"id": "989d222c62b9", "cat": "git", "tip": "git log -p file shows the history of one file with the changes in each commit.", "n": 0, "a": "seed"}
+{"id": "d40ba573f5e5", "cat": "git", "tip": "git log -S text finds commits that added or removed a piece of text, a fast way to see when something changed.", "n": 0, "a": "seed-verified"}
+{"id": "faf899377a64", "cat": "git", "tip": "git restore file throws away unstaged changes to a file; git restore --staged file unstages it but keeps the changes.", "n": 0, "a": "seed-verified"}
+{"id": "cd56a038c82f", "cat": "git", "tip": "git stash saves unfinished changes so you can switch branches; git stash pop brings them back.", "n": 0, "a": "seed-verified"}
+{"id": "91ca2e10d173", "cat": "git", "tip": "git switch -c name creates and switches to a new branch; git switch name changes to an existing one.", "n": 0, "a": "seed-verified"}
+{"id": "a4f20ebf5055", "cat": "git", "tip": "git rev-parse --show-toplevel prints the root folder of the repository you are in.", "n": 0, "a": "seed-verified"}
+{"id": "8aceb5173f8f", "cat": "git", "tip": "git rev-parse --is-inside-work-tree tells a script whether it runs inside a git repository.", "n": 0, "a": "seed-verified"}
+{"id": "e855f85008da", "cat": "git", "tip": "A .gitignore line only affects files that are not tracked yet; run git rm --cached file to stop tracking a file that is already committed.", "n": 0, "a": "seed-verified"}
+{"id": "55f4a395136b", "cat": "git", "tip": "git check-ignore -v file shows which .gitignore rule ignores a file.", "n": 0, "a": "seed-verified"}
+{"id": "6bf1eab484f3", "cat": "git", "tip": "Never commit .env files, keys or tokens; add them to .gitignore before the first commit, because removing them later does not remove them from history.", "n": 0, "a": "seed"}
+{"id": "4301e9629600", "cat": "git", "tip": "If a secret was pushed, revoke it at the provider first; rewriting history is not enough because copies may already exist.", "n": 0, "a": "seed"}
+{"id": "1f3dcaa6f435", "cat": "git", "tip": "git clean -n shows which untracked files would be removed; check it before running git clean -f.", "n": 0, "a": "seed-verified"}
+{"id": "7ec8b8fab0bf", "cat": "git", "tip": "git tag v1.0 marks a release; push tags explicitly with git push origin v1.0 because a normal push does not send them.", "n": 0, "a": "seed-verified"}
+{"id": "c56b95545324", "cat": "git", "tip": "git describe --tags gives a readable version like v1.0-3-gabc123 based on the nearest tag.", "n": 0, "a": "seed-verified"}
+{"id": "958a1a09316d", "cat": "git", "tip": "git bisect finds the commit that introduced a bug by binary search; git bisect run with a test script automates it.", "n": 0, "a": "seed"}
+{"id": "90c6d24271f0", "cat": "git", "tip": "git reflog lists where HEAD has been, which lets you recover commits after a bad reset or rebase.", "n": 0, "a": "seed-verified"}
+{"id": "50d6bd41dbe4", "cat": "git", "tip": "git revert creates a new commit that undoes an old one; unlike reset it is safe on branches that others already pulled.", "n": 0, "a": "seed-verified"}
+{"id": "454368e08b94", "cat": "git", "tip": "git merge --no-ff keeps a merge commit, which shows in the history that a feature branch was merged.", "n": 0, "a": "seed"}
+{"id": "24f851336db8", "cat": "git", "tip": "During a merge conflict, the file contains <<<<<<<, ======= and >>>>>>> markers; edit them away, git add the file and finish with git commit.", "n": 0, "a": "seed"}
+{"id": "9bb3dd0d4fc6", "cat": "git", "tip": "git merge --abort or git rebase --abort returns to the state before the operation when a conflict gets out of hand.", "n": 0, "a": "seed"}
+{"id": "5aed66dbbb82", "cat": "git", "tip": "git pull --rebase replays your local commits on top of the remote ones and avoids extra merge commits for small changes.", "n": 0, "a": "seed"}
+{"id": "21c6fcb4db72", "cat": "git", "tip": "git fetch only downloads remote changes; it never changes your files, so it is always safe to run.", "n": 0, "a": "seed"}
+{"id": "6a4e1dd18082", "cat": "git", "tip": "git remote -v shows where push and pull go; check it before pushing to make sure the remote is the right repository.", "n": 0, "a": "seed-verified"}
+{"id": "ee1adfed6613", "cat": "git", "tip": "Do not force push to a shared main branch; if you must rewrite your own branch, use git push --force-with-lease, which refuses when someone else pushed.", "n": 0, "a": "seed"}
+{"id": "ae50f25a6679", "cat": "git", "tip": "A rejected push usually means the remote has commits you do not have; fetch and rebase or merge, then push again.", "n": 0, "a": "seed"}
+{"id": "8bf3dc8880bc", "cat": "git", "tip": "git clone --depth 1 downloads only the latest commit, much faster for large repositories on a Raspberry Pi.", "n": 0, "a": "seed"}
+{"id": "eb6f005e106f", "cat": "git", "tip": "git config --global user.name and user.email must be set before the first commit, or git refuses to commit.", "n": 0, "a": "seed-verified"}
+{"id": "d6733949d06d", "cat": "git", "tip": "git config --global core.autocrlf input avoids committing Windows line endings from files edited on Windows.", "n": 0, "a": "seed"}
+{"id": "395754c8cc09", "cat": "git", "tip": "Use a credential helper or the GitHub CLI for HTTPS authentication; passwords are no longer accepted for GitHub over HTTPS, a token is needed.", "n": 0, "a": "seed"}
+{"id": "15ef33e1d56b", "cat": "git", "tip": "A fine grained GitHub token can be limited to one repository and only the permissions needed, which limits damage if it leaks.", "n": 0, "a": "seed"}
+{"id": "2cd2de04a84c", "cat": "git", "tip": "Never put a token inside the remote address in a shared script or log; it is printed by git remote -v and stored in the config.", "n": 0, "a": "seed"}
+{"id": "979089ebf53c", "cat": "git", "tip": "git ls-files lists tracked files, a reliable way to see what is in the repository.", "n": 0, "a": "seed-verified"}
+{"id": "49087e12c11e", "cat": "git", "tip": "git diff --stat summarizes how many lines changed in each file.", "n": 0, "a": "seed-verified"}
+{"id": "598fcb1bec12", "cat": "git", "tip": "git diff branch1..branch2 compares two branches; add --name-only to list only the changed files.", "n": 0, "a": "seed"}
+{"id": "9cfe8ebb92c0", "cat": "git", "tip": "A detached HEAD means you checked out a commit, not a branch; create a branch with git switch -c name before making commits you want to keep.", "n": 0, "a": "seed"}
+{"id": "b3fe012ac88a", "cat": "git", "tip": "Large binary files make repositories slow to clone; keep them out of git or use Git LFS.", "n": 0, "a": "seed"}
+{"id": "f31bf101b391", "cat": "git", "tip": "git gc packs objects and removes unreachable ones, reducing the size of the .git folder.", "n": 0, "a": "seed"}
+{"id": "11af5bfa4559", "cat": "git", "tip": "git worktree add ../other branch checks out a second branch in another folder without a second clone.", "n": 0, "a": "seed-verified"}
+{"id": "ab817801c4b6", "cat": "git", "tip": "git submodule update --init --recursive fetches submodules after cloning a project that uses them.", "n": 0, "a": "seed"}
+{"id": "cb3a6ee0a947", "cat": "git", "tip": "Commit small, working steps often; a small commit is easy to review and easy to revert.", "n": 0, "a": "seed"}
+{"id": "ea6cbfc450e9", "cat": "git", "tip": "Run the tests before committing; a pre-commit hook in .git/hooks/pre-commit can do it automatically.", "n": 0, "a": "seed"}
+{"id": "1cd50e62fad3", "cat": "git", "tip": "git log --since='2 days ago' limits history by time, which helps when looking for a recent change.", "n": 0, "a": "seed"}
+{"id": "f72704fe4631", "cat": "git", "tip": "git grep pattern searches only tracked files and is much faster than grep -r in big repositories.", "n": 0, "a": "seed-verified"}
+{"id": "0d2a4ff55310", "cat": "raspberry-pi", "tip": "Check the Raspberry Pi model with cat /proc/device-tree/model; scripts can use it to adapt to Pi 3, 4 or 5.", "n": 0, "a": "seed"}
+{"id": "3ce786f3ea86", "cat": "raspberry-pi", "tip": "vcgencmd get_throttled returns 0x0 when power and temperature are fine; any other value means undervoltage or thermal throttling happened.", "n": 0, "a": "seed"}
+{"id": "d267bfc41b28", "cat": "raspberry-pi", "tip": "Bit 0 of get_throttled means undervoltage right now and bit 16 means it happened since boot; a weak power supply or battery is the usual cause.", "n": 0, "a": "seed"}
+{"id": "324b4f3b2b1a", "cat": "raspberry-pi", "tip": "A Raspberry Pi 4 needs a 5.1 V 3 A supply; undervoltage causes random crashes, USB devices disconnecting and SD card corruption.", "n": 0, "a": "seed"}
+{"id": "a9ad5c7238da", "cat": "raspberry-pi", "tip": "On battery powered Pis, the voltage drops under load; watch get_throttled during heavy work to see whether the battery or converter is too weak.", "n": 0, "a": "seed"}
+{"id": "1f8a5906c3db", "cat": "raspberry-pi", "tip": "vcgencmd measure_temp shows the CPU temperature; above about 80 C the Pi 4 slows down to protect itself.", "n": 0, "a": "seed"}
+{"id": "580da6474fba", "cat": "raspberry-pi", "tip": "A small heatsink and fan keep a Pi 4 in a closed case from throttling during long builds or browser use.", "n": 0, "a": "seed"}
+{"id": "4ac7358c0148", "cat": "raspberry-pi", "tip": "Use raspi-config nonint commands in scripts, for example raspi-config nonint do_ssh 0 to enable SSH, instead of the menu.", "n": 0, "a": "seed"}
+{"id": "dd9f983f8ce4", "cat": "raspberry-pi", "tip": "raspi-config can switch Raspberry Pi OS Bookworm between Wayland and X11 under Advanced Options; desktop automation tools need X11.", "n": 0, "a": "seed"}
+{"id": "ce671847702e", "cat": "raspberry-pi", "tip": "On Raspberry Pi OS Bookworm the boot configuration moved to /boot/firmware/config.txt; older guides still say /boot/config.txt.", "n": 0, "a": "seed"}
+{"id": "ddbd3263104a", "cat": "raspberry-pi", "tip": "Enable I2C and SPI with raspi-config, then check that /dev/i2c-1 or /dev/spidev0.0 exists.", "n": 0, "a": "seed"}
+{"id": "af1675373794", "cat": "raspberry-pi", "tip": "i2cdetect -y 1 lists the addresses of devices on the I2C bus; a 16x2 LCD backpack usually shows up at 0x27 or 0x3f.", "n": 0, "a": "seed"}
+{"id": "5b2aabd98f38", "cat": "raspberry-pi", "tip": "Use pinctrl on Raspberry Pi OS Bookworm to read and set GPIO pins from the shell; raspi-gpio is the older tool.", "n": 0, "a": "seed"}
+{"id": "181fd5c3d068", "cat": "raspberry-pi", "tip": "The gpiozero library is the simplest way to use buttons, LEDs and sensors from Python on a Raspberry Pi.", "n": 0, "a": "seed"}
+{"id": "d0d1a3c28a21", "cat": "raspberry-pi", "tip": "RPi.GPIO does not support the Raspberry Pi 5; use gpiozero or lgpio, which work on all models.", "n": 0, "a": "seed"}
+{"id": "21df4c193ffd", "cat": "raspberry-pi", "tip": "GPIO pins use 3.3 V logic; connecting a 5 V signal directly can destroy the pin.", "n": 0, "a": "seed"}
+{"id": "00121778fe9b", "cat": "raspberry-pi", "tip": "Use a pull up or pull down resistor, or the internal one in software, for buttons; a floating input reads random values.", "n": 0, "a": "seed"}
+{"id": "57e6ff612346", "cat": "raspberry-pi", "tip": "A momentary button on a GPIO pin can trigger a clean shutdown with gpiozero Button and a call to systemctl poweroff.", "n": 0, "a": "seed"}
+{"id": "c6ada7bdd0bf", "cat": "raspberry-pi", "tip": "The dtoverlay=gpio-shutdown line in config.txt turns GPIO3 into a power button without writing any code.", "n": 0, "a": "seed"}
+{"id": "b6edd20d3e2f", "cat": "raspberry-pi", "tip": "Hardware PWM is available on GPIO12, 13, 18 and 19; software PWM on other pins can jitter when the CPU is busy.", "n": 0, "a": "seed"}
+{"id": "7385cc67856e", "cat": "raspberry-pi", "tip": "Status LEDs driven from a script should be turned off in the script's exit handler, so they do not stay lit after a crash.", "n": 0, "a": "seed"}
+{"id": "73b01af191b9", "cat": "raspberry-pi", "tip": "The Pi has no real time clock before the Pi 5; without network the time is wrong after boot until NTP syncs, which breaks TLS certificates.", "n": 0, "a": "seed"}
+{"id": "dbc7b3ee2254", "cat": "raspberry-pi", "tip": "timedatectl shows whether the clock is synchronized; wrong time causes certificate errors and failing apt updates.", "n": 0, "a": "seed"}
+{"id": "f79fd5860e07", "cat": "raspberry-pi", "tip": "Use an SSD over USB 3 for heavy writing; SD cards wear out and are much slower for databases and logs.", "n": 0, "a": "seed"}
+{"id": "7c934cf03cc0", "cat": "raspberry-pi", "tip": "Check SD card or SSD health problems in dmesg; I/O errors there mean the storage is failing.", "n": 0, "a": "seed"}
+{"id": "b6bd486d0817", "cat": "raspberry-pi", "tip": "Reduce SD card writes by keeping logs in RAM with log2ram or by limiting journald size.", "n": 0, "a": "seed"}
+{"id": "6de0687d833e", "cat": "raspberry-pi", "tip": "free -h shows memory; on a Pi with little RAM a larger swap file prevents crashes when compiling, at the cost of speed.", "n": 0, "a": "seed"}
+{"id": "eb57edf7de61", "cat": "raspberry-pi", "tip": "Raspberry Pi OS Bookworm sets swap with rpi-swap or dphys-swapfile depending on the release; check which one exists before changing swap size.", "n": 0, "a": "seed"}
+{"id": "dd20a4917738", "cat": "raspberry-pi", "tip": "uname -m prints aarch64 on 64 bit Raspberry Pi OS and armv7l on 32 bit; download programs built for the right one.", "n": 0, "a": "seed"}
+{"id": "f3330b791ebe", "cat": "raspberry-pi", "tip": "Many x86 only programs and games do not run on a Pi; look for an arm64 build, a Flatpak, or a web version first.", "n": 0, "a": "seed"}
+{"id": "47e338eab514", "cat": "raspberry-pi", "tip": "Java programs usually run on a Pi when a suitable OpenJDK is installed, but native libraries inside them may be x86 only.", "n": 0, "a": "seed"}
+{"id": "ade8a6c099a7", "cat": "raspberry-pi", "tip": "Box64 and Box86 can run some x86 Linux programs on a Pi, but they are slow and not every program works.", "n": 0, "a": "seed"}
+{"id": "af365e337639", "cat": "raspberry-pi", "tip": "The official camera stack on Bookworm is libcamera; use rpicam-still and rpicam-vid instead of the old raspistill.", "n": 0, "a": "seed"}
+{"id": "75732f1b7cd2", "cat": "raspberry-pi", "tip": "rpicam-hello --list-cameras shows whether a camera module is detected.", "n": 0, "a": "seed"}
+{"id": "009f2ba22f12", "cat": "raspberry-pi", "tip": "Audio output on a Pi can go to HDMI or the headphone jack; choose the device in the desktop volume menu or with wpctl on PipeWire systems.", "n": 0, "a": "seed"}
+{"id": "73cbda2c8f87", "cat": "raspberry-pi", "tip": "Raspberry Pi OS Bookworm uses PipeWire for sound; pactl and wpctl work, while old guides for PulseAudio or plain ALSA may not.", "n": 0, "a": "seed"}
+{"id": "11f4d8b37a04", "cat": "raspberry-pi", "tip": "HDMI screens that stay black often need hdmi_force_hotplug or a fixed mode in config.txt when the Pi boots before the screen.", "n": 0, "a": "seed"}
+{"id": "7d0660d42dd5", "cat": "raspberry-pi", "tip": "Screen blanking on Raspberry Pi OS can be turned off in raspi-config under Display Options, which keeps a kiosk or monitor display on.", "n": 0, "a": "seed"}
+{"id": "8c3fbb770c25", "cat": "raspberry-pi", "tip": "The Pi's hostname is set with raspi-config or hostnamectl; Avahi announces it on the local network under that name with the .local suffix.", "n": 0, "a": "seed"}
+{"id": "338be7a62333", "cat": "raspberry-pi", "tip": "The rpi-eeprom-update tool updates the Pi 4 boot firmware, which improves USB boot and power handling.", "n": 0, "a": "seed"}
+{"id": "60fa45543480", "cat": "raspberry-pi", "tip": "A Pi 4 can boot from a USB SSD without an SD card after the bootloader is updated and the boot order is set in raspi-config.", "n": 0, "a": "seed"}
+{"id": "6bce740af780", "cat": "raspberry-pi", "tip": "Shutting down with sudo poweroff before cutting power protects the SD card; just pulling the plug can corrupt it.", "n": 0, "a": "seed"}
+{"id": "ef21e18eae33", "cat": "raspberry-pi", "tip": "A UPS hat or a battery board with a status signal lets a script shut the Pi down cleanly when the battery gets low.", "n": 0, "a": "seed"}
+{"id": "109374925058", "cat": "raspberry-pi", "tip": "The green activity LED blinking in patterns at boot is an error code; the number of long and short blinks tells you the cause.", "n": 0, "a": "seed"}
+{"id": "e68e2f3de733", "cat": "raspberry-pi", "tip": "Use rpi-connect or SSH for remote access; open router ports to a Pi only with keys and updates in place.", "n": 0, "a": "seed"}
+{"id": "29190cc49da6", "cat": "raspberry-pi", "tip": "Use the Raspberry Pi Imager advanced options to set user, Wi-Fi, SSH and locale before the first boot.", "n": 0, "a": "seed"}
+{"id": "4d2b82275161", "cat": "systemd", "tip": "systemctl status name shows whether a service runs, its last log lines and why it stopped.", "n": 0, "a": "seed"}
+{"id": "564a5ba9d37d", "cat": "systemd", "tip": "journalctl -u name -f follows a service's log live; -n 100 shows the last hundred lines.", "n": 0, "a": "seed"}
+{"id": "bd8a79d2aa34", "cat": "systemd", "tip": "journalctl -b -p err lists only errors from the current boot, a quick health check.", "n": 0, "a": "seed"}
+{"id": "bee09df3079e", "cat": "systemd", "tip": "journalctl --since '10 min ago' limits the log to recent events.", "n": 0, "a": "seed"}
+{"id": "7cf51f28cc11", "cat": "systemd", "tip": "systemctl is-active and is-enabled print a single word, which suits scripts and checks.", "n": 0, "a": "seed"}
+{"id": "ed8e019445da", "cat": "systemd", "tip": "systemctl --failed lists services that crashed or failed to start.", "n": 0, "a": "seed"}
+{"id": "2799674ccf06", "cat": "systemd", "tip": "Restart=on-failure with RestartSec=5 restarts a crashed service automatically after five seconds.", "n": 0, "a": "seed"}
+{"id": "fb097d0af39d", "cat": "systemd", "tip": "Set WorkingDirectory in a unit file; relative paths in the program are otherwise resolved from the root folder.", "n": 0, "a": "seed"}
+{"id": "e930aafb25e5", "cat": "systemd", "tip": "Set User= in a unit so a service does not run as root unless it must.", "n": 0, "a": "seed"}
+{"id": "b92327b622d4", "cat": "systemd", "tip": "Services do not get your desktop environment; set DISPLAY and XAUTHORITY in the unit when the program needs the screen.", "n": 0, "a": "seed"}
+{"id": "b98d1c69d659", "cat": "systemd", "tip": "Environment= and EnvironmentFile= set variables for a service; keep secrets in an EnvironmentFile readable only by its user.", "n": 0, "a": "seed"}
+{"id": "ef41dca4f238", "cat": "systemd", "tip": "systemd-analyze blame shows which services make booting slow.", "n": 0, "a": "seed"}
+{"id": "409868b369c7", "cat": "systemd", "tip": "systemctl edit name creates an override file, which survives package updates unlike editing the original unit.", "n": 0, "a": "seed"}
+{"id": "056fde48dc67", "cat": "systemd", "tip": "A user service in ~/.config/systemd/user runs as that user with systemctl --user; enable lingering with loginctl enable-linger to start it at boot.", "n": 0, "a": "seed"}
+{"id": "61d966d7efea", "cat": "systemd", "tip": "systemd timers with OnCalendar=daily and Persistent=true run missed jobs after the computer was off.", "n": 0, "a": "seed"}
+{"id": "bb9cd9735f80", "cat": "systemd", "tip": "systemctl list-timers shows when each timer runs next and when it ran last.", "n": 0, "a": "seed"}
+{"id": "3dbc46e6f8a0", "cat": "systemd", "tip": "Use Type=simple for programs that stay in the foreground; Type=forking is only for old daemons that fork themselves.", "n": 0, "a": "seed"}
+{"id": "2a30c887e798", "cat": "systemd", "tip": "StandardOutput=journal is the default, so print and log output of a service appears in journalctl.", "n": 0, "a": "seed"}
+{"id": "26f7ab1a12c1", "cat": "systemd", "tip": "Limit journal size with SystemMaxUse=100M in journald.conf to protect small SD cards.", "n": 0, "a": "seed"}
+{"id": "017eac59aba2", "cat": "systemd", "tip": "KillMode and TimeoutStopSec control how a service is stopped; a slow program may need more time to save its state.", "n": 0, "a": "seed"}
+{"id": "e786398eca6c", "cat": "network", "tip": "ip -brief address shows every network interface with its addresses in one line each.", "n": 0, "a": "seed"}
+{"id": "478b4ec84b5c", "cat": "network", "tip": "ip route shows the default gateway; no default route means no internet even when Wi-Fi is connected.", "n": 0, "a": "seed"}
+{"id": "5be9e0dda175", "cat": "network", "tip": "ping -c 1 to a known IP tests the connection and ping to a name tests DNS as well; comparing both shows which part is broken.", "n": 0, "a": "seed"}
+{"id": "836c758fe6b4", "cat": "network", "tip": "resolvectl status or the nameserver lines in resolv.conf show which DNS servers are used.", "n": 0, "a": "seed"}
+{"id": "ef7a8f5d1bd2", "cat": "network", "tip": "ss -ltnp lists listening TCP ports with the program that owns each one.", "n": 0, "a": "seed"}
+{"id": "8cbe97174318", "cat": "network", "tip": "A server bound to the loopback address is reachable only from the same machine; bind it to all interfaces to accept connections from the network, and only when that is really wanted.", "n": 0, "a": "seed"}
+{"id": "af06961cbe12", "cat": "network", "tip": "curl -I sends only a HEAD request and shows status and headers, a quick check that a web server responds.", "n": 0, "a": "seed"}
+{"id": "9f8d4d6bc559", "cat": "network", "tip": "nc -zv host port checks whether a TCP port is open without sending data.", "n": 0, "a": "seed"}
+{"id": "56c58dd6561a", "cat": "network", "tip": "NetworkManager is the default on Raspberry Pi OS Bookworm; use nmcli to list and join Wi-Fi networks from the shell.", "n": 0, "a": "seed"}
+{"id": "f4e95e3356b1", "cat": "network", "tip": "nmcli device wifi list shows nearby networks with signal strength; nmcli device wifi connect name password ... joins one.", "n": 0, "a": "seed"}
+{"id": "f5818812fc4a", "cat": "network", "tip": "iwgetid -r prints the name of the Wi-Fi network you are connected to.", "n": 0, "a": "seed"}
+{"id": "110ff32ba88f", "cat": "network", "tip": "Weak Wi-Fi shows as dropped connections and slow downloads; check the signal level with nmcli or iwconfig before blaming the server.", "n": 0, "a": "seed"}
+{"id": "ab890dd7c8b4", "cat": "network", "tip": "Disable Wi-Fi power saving on a Pi used as a server; it can make it unreachable after idle periods.", "n": 0, "a": "seed"}
+{"id": "fb7f265f6cec", "cat": "network", "tip": "mDNS names ending in .local work through Avahi; if they fail, use the IP address and check that avahi-daemon runs.", "n": 0, "a": "seed"}
+{"id": "1fdc2f80335f", "cat": "network", "tip": "A firewall such as ufw blocks ports by default once enabled; allow SSH first so you do not lock yourself out.", "n": 0, "a": "seed"}
+{"id": "6daff8aaa6d6", "cat": "network", "tip": "Port forwarding on a home router exposes a service to the internet; use a tunnel or VPN instead when possible.", "n": 0, "a": "seed"}
+{"id": "2ff30bbd8561", "cat": "network", "tip": "Use HTTPS with a certificate from a trusted authority for anything reachable from the internet; never turn off certificate checks in clients.", "n": 0, "a": "seed"}
+{"id": "e51d7399eb28", "cat": "network", "tip": "Certificate errors right after boot on a Pi are often caused by a wrong clock; check the date before anything else.", "n": 0, "a": "seed"}
+{"id": "e9604a240710", "cat": "network", "tip": "traceroute or mtr show where along the path packets get lost.", "n": 0, "a": "seed"}
+{"id": "a43e631026d3", "cat": "network", "tip": "iperf3 measures the real throughput between two machines on your network.", "n": 0, "a": "seed"}
+{"id": "5134f39b8f82", "cat": "network", "tip": "wget --spider checks whether a download address works without saving the file.", "n": 0, "a": "seed"}
+{"id": "bf582a555c6a", "cat": "apt", "tip": "Run apt update before apt install on a system that has not updated for a while; old package lists point to files that no longer exist.", "n": 0, "a": "seed"}
+{"id": "6461b0e51ce2", "cat": "apt", "tip": "apt-cache policy name shows the installed version and the version that would be installed.", "n": 0, "a": "seed"}
+{"id": "7ff29a64b156", "cat": "apt", "tip": "apt-cache search keyword finds package names; apt show name explains what a package contains.", "n": 0, "a": "seed"}
+{"id": "092193bb413e", "cat": "apt", "tip": "dpkg -S /path/to/file tells which installed package owns a file.", "n": 0, "a": "seed"}
+{"id": "9281e46ef6e9", "cat": "apt", "tip": "apt-file search name finds which package provides a file, even when it is not installed; run apt-file update first.", "n": 0, "a": "seed"}
+{"id": "6a37c21327dd", "cat": "apt", "tip": "dpkg -l | grep name checks whether a package is installed and which version.", "n": 0, "a": "seed"}
+{"id": "0dc184ba7418", "cat": "apt", "tip": "apt install -y and DEBIAN_FRONTEND=noninteractive avoid prompts that make scripts hang.", "n": 0, "a": "seed"}
+{"id": "a2d3f7140f84", "cat": "apt", "tip": "If apt says another process holds the lock, wait for the automatic update to finish instead of deleting the lock files.", "n": 0, "a": "seed"}
+{"id": "891975813b75", "cat": "apt", "tip": "sudo dpkg --configure -a repairs packages left half installed after an interruption.", "n": 0, "a": "seed"}
+{"id": "a84973d0aa40", "cat": "apt", "tip": "sudo apt -f install fixes broken dependencies after a failed manual .deb installation.", "n": 0, "a": "seed"}
+{"id": "8345b95d2112", "cat": "apt", "tip": "Install a downloaded .deb with sudo apt install ./file.deb; apt resolves its dependencies, unlike dpkg -i.", "n": 0, "a": "seed"}
+{"id": "c3da117a64c4", "cat": "apt", "tip": "apt autoremove removes packages that were installed as dependencies and are no longer needed.", "n": 0, "a": "seed"}
+{"id": "ffc17a1920e1", "cat": "apt", "tip": "apt clean deletes downloaded package files and frees space on small SD cards.", "n": 0, "a": "seed"}
+{"id": "6205afd1a1b0", "cat": "apt", "tip": "apt list --upgradable shows which packages have updates waiting.", "n": 0, "a": "seed"}
+{"id": "ac37fb80d60a", "cat": "apt", "tip": "apt-mark hold name keeps a package at its current version during upgrades.", "n": 0, "a": "seed"}
+{"id": "de93a749f7b9", "cat": "apt", "tip": "Packages for the Python modules of the system often exist as python3-name; they install cleanly on Raspberry Pi OS where pip is restricted.", "n": 0, "a": "seed"}
+{"id": "3eb2e3457619", "cat": "apt", "tip": "Third party repositories need their signing key in /etc/apt/keyrings and a signed-by option in the sources file; apt-key is deprecated.", "n": 0, "a": "seed"}
+{"id": "823a8882b836", "cat": "apt", "tip": "On Raspberry Pi OS the Chromium package is called chromium or chromium-browser depending on the release; check with apt-cache policy.", "n": 0, "a": "seed"}
+{"id": "93b10643e2fd", "cat": "apt", "tip": "Flatpak and Snap offer newer versions of some desktop apps than apt, but use more disk space and memory.", "n": 0, "a": "seed"}

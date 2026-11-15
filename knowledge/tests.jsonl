@@ -2311,3 +2311,112 @@
 {"id": "fcaaf144e1f3", "cmd": "python3 -c \"from pathlib import Path; print(Path('a') / 'b' / 'c.txt')\"", "expect": "a/b/c.txt"}
 {"id": "0b128f0d4d02", "cmd": "python3 -c \"import os; print(os.path.expanduser('~') != '~')\"", "expect": "True"}
 {"id": "dfed35a4a235", "cmd": "python3 -c \"from pathlib import Path; base=Path('.').resolve(); p=(base/'../etc').resolve(); print(p.is_relative_to(base))\"", "expect": "False"}
+{"id": "7bdec84b39f2", "cmd": "d=$(mktemp -d) && test -d \"$d\" && echo made", "expect": "made"}
+{"id": "b622892f0655", "cmd": "bash -c 'f=$(mktemp); trap \"rm -f \\\"$f\\\"\" EXIT; echo x > \"$f\"; echo $f > path.txt'; test ! -e \"$(cat path.txt)\" && echo cleaned", "expect": "cleaned"}
+{"id": "01e4ccf6839d", "cmd": "bash -c 'v=\"a b\"; [[ -n $v ]] && echo ok-spaces'", "expect": "ok-spaces"}
+{"id": "45b9b6becf83", "cmd": "bash -c 'a=10; b=9; (( a > b )) && echo bigger'", "expect": "bigger"}
+{"id": "31f54dce6c3c", "cmd": "bash -c 'echo $(( 7 / 2 )) $(awk \"BEGIN{print 7/2}\")'", "expect": "3 3.5"}
+{"id": "ae3319e196d8", "cmd": "bash -c 'touch \"a b.txt\" c.txt; f=( *.txt ); echo ${#f[@]}'", "expect": "2"}
+{"id": "7a6962ca9c0c", "cmd": "bash -c 'shopt -s nullglob; f=( *.nomatch ); echo \"count=${#f[@]}\"'", "expect": "count=0"}
+{"id": "312984118f57", "cmd": "bash -c \"cat <<'EOF'\ncost \\$5 \\$HOME\nEOF\"", "expect": "cost $5 $HOME"}
+{"id": "f2c43deac1e7", "cmd": "bash -c 'ls /nonexistent_x > out.txt 2>&1'; grep -c \"No such file\" out.txt", "expect": "1"}
+{"id": "1abdff8912eb", "cmd": "bash -c 'false | true | (exit 3); echo \"${PIPESTATUS[@]}\"'", "expect": "1 0 3"}
+{"id": "8c192f704411", "cmd": "bash -c 'type cd | head -1'", "expect": "cd is a shell builtin"}
+{"id": "53a44aa379ac", "cmd": "timeout 0.2 sleep 5; echo \"code=$?\"", "expect": "code=124"}
+{"id": "af968e7f67ce", "cmd": "seq 4 | xargs -P 4 -I{} sh -c 'echo {}' | sort | tr '\\n' ' '", "expect": "1 2 3 4"}
+{"id": "0f4e2c1e8b94", "cmd": "printf 'b\\na\\nb\\n' | uniq | wc -l; printf 'b\\na\\nb\\n' | sort -u | wc -l", "expect": "2"}
+{"id": "de2b1b8a30d8", "cmd": "printf '10\\n9\\n100\\n' | sort -n | tr '\\n' ' '", "expect": "9 10 100"}
+{"id": "ae2e6ae830aa", "cmd": "echo 'x,y,z' | cut -d, -f2", "expect": "y"}
+{"id": "2b5ffe7bdab9", "cmd": "echo 'a  b   c' | awk '{print $NF, NF}'", "expect": "c 3"}
+{"id": "7aafdd15c8e8", "cmd": "printf 'a 2\\nb 3\\n' | awk '{s+=$2} END {print s}'", "expect": "5"}
+{"id": "0727342dc4b3", "cmd": "seq 30 | sed -n '10,12p' | tr '\\n' ' '", "expect": "10 11 12"}
+{"id": "e54138eb5912", "cmd": "echo hello > f && sed -i.bak 's/hello/bye/' f && cat f f.bak | tr '\\n' ' '", "expect": "bye hello"}
+{"id": "e090596ff9d7", "cmd": "echo /a/b | sed 's|/a|/x|'", "expect": "/x/b"}
+{"id": "21228ee053ce", "cmd": "mkdir -p s && echo needle > s/a.py && echo needle > s/b.txt && grep -rn --include='*.py' needle s | cut -d: -f1", "expect": "s/a.py"}
+{"id": "92e506a38da7", "cmd": "printf 'a.c\\nabc\\n' | grep -cF 'a.c'", "expect": "1"}
+{"id": "5971702b7f54", "cmd": "echo hi | grep -q hi && echo matched", "expect": "matched"}
+{"id": "62a71db71170", "cmd": "printf 'a\\n#b\\nc\\n' | grep -v '^#' | wc -l", "expect": "2"}
+{"id": "79707bcf3e4b", "cmd": "echo 'id=42 x' | grep -oE '[0-9]+'", "expect": "42"}
+{"id": "831cd3adf0f4", "cmd": "printf 'a\\nERR\\nb\\nc\\n' | grep -A1 ERR | tail -1", "expect": "b"}
+{"id": "bf663dacb9b8", "cmd": "printf 'echo ok\\r\\n' > w.sh && tr -d '\\r' < w.sh > u.sh && sh u.sh", "expect": "ok"}
+{"id": "ccf831da5f23", "cmd": "printf '#!/bin/sh\\r\\necho x\\r\\n' > c.sh && file c.sh | grep -c CRLF", "expect": "1"}
+{"id": "aa4460e25308", "cmd": "printf 'a\\nb' | wc -l", "expect": "1"}
+{"id": "6526f0ac5f46", "cmd": "printf 'abcdef' | head -c 3", "expect": "abc"}
+{"id": "3e929fdc7d2e", "cmd": "printf 'h\\n1\\n2\\n' | tail -n +2 | tr '\\n' ' '", "expect": "1 2"}
+{"id": "c0da256babe7", "cmd": "echo x | tee t.txt >/dev/null && cat t.txt", "expect": "x"}
+{"id": "ab0676a15350", "cmd": "date -d @0 -u +%F", "expect": "1970-01-01"}
+{"id": "537e03084d61", "cmd": "date -u -d '2026-01-01 +3 days' +%F", "expect": "2026-01-04"}
+{"id": "32b8b0ed5496", "cmd": "seq -w 8 10 | tr '\\n' ' '", "expect": "08 09 10"}
+{"id": "b0e35e798503", "cmd": "mkdir -p p/{src,tests,docs} && ls p | tr '\\n' ' '", "expect": "docs src tests"}
+{"id": "e7c1fcec80f5", "cmd": "bash -c 'unset X; echo ${X:-dflt}; echo \"[${X}]\"'", "expect": "dflt"}
+{"id": "81f1cc7f53be", "cmd": "bash -c 'v=raspberry; echo ${#v} ${v:0:3}'", "expect": "9 ras"}
+{"id": "23d6e20ae90f", "cmd": "bash -c 'f=/a/b/photo.jpg; echo ${f##*/} ${f%.*}'", "expect": "photo.jpg /a/b/photo"}
+{"id": "a59d32c8c898", "cmd": "bash -c 'f(){ local x=1; }; x=0; f; echo $x'", "expect": "0"}
+{"id": "c3680b44d600", "cmd": "bash -c 'f(){ echo result; }; r=$(f); echo \"got $r\"'", "expect": "got result"}
+{"id": "789466876296", "cmd": "bash -c 'no_such_cmd_x 2>/dev/null; echo $?'", "expect": "127"}
+{"id": "bbe79ef9c99d", "cmd": "bash -c 'sleep 5 & p=$!; kill -9 $p; wait $p; echo $?'", "expect": "137"}
+{"id": "34454dd8c264", "cmd": "setsid sleep 0.1 >/dev/null 2>&1 < /dev/null & echo started", "expect": "started"}
+{"id": "587630bc42cc", "cmd": "bash -c 'sleep 0.1 & p=$!; wait $p; echo \"waited $?\"'", "expect": "waited 0"}
+{"id": "41fe629021ad", "cmd": "bash -c '(sleep 0.1; echo a) & (sleep 0.1; echo b) & wait; echo done' | tail -1", "expect": "done"}
+{"id": "d4011160acef", "cmd": "sleep 3 & pgrep -x sleep >/dev/null && echo running; kill %1 2>/dev/null", "expect": "running"}
+{"id": "ea3e92cfc2ef", "cmd": "mkdir -p q/r && cd q && realpath r | grep -c '/q/r$'", "expect": "1"}
+{"id": "b282c0104ec7", "cmd": "printf 'if true; then\\necho x\\n' > s.sh && (bash -n s.sh 2>&1 | grep -c \"syntax error\")", "expect": "1"}
+{"id": "a95d6e510233", "cmd": "bash -x -c 'a=1' 2>&1 | grep -c '+ a=1'", "expect": "1"}
+{"id": "bfca58614e55", "cmd": "env -i sh -c 'echo \"[$HOME]\"'", "expect": "[]"}
+{"id": "fb58172518ce", "cmd": ": > e; echo x > n; test -s e || echo empty; test -s n && echo filled", "expect": "empty"}
+{"id": "e6fa897157d6", "cmd": "mkdir -p dd; [ -d dd ] && [ ! -f dd ] && echo isdir", "expect": "isdir"}
+{"id": "163450796571", "cmd": "echo a > x; echo a > y; cmp -s x y && echo same", "expect": "same"}
+{"id": "4c1ae693f693", "cmd": "echo a > o; echo b > n; diff -u o n | grep -c '^+b'", "expect": "1"}
+{"id": "a5d1015e3fcd", "cmd": "echo hi > a && sha256sum a > sums && sha256sum -c sums | grep -c OK", "expect": "1"}
+{"id": "3a7aef13c562", "cmd": "numfmt --to=iec 1536", "expect": "1.5K"}
+{"id": "c8a7b7e25925", "cmd": "bash -c '[[ \"v1.2\" =~ ([0-9]+)\\.([0-9]+) ]] && echo ${BASH_REMATCH[2]}'", "expect": "2"}
+{"id": "f5af7d703269", "cmd": "bash -c 'f=a.jpg; case $f in *.png|*.jpg) echo image;; *) echo other;; esac'", "expect": "image"}
+{"id": "c6eba3b02d9f", "cmd": "bash -c 'set -- -o out -v; while getopts \"o:v\" o; do case $o in o) f=$OPTARG;; v) v=1;; esac; done; echo $f $v'", "expect": "out 1"}
+{"id": "e0f8aba0e2ce", "cmd": "bash -c 'mkdir -p z; grep -qx line z/f 2>/dev/null || echo line >> z/f; grep -qx line z/f || echo line >> z/f; wc -l < z/f'", "expect": "1"}
+{"id": "067542b2b89a", "cmd": "echo a > c; grep -qxF b c || echo b >> c; grep -qxF b c || echo b >> c; wc -l < c", "expect": "2"}
+{"id": "89fc45a4665e", "cmd": "printf 'a\\r\\n' > w && sed -i 's/\\r$//' w && od -c w | grep -c '\\\\r'", "expect": "0"}
+{"id": "b3d98d7712f3", "cmd": "mkdir -p s1 && touch s1/f && rsync -a s1/ d1/ 2>/dev/null && ls d1 || (cp -a s1/. d1/ && ls d1)", "expect": "f"}
+{"id": "0903d226cd04", "cmd": "touch -d '2001-01-01' old && cp -a old copy && stat -c %y copy | cut -c1-4", "expect": "2001"}
+{"id": "fb60e4528158", "cmd": "echo one > a; echo two > b; cp -n b a 2>/dev/null; cat a", "expect": "one"}
+{"id": "d232b5461f4b", "cmd": "touch f && mv f newname 2>/dev/null && ls", "expect": "newname"}
+{"id": "717c23156055", "cmd": "touch -d '2000-01-01' old.log && touch new.log && find . -name '*.log' -mtime +30", "expect": "./old.log"}
+{"id": "1e82c89aeb03", "cmd": "touch ref; sleep 1; touch made; find . -newer ref -type f", "expect": "./made"}
+{"id": "bda0bbf92487", "cmd": "head -c 2048 /dev/zero > big && find . -size +1k -type f", "expect": "./big"}
+{"id": "8a824f13d2c4", "cmd": "mkdir -p t && echo x > t/a && tar -czf t.tgz t && tar -tzf t.tgz | grep -c 't/a'", "expect": "1"}
+{"id": "82770c728d9e", "cmd": "mkdir -p src out && echo y > src/b && tar -cf a.tar -C src b && tar -C out -xf a.tar && cat out/b", "expect": "y"}
+{"id": "5c18c590073b", "cmd": "mkdir -p zf/sub && echo q > zf/sub/f && zip -qr z.zip zf && unzip -l z.zip | grep -c 'zf/sub/f'", "expect": "1"}
+{"id": "2c1f0848323f", "cmd": "touch real && ln -s real lnk && readlink lnk", "expect": "real"}
+{"id": "e886f8e3e9ed", "cmd": "mkdir -p a && touch a/f && ln -s f a/l && test -e a/l && echo resolves", "expect": "resolves"}
+{"id": "43ffc6a2cc09", "cmd": "touch s && chmod 600 s && stat -c %a s", "expect": "600"}
+{"id": "a162c5d869ca", "cmd": "mkdir -p m && chmod 755 m && stat -c %a m", "expect": "755"}
+{"id": "fe252c2c8b6a", "cmd": "bash -c 'umask 077; touch p; stat -c %a p'", "expect": "600"}
+{"id": "83a574fc2be5", "cmd": "printf '%%PDF-1.4\\n' > x.txt && file x.txt | grep -c PDF", "expect": "1"}
+{"id": "4eee685de028", "cmd": "echo data > l && truncate -s 0 l && stat -c %s l", "expect": "0"}
+{"id": "5aa1df2d0c0c", "cmd": "head -c 3000 /dev/urandom > b && split -b 1000 b p_ && cat p_* > j && cmp -s b j && echo joined", "expect": "joined"}
+{"id": "21d1d8097868", "cmd": "printf '\\xfe' > w.txt && iconv -f CP1254 -t UTF-8 w.txt", "expect": "ş"}
+{"id": "fb726a179f71", "cmd": "touch .hid vis && bash -c 'shopt -s dotglob; f=( * ); echo ${#f[@]}'", "expect": "2"}
+{"id": "736568d14193", "cmd": "mkdir -p s2 d2 && touch s2/.h && cp -a s2/. d2/ && ls -a d2 | grep -c '^.h$'", "expect": "1"}
+{"id": "f3c04b1de745", "cmd": "basename /a/b/", "expect": "b"}
+{"id": "2141a3394202", "cmd": "touch A a && ls | wc -l", "expect": "2"}
+{"id": "8378b059d219", "cmd": "git init -q r && cd r && touch a && git status --short", "expect": "?? a"}
+{"id": "4ac777cfc21b", "cmd": "git init -q r && cd r && git commit -q --allow-empty -m one && git commit -q --amend --allow-empty -m two && git log --format=%s | tr '\\n' ' '", "expect": "two"}
+{"id": "17aa46a4d28b", "cmd": "git init -q r && cd r && git commit -q --allow-empty -m first && git log --oneline | wc -l", "expect": "1"}
+{"id": "d40ba573f5e5", "cmd": "git init -q r && cd r && echo needle > f && git add f && git commit -qm add && echo x > f && git commit -qam rm && git log -S needle --format=%s | tr '\\n' ' '", "expect": "rm add"}
+{"id": "faf899377a64", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm a && echo b > f && git restore f && cat f", "expect": "a"}
+{"id": "cd56a038c82f", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm a && echo b > f && git stash -q && cat f && git stash pop -q && cat f", "expect": "a"}
+{"id": "91ca2e10d173", "cmd": "git init -q r && cd r && git commit -q --allow-empty -m a && git switch -q -c feature && git branch --show-current", "expect": "feature"}
+{"id": "a4f20ebf5055", "cmd": "git init -q r && cd r && mkdir -p x && cd x && basename \"$(git rev-parse --show-toplevel)\"", "expect": "r"}
+{"id": "8aceb5173f8f", "cmd": "git init -q r && cd r && git rev-parse --is-inside-work-tree", "expect": "true"}
+{"id": "e855f85008da", "cmd": "git init -q r && cd r && echo s > .env && git add .env && git commit -qm a && echo .env > .gitignore && git rm -q --cached .env && git status --short | grep -c '.env'", "expect": "1"}
+{"id": "55f4a395136b", "cmd": "git init -q r && cd r && echo '*.log' > .gitignore && touch a.log && git check-ignore -v a.log | grep -c '\\*.log'", "expect": "1"}
+{"id": "1f3dcaa6f435", "cmd": "git init -q r && cd r && touch junk && git clean -n | grep -c junk", "expect": "1"}
+{"id": "7ec8b8fab0bf", "cmd": "git init -q r && cd r && git commit -q --allow-empty -m a && git tag v1.0 && git tag | grep -c v1.0", "expect": "1"}
+{"id": "c56b95545324", "cmd": "git init -q r && cd r && git commit -q --allow-empty -m a && git tag v1.0 && git commit -q --allow-empty -m b && git describe --tags | cut -d- -f1,2", "expect": "v1.0-1"}
+{"id": "90c6d24271f0", "cmd": "git init -q r && cd r && git commit -q --allow-empty -m a && git commit -q --allow-empty -m b && git reset -q --hard HEAD~1 && git reflog | grep -c 'commit: b'", "expect": "1"}
+{"id": "50d6bd41dbe4", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm a && echo b > f && git commit -qam b && git revert --no-edit HEAD -q && cat f", "expect": "a"}
+{"id": "6a4e1dd18082", "cmd": "git init -q r && cd r && git remote add origin ../other && git remote -v | head -1 | awk '{print $1}'", "expect": "origin"}
+{"id": "eb6f005e106f", "cmd": "git init -q r && cd r && git config user.name t && git config user.email t@t && git commit -q --allow-empty -m ok && git log --format=%s", "expect": "ok"}
+{"id": "979089ebf53c", "cmd": "git init -q r && cd r && touch a b && git add a && git ls-files", "expect": "a"}
+{"id": "49087e12c11e", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm a && echo b >> f && git diff --stat | grep -c '1 insertion'", "expect": "1"}
+{"id": "11af5bfa4559", "cmd": "git init -q -b main r && cd r && git commit -q --allow-empty -m a && git branch b && git worktree add -q ../wt b && test -d ../wt && echo wt", "expect": "wt"}
+{"id": "f72704fe4631", "cmd": "git init -q r && cd r && echo findme > f && git add f && git grep -l findme", "expect": "f"}
