@@ -4379,7 +4379,7 @@
 {"id": "929eff96dd1e", "cat": "files", "tip": "Use printf '%d' 0xff to convert hex to decimal and printf '%x' 255 for the other way, with no extra program.", "n": 0, "a": "seed-verified"}
 {"id": "ab950f02a96b", "cat": "files", "tip": "Go builds a single static binary: GOOS=windows GOARCH=amd64 go build gives an exe from Linux, and CGO_ENABLED=0 avoids a C compiler and library dependencies.", "n": 0, "a": "seed-verified"}
 {"id": "582873d584da", "cat": "files", "tip": "go build -ldflags \"-s -w\" strips symbol tables and makes smaller binaries, and -X main.version=1.2 sets a string variable at build time.", "n": 0, "a": "seed-verified"}
-{"id": "802834a53535", "cat": "files", "tip": "Go's standard library has an HTTP server, JSON, crypto and WebSocket helpers in x packages, so a small tool needs no frameworks and compiles to one file.", "n": 0, "a": "seed-verified"}
+{"id": "802834a53535", "cat": "files", "tip": "Go's standard library has an HTTP server, JSON, crypto and WebSocket helpers in x packages, so a small tool needs no frameworks and compiles to one file.", "n": 0, "a": "seed"}
 {"id": "24156949bc82", "cat": "files", "tip": "gcc -Wall -O2 file.c -o prog compiles C with common warnings; read every warning, since most of them point to real bugs.", "n": 0, "a": "seed-verified"}
 {"id": "175d664d294a", "cat": "files", "tip": "make runs the first target of a Makefile by default; use .PHONY for targets that are not files and tabs, not spaces, for the command lines.", "n": 0, "a": "seed-verified"}
 {"id": "4efa4142197d", "cat": "files", "tip": "ruby -e or ruby file.rb runs scripts and gem install adds libraries; on a Pi prefer apt packages for system tools written in Ruby to avoid long builds.", "n": 0, "a": "seed-verified"}
@@ -4409,7 +4409,7 @@
 {"id": "f4417a5389b3", "cat": "files", "tip": "du -b prints exact bytes and du -s sums a folder; du --exclude='*.log' leaves out patterns, so you can compare sizes of what matters.", "n": 0, "a": "seed-verified"}
 {"id": "7fa9b73a30b8", "cat": "files", "tip": "ls -1 prints one name per line, ls -a includes hidden files, and ls -R lists folders recursively; for scripts use find or globs instead of parsing ls.", "n": 0, "a": "seed-verified"}
 {"id": "d2103b294669", "cat": "files", "tip": "wc -m counts characters while wc -c counts bytes; for Turkish text they differ because letters such as ş use two bytes in UTF-8.", "n": 0, "a": "seed-verified"}
-{"id": "0203ee529f23", "cat": "files", "tip": "printf 'ş' | wc -m shows 1 in a UTF-8 locale and 2 in the C locale, because the locale decides what a character is; set LANG to a UTF-8 locale in services.", "n": 0, "a": "seed-verified"}
+{"id": "0203ee529f23", "cat": "files", "tip": "printf 'ş' | wc -m shows 1 in a UTF-8 locale and 2 in the C locale, because the locale decides what a character is; set LANG to a UTF-8 locale in services.", "n": 0, "a": "seed"}
 {"id": "236403f44ceb", "cat": "files", "tip": "sort order depends on the locale: LC_ALL=C sort gives byte order, which is stable across machines and what scripts and diffs need.", "n": 0, "a": "seed-verified"}
 {"id": "ab2da2dfd2eb", "cat": "files", "tip": "export LC_ALL=C in scripts that parse tool output, because messages in other languages break grep patterns such as 'No such file'.", "n": 0, "a": "seed-verified"}
 {"id": "8075746bb0f6", "cat": "files", "tip": "Use date -u +%Y-%m-%dT%H:%M:%SZ for ISO 8601 time in UTC, which sorts correctly, is unambiguous and is accepted by most tools and programming languages.", "n": 0, "a": "seed-verified"}
