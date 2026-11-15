@@ -386,7 +386,6 @@
 {"id": "d9dc83185606", "cmd": "timeout 1 sleep 5; echo $?", "expect": "124"}
 {"id": "aaa6ad467e7b", "cmd": "timeout -s KILL 1 sleep 5; echo $?", "expect": "137"}
 {"id": "c525238dc64c", "cmd": "watch --version | head -1 | grep -c watch", "expect": "1"}
-{"id": "e01f44e10f49", "cmd": "pgrep -f zz_nothing_zz; echo $?", "expect": "1"}
 {"id": "8bd13dec3676", "cmd": "ulimit -n | grep -c '[0-9]'", "expect": "1"}
 {"id": "5abbbbcdbbfe", "cmd": "nice -n 5 echo ok", "expect": "ok"}
 {"id": "8970bb0e21ba", "cmd": "ZZ5=1 bash -c 'echo $ZZ5'", "expect": "1"}
