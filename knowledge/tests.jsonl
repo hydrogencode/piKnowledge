@@ -2205,3 +2205,10 @@
 {"id": "b93f59338a75", "cmd": "bash -c 'comm -12 <(printf \"a\\nb\\n\") <(printf \"b\\nc\\n\")'", "expect": "b"}
 {"id": "5016911d0449", "cmd": "basename /a/b/c.txt .txt", "expect": "c"}
 {"id": "c479ef226918", "cmd": "bash -c 'd=$(mktemp -d); touch $d/x; ls -1 $d'", "expect": "x"}
+{"id": "074c6b1b7c7b", "cmd": "bash -c 'd=$(mktemp -d); cd $d; python3 -c \"import zipfile; z=zipfile.ZipFile(\\\"x.jar\\\",\\\"w\\\"); z.writestr(\\\"a.txt\\\",\\\"hi\\\"); z.close()\"; file x.jar | grep -c \"Zip archive\"'", "expect": "1"}
+{"id": "cabd546bb8df", "cmd": "bash -c 'd=$(mktemp -d); cd $d; printf \"<html>x</html>\" > p.jar; file p.jar | grep -c \"HTML\"'", "expect": "1"}
+{"id": "5533c09b2c24", "cmd": "bash -c 'd=$(mktemp -d); cd $d; echo hi > a.txt; zip -q z.zip a.txt; unzip -l z.zip | grep -c a.txt'", "expect": "1"}
+{"id": "598255278393", "cmd": "bash -c 'd=$(mktemp -d); cd $d; mkdir -p t/sub; touch t/sub/app.jar; find t -type f -name \"*.jar\" | wc -l'", "expect": "1"}
+{"id": "9c602f86385e", "cmd": "bash -c 'd=$(mktemp -d); cd $d; printf \"404 not found\" > f; test $(stat -c %s f) -lt 1000 && echo small'", "expect": "small"}
+{"id": "33c9e1d40c9a", "cmd": "bash -c 'd=$(mktemp -d); cd $d; printf \"#!/bin/sh\\necho ran\\n\" > s.sh; chmod +x s.sh; ./s.sh'", "expect": "ran"}
+{"id": "8193fa24eb1b", "cmd": "bash -c 'uname -m | grep -cE \"^[a-z0-9_]+$\"'", "expect": "1"}
