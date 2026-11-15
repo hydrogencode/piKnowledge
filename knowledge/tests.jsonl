@@ -1664,3 +1664,54 @@
 {"id": "47700da7fb97", "cmd": "python3 -c \"\nfrom email.message import EmailMessage\nm=EmailMessage(); m['Subject']='Merhaba'; m.set_content('şğ'); print(m.get_content().strip())\"", "expect": "şğ"}
 {"id": "8022f6ed5488", "cmd": "python3 -c \"\nfrom email.message import EmailMessage\nm=EmailMessage()\ntry: m['Subject']='a\\nBcc: x'\nexcept ValueError: print('rejected')\"", "expect": "rejected"}
 {"id": "895c83397f06", "cmd": "python3 -c \"\nfrom email.message import EmailMessage\nm=EmailMessage(); m.set_content('Your code is 123456. It works for 10 minutes.'); print('123456' in m.get_content())\"", "expect": "True"}
+{"id": "efff55e74e85", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm one && echo b >> f && git commit -qam two && git log --oneline -n 2 | wc -l", "expect": "2"}
+{"id": "aad6fe6ed604", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm c && echo b > g && git add g && git diff --cached --name-status", "expect": "A\tg"}
+{"id": "e40f055d656b", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm one && echo b >> f && git commit -qam two && git show HEAD~1:f", "expect": "a"}
+{"id": "c512bb500617", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm one && git mv f g && git commit -qm mv && git log --follow --oneline g | wc -l", "expect": "2"}
+{"id": "beaf9f4e4613", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm c && echo b > f && git stash push -qm work && git stash list | grep -c work", "expect": "1"}
+{"id": "7ef55c0fb620", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm c && echo b > f && git stash -q && git stash drop -q && git stash list | wc -l", "expect": "0"}
+{"id": "fc92319763cc", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm c && git switch -qc t && git switch -q - && git branch --show-current | grep -c -E 'main|master'", "expect": "1"}
+{"id": "7d8c99729fd8", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm c && git branch -m trunk && git branch --show-current", "expect": "trunk"}
+{"id": "8bb61fe606bb", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm c && git switch -qc feature && echo b > g && git add g && git commit -qm d && git log --oneline $(git rev-list --max-parents=0 HEAD)..feature | wc -l", "expect": "1"}
+{"id": "a89c685f4b15", "cmd": "git init -q r && cd r && git config user.email a@b.c && git config user.email", "expect": "a@b.c"}
+{"id": "1eea3527d34b", "cmd": "git init -q r && cd r && test -z \"$(git status --porcelain)\" && echo clean", "expect": "clean"}
+{"id": "1e0977033137", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm c && git diff --exit-code && echo none; echo b > f; git diff --exit-code >/dev/null; echo $?", "expect": "none\n1"}
+{"id": "2ea1cb3efe9b", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm c && git rev-list --count HEAD..HEAD", "expect": "0"}
+{"id": "c12158169f61", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm c && git ls-remote . HEAD | wc -l", "expect": "1"}
+{"id": "667915ab8a23", "cmd": "git fetch -h 2>&1 | head -1 | grep -c usage", "expect": "1"}
+{"id": "d7656de5d734", "cmd": "git init -q r && cd r && printf 'a b\\n' > f && git add f && git commit -qm c && printf 'a  b\\n' > f && git diff -w --stat | wc -l", "expect": "0"}
+{"id": "1aa152b863e5", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm c && echo n > new && git add -N new && git diff --stat | grep -c new", "expect": "1"}
+{"id": "af9de5d70c16", "cmd": "git init -q r && cd r && git commit -q --allow-empty -m trigger && git log --oneline | wc -l", "expect": "1"}
+{"id": "4264697a18da", "cmd": "git init -q r && cd r && GIT_COMMITTER_DATE='2026-01-01T00:00:00' git commit -q --allow-empty -m x --date '2026-01-01T00:00:00' && git log -1 --format=%ad --date=short", "expect": "2026-01-01"}
+{"id": "31558fecb78e", "cmd": "git init -q r && cd r && git commit -q --allow-empty -m c && git tag v1 && git tag -d v1 && git tag | wc -l", "expect": "0"}
+{"id": "048cc63bfc25", "cmd": "git init -q r && cd r && git commit -q --allow-empty -m c && git describe --tags --always | awk '{print length($1)>=7}'", "expect": "1"}
+{"id": "bc47609b85d6", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm c && git archive --prefix=p/ -o ../a.tar.gz HEAD && tar -tzf ../a.tar.gz | head -2 | tail -1", "expect": "p/f"}
+{"id": "ef44d833d738", "cmd": "git init -q r && cd r && git count-objects -v | grep -c count", "expect": "1"}
+{"id": "6157f839afb9", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm c && git fsck 2>&1 | grep -c -i error", "expect": "0"}
+{"id": "28988ec62e52", "cmd": "git init -q r && cd r && git symbolic-ref --short HEAD | grep -c -E 'main|master'", "expect": "1"}
+{"id": "9fa47e2ba000", "cmd": "echo hello | git hash-object --stdin", "expect": "ce013625030ba8dba906f756967f9e9ca394464a"}
+{"id": "7aecbcd5d6aa", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm c && git cat-file -t HEAD", "expect": "commit"}
+{"id": "893a83fceb31", "cmd": "git init -q r && cd r && git commit -q --allow-empty -m c && git notes add -m hi && git notes show", "expect": "hi"}
+{"id": "639a9ae378fd", "cmd": "git init -q r && cd r && git config blame.ignoreRevsFile .git-blame-ignore-revs && git config blame.ignoreRevsFile", "expect": ".git-blame-ignore-revs"}
+{"id": "135713a2cb82", "cmd": "git init -q r && cd r && git config rerere.enabled true && git config rerere.enabled", "expect": "true"}
+{"id": "958f9ce12dfa", "cmd": "git init -q r && cd r && echo content > f && git add f && git commit -qm c && git mv f g && git diff --cached -M --name-status | cut -c1", "expect": "R"}
+{"id": "e6448cfd2249", "cmd": "git init -q r && cd r && echo \"*.log\" > .gitignore && touch a.log b.txt && git ls-files --others --exclude-standard | tr '\\n' ' '", "expect": ".gitignore b.txt"}
+{"id": "4c8e35a05818", "cmd": "git init -q r && cd r && printf '*.sh text eol=lf\\n' > .gitattributes && git check-attr eol a.sh", "expect": "a.sh: eol: lf"}
+{"id": "5a937a759eb1", "cmd": "git config --global credential.helper 'cache --timeout=3600' && git config --global credential.helper", "expect": "cache --timeout=3600"}
+{"id": "29d02a210f73", "cmd": "git remote -h 2>&1 | head -1 | grep -c usage", "expect": "1"}
+{"id": "76067e332925", "cmd": "git init -q r && cd r && git commit -q --allow-empty -m c && git branch -vv | wc -l", "expect": "1"}
+{"id": "632208f52631", "cmd": "git push -h 2>&1 | grep -c follow-tags", "expect": "1"}
+{"id": "b6e3279ad32f", "cmd": "git pull -h 2>&1 | grep -c ff-only", "expect": "1"}
+{"id": "9e6a0cdb3042", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm c && echo b > f && git reset -q --hard HEAD && cat f", "expect": "a"}
+{"id": "d9162659079d", "cmd": "git init -q r && cd r && touch junk && git clean -nd | wc -l", "expect": "1"}
+{"id": "e94a3685125d", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm one && echo b >> f && git commit -qam two && git branch old HEAD~1 && git log old --oneline | wc -l", "expect": "1"}
+{"id": "7986f34a50de", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm one && echo b > f && git commit -qam two && git restore --source=HEAD~1 f && cat f", "expect": "a"}
+{"id": "7d1129d033c2", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm c && git rm -q f && git status -s", "expect": "D  f"}
+{"id": "e8c88175fe29", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm c && echo b > f && echo n > n && git add -u && git status -s | tr '\\n' ' '", "expect": "M  f ?? n"}
+{"id": "9b21bc534e2b", "cmd": "git init -q r && cd r && git config core.editor nano && git config core.editor", "expect": "nano"}
+{"id": "7f74bcddaec8", "cmd": "GIT_EDITOR=true git var GIT_EDITOR", "expect": "true"}
+{"id": "03d99d39aff3", "cmd": "git init -q r && cd r && git config user.name A && git config user.email a@a.a && echo a > f && git add f && git commit -qm c && echo ok", "expect": "ok"}
+{"id": "8189d429b447", "cmd": "gh --version 2>&1 | head -1 | grep -c gh", "expect": "1"}
+{"id": "97100fb3733d", "cmd": "printf 'x\\n' | wc -l", "expect": "1"}
+{"id": "5fc75a74eeb2", "cmd": "mkdir s && chmod 700 s && stat -c %a s", "expect": "700"}
+{"id": "36c924175704", "cmd": "printf 'Restart=always\\n' | grep -c Restart", "expect": "1"}
