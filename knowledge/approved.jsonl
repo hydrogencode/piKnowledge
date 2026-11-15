@@ -6895,3 +6895,102 @@
 {"id": "32762e7c48e6", "cat": "python", "tip": "Path.unlink(missing_ok=True) deletes a file without failing when it is already gone.", "n": 0, "a": "seed-verified"}
 {"id": "1d5c6a5cb621", "cat": "python", "tip": "Path.iterdir lists a folder's entries as Path objects; filter with is_file or suffix.", "n": 0, "a": "seed-verified"}
 {"id": "a01c5edfb734", "cat": "python", "tip": "Path.relative_to gives a path relative to another, useful for printing short paths in reports.", "n": 0, "a": "seed-verified"}
+{"id": "41972d27a6ce", "cat": "shell", "tip": "paste -sd, joins all lines of input into one comma separated line.", "n": 0, "a": "seed-verified"}
+{"id": "297b8e63d617", "cat": "shell", "tip": "paste file1 file2 puts lines of two files side by side, separated by a tab.", "n": 0, "a": "seed-verified"}
+{"id": "dad555c8404d", "cat": "shell", "tip": "join merges two files on a common first field; both must be sorted on that field.", "n": 0, "a": "seed-verified"}
+{"id": "8a0d32b90434", "cat": "shell", "tip": "comm -12 a b prints lines present in both sorted files, -23 only those unique to the first.", "n": 0, "a": "seed-verified"}
+{"id": "86db7444e524", "cat": "shell", "tip": "tac prints a file with the last line first, handy for reading logs newest first.", "n": 0, "a": "seed-verified"}
+{"id": "3887f563a4e3", "cat": "shell", "tip": "rev reverses each line, and a rev, cut, rev combination takes fields from the end of a line.", "n": 0, "a": "seed-verified"}
+{"id": "713e7748b4bf", "cat": "shell", "tip": "fold -w 40 wraps long lines at a fixed width, and fmt wraps at word boundaries.", "n": 0, "a": "seed-verified"}
+{"id": "e1337c6224f5", "cat": "shell", "tip": "nl numbers the lines of a file, which helps when you refer to specific lines.", "n": 0, "a": "seed-verified"}
+{"id": "3a5abb41b9cb", "cat": "shell", "tip": "expand turns tabs into spaces and unexpand does the reverse.", "n": 0, "a": "seed-verified"}
+{"id": "55b82a7e2564", "cat": "shell", "tip": "shuf picks random lines, and shuf -n 1 chooses one random item from a list.", "n": 0, "a": "seed-verified"}
+{"id": "5de1f3eb1ec8", "cat": "shell", "tip": "factor prints the prime factors of a number.", "n": 0, "a": "seed-verified"}
+{"id": "23d205b3ac48", "cat": "shell", "tip": "bc -l does decimal arithmetic in the shell; scale sets the number of digits after the point.", "n": 0, "a": "seed-verified"}
+{"id": "86b2df3a3e26", "cat": "shell", "tip": "awk printf formats numbers with fixed decimals, useful for reports.", "n": 0, "a": "seed-verified"}
+{"id": "ea47497f3155", "cat": "shell", "tip": "awk -F, sets the field separator for comma separated input; use -v OFS=, to keep commas in the output.", "n": 0, "a": "seed-verified"}
+{"id": "4a9b83363421", "cat": "shell", "tip": "awk 'NR==FNR' processes the first file to build a lookup table and then filters the second file with it.", "n": 0, "a": "seed-verified"}
+{"id": "9b5b68f5e7bb", "cat": "shell", "tip": "awk can count unique values without sort: awk '!seen[$0]++' removes duplicates and keeps the first order.", "n": 0, "a": "seed-verified"}
+{"id": "49e7d4285093", "cat": "shell", "tip": "awk 'length > 80' prints only lines longer than 80 characters, a quick style check.", "n": 0, "a": "seed-verified"}
+{"id": "5b56cfaadb2e", "cat": "shell", "tip": "sed -n '/start/,/end/p' prints the block of lines between two markers.", "n": 0, "a": "seed-verified"}
+{"id": "ed3cea762bc2", "cat": "shell", "tip": "sed 's/a/b/2' replaces only the second match on each line; a g flag replaces all.", "n": 0, "a": "seed-verified"}
+{"id": "c00323e91570", "cat": "shell", "tip": "sed with -E enables extended regular expressions, so groups and + work without backslashes.", "n": 0, "a": "seed-verified"}
+{"id": "f05748e2c196", "cat": "shell", "tip": "sed '1i text' inserts a line at the top of a file and sed '$a text' appends one at the end.", "n": 0, "a": "seed-verified"}
+{"id": "2947741a3962", "cat": "shell", "tip": "grep -E with alternatives like 'error|fail' searches for several words at once; -i ignores case.", "n": 0, "a": "seed-verified"}
+{"id": "1ed228bb4392", "cat": "shell", "tip": "grep -w matches whole words only, so searching for cat does not match category.", "n": 0, "a": "seed-verified"}
+{"id": "666206524c53", "cat": "shell", "tip": "grep -l lists only the names of files that contain a match.", "n": 0, "a": "seed-verified"}
+{"id": "e42957443d76", "cat": "shell", "tip": "grep -x matches a whole line exactly, useful to check if a line already exists in a file.", "n": 0, "a": "seed-verified"}
+{"id": "dd660bbcc66c", "cat": "shell", "tip": "grep --color=never keeps escape codes out of output that goes into files or other programs.", "n": 0, "a": "seed"}
+{"id": "b19a2135a0d9", "cat": "shell", "tip": "cut -c1-10 takes the first ten characters of each line.", "n": 0, "a": "seed-verified"}
+{"id": "429795208576", "cat": "shell", "tip": "tr -s ' ' squeezes repeated spaces into one, which makes cut work on aligned columns.", "n": 0, "a": "seed-verified"}
+{"id": "314f1cf0de49", "cat": "shell", "tip": "tr 'a-z' 'A-Z' converts text to upper case for ASCII letters.", "n": 0, "a": "seed-verified"}
+{"id": "de01d53a609b", "cat": "shell", "tip": "tr -dc 'a-zA-Z0-9' keeps only letters and digits, for example to make safe file names.", "n": 0, "a": "seed-verified"}
+{"id": "68f6d28e5969", "cat": "shell", "tip": "od -c shows invisible characters such as tabs, carriage returns and missing final newlines.", "n": 0, "a": "seed-verified"}
+{"id": "033565dc18a0", "cat": "shell", "tip": "xxd or hexdump -C shows the bytes of a binary file, useful to check the first bytes of a download.", "n": 0, "a": "seed-verified"}
+{"id": "197d0cee1c16", "cat": "shell", "tip": "Use $'...' quoting in bash to write tabs and newlines in strings: $'a\\tb'.", "n": 0, "a": "seed-verified"}
+{"id": "e4e0ea913f9f", "cat": "shell", "tip": "printf '%q' shows how bash would quote a string, which reveals hidden spaces or special characters.", "n": 0, "a": "seed-verified"}
+{"id": "2f8233f2aeff", "cat": "shell", "tip": "A here string <<< passes a short string as standard input.", "n": 0, "a": "seed-verified"}
+{"id": "ec3e32059935", "cat": "shell", "tip": "mapfile -t reads lines of a file into a bash array.", "n": 0, "a": "seed-verified"}
+{"id": "9227c4260ad6", "cat": "shell", "tip": "declare -A creates an associative array in bash for key value lookups.", "n": 0, "a": "seed-verified"}
+{"id": "5f7b8fd1707e", "cat": "shell", "tip": "for ((i=0; i<3; i++)) is bash's C style loop for counting.", "n": 0, "a": "seed-verified"}
+{"id": "374f804dc827", "cat": "shell", "tip": "until loops run while a condition is false, a clean way to wait for a file or a port.", "n": 0, "a": "seed-verified"}
+{"id": "5ccf4fc72dc4", "cat": "shell", "tip": "A wait loop with a deadline avoids waiting forever: try a check every second and stop after a number of tries.", "n": 0, "a": "seed-verified"}
+{"id": "1d5da4d6ae4a", "cat": "shell", "tip": "set -u makes a script stop when it uses an unset variable, which catches typos in variable names.", "n": 0, "a": "seed-verified"}
+{"id": "ef2e3f5fc8da", "cat": "shell", "tip": "set -e stops a script at the first failing command, but not inside if conditions or commands joined with || and &&.", "n": 0, "a": "seed-verified"}
+{"id": "5aa312968cee", "cat": "shell", "tip": "trap ERR runs a handler whenever a command fails, useful to print the failing line number.", "n": 0, "a": "seed-verified"}
+{"id": "1334c284d227", "cat": "shell", "tip": "Subshells in parentheses keep cd and variable changes from affecting the rest of the script.", "n": 0, "a": "seed-verified"}
+{"id": "272c910e437e", "cat": "shell", "tip": "Use pushd and popd to change folders temporarily and come back.", "n": 0, "a": "seed-verified"}
+{"id": "25ec0f01ee80", "cat": "shell", "tip": "source or . runs a file in the current shell so its variables stay set; running it as a program does not.", "n": 0, "a": "seed-verified"}
+{"id": "2200fe5f381e", "cat": "shell", "tip": "export makes a variable visible to programs started from the script; without export only the shell sees it.", "n": 0, "a": "seed-verified"}
+{"id": "2fa422d3c439", "cat": "shell", "tip": "Read variables from a .env style file safely with set -a; source file; set +a, only for files you trust.", "n": 0, "a": "seed-verified"}
+{"id": "98c52c80aac6", "cat": "shell", "tip": "Long command lines can be split with a backslash at the end of a line; nothing, not even a space, may follow it.", "n": 0, "a": "seed"}
+{"id": "9a559bc73303", "cat": "shell", "tip": "Use readonly for constants in scripts so a later line cannot change them by mistake.", "n": 0, "a": "seed-verified"}
+{"id": "2b4522a513d7", "cat": "shell", "tip": "Use exec > >(tee log) 2>&1 at the top of a script to copy all its output into a log file.", "n": 0, "a": "seed-verified"}
+{"id": "449171068cc9", "cat": "shell", "tip": "logger writes a message into the system log, so script events show up in journalctl.", "n": 0, "a": "seed"}
+{"id": "a7e89b84aa96", "cat": "shell", "tip": "basename \"$0\" gives the script's own name for usage and error messages.", "n": 0, "a": "seed"}
+{"id": "ecdaa0ab8bea", "cat": "shell", "tip": "uptime -p prints how long the system has been running in words.", "n": 0, "a": "seed"}
+{"id": "d3e899691ce2", "cat": "shell", "tip": "nproc prints the number of CPU cores, useful for make -j or parallel jobs.", "n": 0, "a": "seed-verified"}
+{"id": "41e548f63f61", "cat": "shell", "tip": "free -m shows memory in megabytes; the available column is what programs can still use.", "n": 0, "a": "seed-verified"}
+{"id": "c11f90ac7483", "cat": "shell", "tip": "df -h --output=avail path prints only the free space where a path lives.", "n": 0, "a": "seed-verified"}
+{"id": "d00d26f91596", "cat": "shell", "tip": "id -un prints the current user name and id -u its number; root has number 0.", "n": 0, "a": "seed-verified"}
+{"id": "881ba33b7d6f", "cat": "shell", "tip": "whoami inside sudo prints root; use SUDO_USER to learn who called sudo.", "n": 0, "a": "seed"}
+{"id": "de8bd5e375a7", "cat": "shell", "tip": "Use getent passwd name to look up a user, including the home folder, instead of guessing the home path.", "n": 0, "a": "seed-verified"}
+{"id": "38fe70ace812", "cat": "shell", "tip": "groups shows which groups a user belongs to; access to GPIO, video or audio devices depends on them.", "n": 0, "a": "seed"}
+{"id": "78dec92d1122", "cat": "shell", "tip": "last and journalctl show logins and reboots, useful for finding out when a device restarted.", "n": 0, "a": "seed"}
+{"id": "2e6e3973768c", "cat": "shell", "tip": "lsblk shows disks and partitions in a tree with their sizes and mount points.", "n": 0, "a": "seed"}
+{"id": "565241306f9f", "cat": "shell", "tip": "mount | column -t or findmnt shows what is mounted where.", "n": 0, "a": "seed"}
+{"id": "98325b523878", "cat": "shell", "tip": "lscpu summarizes the CPU architecture, cores and speeds.", "n": 0, "a": "seed-verified"}
+{"id": "2fc280b5f097", "cat": "shell", "tip": "lsusb lists USB devices; lsusb -t shows the tree and speed of each port.", "n": 0, "a": "seed"}
+{"id": "69cfb5436773", "cat": "shell", "tip": "dmesg -w follows kernel messages live, which shows what happens when a USB device is plugged in.", "n": 0, "a": "seed"}
+{"id": "e0bf80c13e31", "cat": "shell", "tip": "vmstat 1 shows CPU, memory and I/O every second, a quick way to see what limits a slow system.", "n": 0, "a": "seed"}
+{"id": "02db292faa1e", "cat": "shell", "tip": "iostat or iotop shows which disk or process causes heavy disk activity.", "n": 0, "a": "seed"}
+{"id": "c2eee6d10031", "cat": "shell", "tip": "htop shows processes interactively; in scripts use ps or top -b -n 1 instead.", "n": 0, "a": "seed-verified"}
+{"id": "80750dd37cf5", "cat": "shell", "tip": "ionice -c3 and nice -n 19 run a heavy job at low priority so the desktop stays responsive.", "n": 0, "a": "seed-verified"}
+{"id": "501d77134f10", "cat": "shell", "tip": "renice changes the priority of a running process.", "n": 0, "a": "seed"}
+{"id": "247ee0b924e6", "cat": "shell", "tip": "taskset pins a process to certain CPU cores.", "n": 0, "a": "seed"}
+{"id": "9a9b631933ea", "cat": "shell", "tip": "time command reports how long a command took, splitting real time and CPU time.", "n": 0, "a": "seed-verified"}
+{"id": "e1d63e37aa3d", "cat": "shell", "tip": "sleep accepts fractions like 0.5 in GNU coreutils for short waits.", "n": 0, "a": "seed-verified"}
+{"id": "6a6d94805885", "cat": "shell", "tip": "yes text | head -n 5 produces repeated lines, handy for test input.", "n": 0, "a": "seed-verified"}
+{"id": "fe255ab9bae4", "cat": "shell", "tip": "Generate test files of a given size with head -c size /dev/urandom or truncate -s.", "n": 0, "a": "seed-verified"}
+{"id": "a8f67f024a40", "cat": "shell", "tip": "For file names with spaces, for f in *; do ... \"$f\"; done works, for f in $(ls) does not.", "n": 0, "a": "seed-verified"}
+{"id": "ab0ef7131c0d", "cat": "shell", "tip": "Use -- to end options before file names that may start with a dash.", "n": 0, "a": "seed-verified"}
+{"id": "181dd3084ad5", "cat": "shell", "tip": "cat -A shows tabs as ^I and line ends as $, revealing hidden whitespace problems.", "n": 0, "a": "seed-verified"}
+{"id": "d01385d5f535", "cat": "shell", "tip": "Check the exit code of the previous command right away with $?; any other command overwrites it.", "n": 0, "a": "seed-verified"}
+{"id": "ca5d6e977d4c", "cat": "files", "tip": "cp --backup=numbered keeps numbered copies of files that would be overwritten.", "n": 0, "a": "seed-verified"}
+{"id": "9705e438089f", "cat": "files", "tip": "install -m 755 src dest copies a file and sets its mode in one step, common in setup scripts.", "n": 0, "a": "seed-verified"}
+{"id": "da6f108535f0", "cat": "files", "tip": "install -d creates folders like mkdir -p and can set owner and mode at the same time.", "n": 0, "a": "seed-verified"}
+{"id": "7f1b6de6615a", "cat": "files", "tip": "ln -sf replaces an existing symbolic link, useful to switch a current link to a new version.", "n": 0, "a": "seed-verified"}
+{"id": "be72cba13dd9", "cat": "files", "tip": "find -empty finds empty files and folders.", "n": 0, "a": "seed-verified"}
+{"id": "9ea74b3e7c23", "cat": "files", "tip": "find -type l -xtype l finds broken symbolic links.", "n": 0, "a": "seed-verified"}
+{"id": "46f8302b295f", "cat": "files", "tip": "find -maxdepth 1 limits the search to the current folder.", "n": 0, "a": "seed-verified"}
+{"id": "891249ad2875", "cat": "files", "tip": "find -iname matches names without regard to case.", "n": 0, "a": "seed-verified"}
+{"id": "2947ca26cd43", "cat": "files", "tip": "find -perm -u+x -type f lists executable files, useful after unpacking an archive.", "n": 0, "a": "seed-verified"}
+{"id": "585931e38619", "cat": "files", "tip": "find -printf '%s %p\\n' prints sizes and paths without calling stat for each file.", "n": 0, "a": "seed-verified"}
+{"id": "e138349f9286", "cat": "files", "tip": "find ... -exec cmd {} + passes many files to one command call, much faster than one call per file.", "n": 0, "a": "seed-verified"}
+{"id": "d771b4b49d9f", "cat": "files", "tip": "Rename many files with a loop and parameter expansion: for f in *.jpeg; do mv \"$f\" \"${f%.jpeg}.jpg\"; done.", "n": 0, "a": "seed-verified"}
+{"id": "52d905a1af93", "cat": "files", "tip": "mktemp -p folder creates a temporary file inside a chosen folder, for example on the same disk as the target.", "n": 0, "a": "seed-verified"}
+{"id": "4608b4ddfb06", "cat": "files", "tip": "stat -c %U shows a file's owner, which explains permission errors after files were created with sudo.", "n": 0, "a": "seed-verified"}
+{"id": "ec32bef6a587", "cat": "files", "tip": "du --apparent-size shows file sizes as stored, while plain du shows disk blocks used; they differ for sparse files.", "n": 0, "a": "seed-verified"}
+{"id": "aee2971279d8", "cat": "files", "tip": "gzip -k keeps the original file when compressing; plain gzip replaces it.", "n": 0, "a": "seed-verified"}
+{"id": "7773441da5f7", "cat": "files", "tip": "xz compresses better than gzip but is slower; use it for archives that are stored long, gzip for quick ones.", "n": 0, "a": "seed"}
+{"id": "ca287f834de8", "cat": "files", "tip": "sha256sum of a downloaded file compared with the published checksum proves the download is complete and unchanged.", "n": 0, "a": "seed"}

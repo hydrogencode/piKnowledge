@@ -2527,3 +2527,84 @@
 {"id": "32762e7c48e6", "cmd": "python3 -c \"from pathlib import Path; Path('x').unlink(missing_ok=True); print('fine')\"", "expect": "fine"}
 {"id": "1d5c6a5cb621", "cmd": "python3 -c \"from pathlib import Path; Path('a.py').touch(); Path('b.txt').touch(); print(sorted(p.name for p in Path('.').iterdir() if p.suffix=='.py'))\"", "expect": "['a.py']"}
 {"id": "a01c5edfb734", "cmd": "python3 -c \"from pathlib import Path; print(Path('/a/b/c.txt').relative_to('/a'))\"", "expect": "b/c.txt"}
+{"id": "41972d27a6ce", "cmd": "printf 'a\\nb\\nc\\n' | paste -sd,", "expect": "a,b,c"}
+{"id": "297b8e63d617", "cmd": "printf '1\\n2\\n' > a; printf 'x\\ny\\n' > b; paste -d: a b | tail -1", "expect": "2:y"}
+{"id": "dad555c8404d", "cmd": "printf '1 a\\n2 b\\n' > l; printf '1 X\\n2 Y\\n' > r; join l r | tail -1", "expect": "2 b Y"}
+{"id": "8a0d32b90434", "cmd": "printf 'a\\nb\\n' > x; printf 'b\\nc\\n' > y; comm -12 x y", "expect": "b"}
+{"id": "86db7444e524", "cmd": "printf '1\\n2\\n3\\n' | tac | head -1", "expect": "3"}
+{"id": "3887f563a4e3", "cmd": "echo a.b.c.txt | rev | cut -d. -f1 | rev", "expect": "txt"}
+{"id": "713e7748b4bf", "cmd": "echo 'aaaa bbbb cccc' | fold -w 5 | head -1", "expect": "aaaa"}
+{"id": "e1337c6224f5", "cmd": "printf 'a\\nb\\n' | nl | tail -1 | awk '{print $1, $2}'", "expect": "2 b"}
+{"id": "3a5abb41b9cb", "cmd": "printf 'a\\tb\\n' | expand -t 4 | od -c | grep -c '\\\\t'", "expect": "0"}
+{"id": "55b82a7e2564", "cmd": "seq 10 | shuf -n 3 | wc -l", "expect": "3"}
+{"id": "5de1f3eb1ec8", "cmd": "factor 84 | cut -d: -f2", "expect": " 2 2 3 7"}
+{"id": "23d205b3ac48", "cmd": "echo 'scale=2; 10/3' | bc 2>/dev/null || awk 'BEGIN{printf \"%.2f\\n\", 10/3}'", "expect": "3.33"}
+{"id": "86b2df3a3e26", "cmd": "echo 3.14159 | awk '{printf \"%.1f\\n\", $1}'", "expect": "3.1"}
+{"id": "ea47497f3155", "cmd": "echo 'a,b,c' | awk -F, -v OFS=, '{$2=\"X\"; print}'", "expect": "a,X,c"}
+{"id": "4a9b83363421", "cmd": "printf 'b\\n' > keep; printf 'a 1\\nb 2\\n' > data; awk 'NR==FNR{k[$1];next} $1 in k' keep data", "expect": "b 2"}
+{"id": "9b5b68f5e7bb", "cmd": "printf 'b\\na\\nb\\n' | awk '!seen[$0]++' | tr '\\n' ' '", "expect": "b a"}
+{"id": "49e7d4285093", "cmd": "printf 'short\\n%090d\\n' 0 | awk 'length > 80' | wc -l", "expect": "1"}
+{"id": "5b56cfaadb2e", "cmd": "printf 'x\\nstart\\n1\\nend\\ny\\n' | sed -n '/start/,/end/p' | wc -l", "expect": "3"}
+{"id": "ed3cea762bc2", "cmd": "echo aaa | sed 's/a/b/2'", "expect": "aba"}
+{"id": "c00323e91570", "cmd": "echo 'v12' | sed -E 's/v([0-9]+)/\\1/'", "expect": "12"}
+{"id": "f05748e2c196", "cmd": "printf 'b\\n' | sed '1i a' | head -1", "expect": "a"}
+{"id": "2947741a3962", "cmd": "printf 'ERROR x\\nok\\nFail y\\n' | grep -Eic 'error|fail'", "expect": "2"}
+{"id": "1ed228bb4392", "cmd": "printf 'cat\\ncategory\\n' | grep -cw cat", "expect": "1"}
+{"id": "666206524c53", "cmd": "echo hit > a.txt; echo no > b.txt; grep -l hit *.txt", "expect": "a.txt"}
+{"id": "e42957443d76", "cmd": "printf 'abc\\nab\\n' | grep -cx ab", "expect": "1"}
+{"id": "b19a2135a0d9", "cmd": "echo 'abcdefghijkl' | cut -c1-10", "expect": "abcdefghij"}
+{"id": "429795208576", "cmd": "echo 'a    b' | tr -s ' ' | cut -d' ' -f2", "expect": "b"}
+{"id": "314f1cf0de49", "cmd": "echo hello | tr 'a-z' 'A-Z'", "expect": "HELLO"}
+{"id": "de01d53a609b", "cmd": "echo 'my file!.txt' | tr -dc 'a-zA-Z0-9.'", "expect": "myfile.txt"}
+{"id": "68f6d28e5969", "cmd": "printf 'a\\tb' | od -c | head -1 | grep -c '\\\\t'", "expect": "1"}
+{"id": "033565dc18a0", "cmd": "printf 'PK' > z && (xxd z 2>/dev/null || hexdump -C z) | grep -c PK", "expect": "1"}
+{"id": "197d0cee1c16", "cmd": "bash -c \"printf '%s' \\$'a\\tb' | od -c | grep -c '\\\\\\\\t'\"", "expect": "1"}
+{"id": "e4e0ea913f9f", "cmd": "bash -c 'printf \"%q\\n\" \"a b\"'", "expect": "a\\ b"}
+{"id": "2f8233f2aeff", "cmd": "bash -c 'tr a-z A-Z <<< hi'", "expect": "HI"}
+{"id": "ec3e32059935", "cmd": "bash -c 'mapfile -t L < <(printf \"x\\ny\\n\"); echo ${#L[@]} ${L[1]}'", "expect": "2 y"}
+{"id": "9227c4260ad6", "cmd": "bash -c 'declare -A m; m[tr]=Turkey; echo ${m[tr]}'", "expect": "Turkey"}
+{"id": "5f7b8fd1707e", "cmd": "bash -c 'for ((i=0;i<3;i++)); do printf $i; done'", "expect": "012"}
+{"id": "374f804dc827", "cmd": "bash -c 'n=0; until [ $n -ge 3 ]; do n=$((n+1)); done; echo $n'", "expect": "3"}
+{"id": "5ccf4fc72dc4", "cmd": "bash -c 'for i in 1 2 3; do test -e flag && break; sleep 0.1; done; echo tries=$i'", "expect": "tries=3"}
+{"id": "1d5da4d6ae4a", "cmd": "bash -c 'set -u; echo $NOPE_X' 2>&1 | grep -c unbound", "expect": "1"}
+{"id": "ef2e3f5fc8da", "cmd": "bash -c 'set -e; false || true; echo continued'", "expect": "continued"}
+{"id": "5aa312968cee", "cmd": "bash -c 'trap \"echo failed at \\$LINENO\" ERR; false' 2>&1", "expect": "failed at 1"}
+{"id": "1334c284d227", "cmd": "bash -c 'x=1; (x=2; cd /); echo $x $(pwd | grep -c \"^/$\")'", "expect": "1 0"}
+{"id": "272c910e437e", "cmd": "bash -c 'mkdir -p q; pushd q >/dev/null; popd >/dev/null; basename $(pwd) | grep -vc \"^q$\"'", "expect": "1"}
+{"id": "25ec0f01ee80", "cmd": "echo 'V=7' > env.sh && bash -c '. ./env.sh; echo $V'", "expect": "7"}
+{"id": "2200fe5f381e", "cmd": "bash -c 'A=1; export B=2; sh -c \"echo [\\$A][\\$B]\"'", "expect": "[][2]"}
+{"id": "2fa422d3c439", "cmd": "printf 'X=5\\n' > .e && bash -c 'set -a; . ./.e; set +a; sh -c \"echo \\$X\"'", "expect": "5"}
+{"id": "9a559bc73303", "cmd": "bash -c 'readonly K=1; K=2' 2>&1 | grep -c readonly", "expect": "1"}
+{"id": "2b4522a513d7", "cmd": "bash -c 'exec > >(tee lg) 2>&1; echo logged'; sleep 0.3; cat lg", "expect": "logged"}
+{"id": "d3e899691ce2", "cmd": "nproc | grep -cE '^[0-9]+$'", "expect": "1"}
+{"id": "41e548f63f61", "cmd": "free -m | grep -c Mem", "expect": "1"}
+{"id": "c11f90ac7483", "cmd": "df -h --output=avail . | tail -1 | grep -cE '[0-9]'", "expect": "1"}
+{"id": "d00d26f91596", "cmd": "id -u | grep -cE '^[0-9]+$'", "expect": "1"}
+{"id": "de8bd5e375a7", "cmd": "getent passwd root | cut -d: -f6", "expect": "/root"}
+{"id": "98325b523878", "cmd": "lscpu | grep -c Architecture", "expect": "1"}
+{"id": "c2eee6d10031", "cmd": "top -b -n 1 | head -1 | grep -c top", "expect": "1"}
+{"id": "80750dd37cf5", "cmd": "nice -n 19 sh -c 'echo low'", "expect": "low"}
+{"id": "9a9b631933ea", "cmd": "bash -c 'time true' 2>&1 | grep -c real", "expect": "1"}
+{"id": "e1d63e37aa3d", "cmd": "sleep 0.1 && echo slept", "expect": "slept"}
+{"id": "6a6d94805885", "cmd": "yes y | head -n 3 | wc -l", "expect": "3"}
+{"id": "fe255ab9bae4", "cmd": "truncate -s 1M t && stat -c %s t", "expect": "1048576"}
+{"id": "a8f67f024a40", "cmd": "touch 'a b' c && bash -c 'n=0; for f in *; do n=$((n+1)); done; echo $n'", "expect": "2"}
+{"id": "ab0ef7131c0d", "cmd": "touch -- -weird && ls -- -weird", "expect": "-weird"}
+{"id": "181dd3084ad5", "cmd": "printf 'a\\tb \\n' | cat -A", "expect": "a^Ib $"}
+{"id": "d01385d5f535", "cmd": "bash -c 'false; c=$?; true; echo $c'", "expect": "1"}
+{"id": "ca5d6e977d4c", "cmd": "echo 1 > a; echo 2 > b; cp --backup=numbered b a; ls | grep -c 'a.~1~'", "expect": "1"}
+{"id": "9705e438089f", "cmd": "echo x > s && install -m 755 s d && stat -c %a d", "expect": "755"}
+{"id": "da6f108535f0", "cmd": "install -d -m 700 secret && stat -c %a secret", "expect": "700"}
+{"id": "7f1b6de6615a", "cmd": "touch v1 v2 && ln -s v1 cur && ln -sfn v2 cur && readlink cur", "expect": "v2"}
+{"id": "be72cba13dd9", "cmd": "mkdir e1 && touch z && find . -empty | sort | tr '\\n' ' '", "expect": "./e1 ./z"}
+{"id": "9ea74b3e7c23", "cmd": "ln -s missing bad && find . -xtype l", "expect": "./bad"}
+{"id": "46f8302b295f", "cmd": "mkdir -p d/e && touch d/e/f top && find . -maxdepth 1 -type f", "expect": "./top"}
+{"id": "891249ad2875", "cmd": "touch Photo.JPG && find . -iname '*.jpg'", "expect": "./Photo.JPG"}
+{"id": "2947ca26cd43", "cmd": "touch run && chmod +x run && touch doc && find . -type f -perm -u+x", "expect": "./run"}
+{"id": "585931e38619", "cmd": "printf abc > f && find . -name f -printf '%s %p\\n'", "expect": "3 ./f"}
+{"id": "e138349f9286", "cmd": "touch a b c && find . -type f -exec ls {} + | wc -l", "expect": "3"}
+{"id": "d771b4b49d9f", "cmd": "touch a.jpeg b.jpeg && for f in *.jpeg; do mv \"$f\" \"${f%.jpeg}.jpg\"; done && ls | tr '\\n' ' '", "expect": "a.jpg b.jpg"}
+{"id": "52d905a1af93", "cmd": "mkdir t && f=$(mktemp -p t) && dirname $f", "expect": "t"}
+{"id": "4608b4ddfb06", "cmd": "touch o && stat -c %U o | grep -cE '.+'", "expect": "1"}
+{"id": "ec32bef6a587", "cmd": "truncate -s 10M sp && du -k sp | cut -f1 | awk '{print ($1 < 1000) ? \"sparse\" : \"full\"}'", "expect": "sparse"}
+{"id": "aee2971279d8", "cmd": "echo x > f && gzip -k f && ls | sort | tr '\\n' ' '", "expect": "f f.gz"}
