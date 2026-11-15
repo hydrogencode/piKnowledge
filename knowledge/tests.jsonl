@@ -1494,3 +1494,108 @@
 {"id": "b93c6f8e045a", "cmd": "python3 -c \"\nimport sys\na=[0]*1000; print(sys.getsizeof(a)>8000)\"", "expect": "True"}
 {"id": "274f6cc2c096", "cmd": "python3 -c \"\nimport tracemalloc\ntracemalloc.start(); x=[0]*100000; print(tracemalloc.get_traced_memory()[0]>100000)\"", "expect": "True"}
 {"id": "ce09016e4875", "cmd": "python3 -c \"\nimport resource\nprint(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss>0)\"", "expect": "True"}
+{"id": "f8d6485fbe7b", "cmd": "printf a | openssl dgst -sha256 | awk '{print $NF}' | cut -c1-8", "expect": "ca978112"}
+{"id": "dbc939ca79ef", "cmd": "printf hello | openssl enc -aes-256-cbc -pbkdf2 -pass pass:x | openssl enc -d -aes-256-cbc -pbkdf2 -pass pass:x", "expect": "hello"}
+{"id": "0b56d08c2862", "cmd": "openssl req -x509 -newkey rsa:2048 -nodes -keyout k.pem -out c.pem -days 30 -subj /CN=t 2>/dev/null; openssl x509 -noout -checkend 86400 -in c.pem", "expect": "Certificate will not expire"}
+{"id": "dfc6d200ac67", "cmd": "openssl req -x509 -newkey rsa:2048 -nodes -keyout k.pem -out c.pem -days 365 -subj /CN=localhost 2>/dev/null; openssl x509 -noout -subject -in c.pem", "expect": "CN"}
+{"id": "48dcd1ba3451", "cmd": "openssl s_client -help 2>&1 | grep -c connect", "expect": "1"}
+{"id": "23dab034d6c6", "cmd": "mkdir d; echo x > d/f; zip -qr a.zip d; unzip -l a.zip | grep -c d/f", "expect": "1"}
+{"id": "cbdec30f0cae", "cmd": "mkdir d; echo x > d/f; zip -qr a.zip d; unzip -tq a.zip", "expect": "No errors detected in compressed data of a.zip."}
+{"id": "10e01b16e05d", "cmd": "printf '{\"a\":1}' > a.bin; file --mime-type -b a.bin", "expect": "application/json"}
+{"id": "0711cdeb0192", "cmd": "printf '<a><b>1</b></a>' > a.xml; xmllint --xpath 'string(//b)' a.xml", "expect": "1"}
+{"id": "c673ee3b1a45", "cmd": "echo '{\"a\":1}' | jq -c .", "expect": "{\"a\":1}"}
+{"id": "be849e824c8f", "cmd": "printf '{\"n\":\"a\"}\\n{\"n\":\"b\"}\\n' | jq -r '.n'", "expect": "a\nb"}
+{"id": "4a9a7e182456", "cmd": "echo '{\"a\":1}' | jq -c '. + {x:2} | del(.a)'", "expect": "{\"x\":2}"}
+{"id": "c03579718b24", "cmd": "echo '[{\"a\":1},{\"a\":3}]' | jq -c 'map(select(.a>1))'", "expect": "[{\"a\":3}]"}
+{"id": "45a7556a26bc", "cmd": "jq -nc --arg n 'a \"b\"' '{name:$n}'", "expect": "{\"name\":\"a \\\"b\\\"\"}"}
+{"id": "0f0a98821d01", "cmd": "echo '{\"A\":\"1\",\"B\":\"2\"}' | jq -r 'to_entries[] | \"\\(.key)=\\(.value)\"'", "expect": "A=1\nB=2"}
+{"id": "9b8ce7754615", "cmd": "echo '{\"b\":1,\"a\":2}' | jq -c 'keys'", "expect": "[\"a\",\"b\"]"}
+{"id": "ec6df694766e", "cmd": "yq --version 2>&1 | grep -c yq", "expect": "1"}
+{"id": "cb47f6082c1f", "cmd": "printf '# T\\n' | pandoc -f markdown -t html", "expect": "<h1 id=\"t\">T</h1>"}
+{"id": "dce5bb93395b", "cmd": "convert -size 100x50 xc:red a.png; convert a.png -resize 50x b.png; identify -format '%wx%h' b.png", "expect": "50x25"}
+{"id": "6de16a37311b", "cmd": "convert -size 20x10 xc:blue a.png; identify -format '%wx%h' a.png", "expect": "20x10"}
+{"id": "aa15f41e1671", "cmd": "convert -size 10x10 xc:red a.jpg; convert a.jpg -strip b.jpg; test -s b.jpg && echo ok", "expect": "ok"}
+{"id": "4128ebab65d8", "cmd": "ffmpeg -loglevel error -f lavfi -i sine=frequency=440:duration=1 a.mp3 -y; ffmpeg -loglevel error -i a.mp3 -ar 16000 -ac 1 out.wav -y; ffprobe -v error -show_entries stream=sample_rate,channels -of csv=p=0 out.wav", "expect": "16000,1"}
+{"id": "272043819557", "cmd": "ffmpeg -loglevel error -f lavfi -i sine=duration=3 -y a.wav; ffmpeg -loglevel error -ss 1 -t 1 -i a.wav -c copy -y b.wav; ffprobe -v error -show_entries format=duration -of csv=p=0 b.wav | cut -c1-3", "expect": "1.0"}
+{"id": "3ec79419107f", "cmd": "ffmpeg -loglevel error -f lavfi -i sine=duration=1 -af volume=0.5 -y a.wav; test -s a.wav && echo ok", "expect": "ok"}
+{"id": "c89cc3f9ea20", "cmd": "ffmpeg -loglevel error -f lavfi -i sine=duration=1 -y a.wav; ffmpeg -loglevel error -i a.wav -c:a libmp3lame -b:a 64k -y a.mp3; test -s a.mp3 && echo ok", "expect": "ok"}
+{"id": "45c94f10d503", "cmd": "ffmpeg -loglevel error -f lavfi -i testsrc=duration=1:size=320x240:rate=5 -y t.mp4; ffprobe -v error -show_entries stream=width,height -of csv=p=0 t.mp4", "expect": "320,240"}
+{"id": "ad24c1f66100", "cmd": "ffmpeg -loglevel error -f lavfi -i testsrc=duration=1:size=320x240:rate=5 -y t.mp4; ffmpeg -loglevel error -i t.mp4 -vf scale=160:-2 -y s.mp4; ffprobe -v error -show_entries stream=width,height -of csv=p=0 s.mp4", "expect": "160,120"}
+{"id": "750a7b8c622d", "cmd": "ffmpeg -loglevel error -f lavfi -i testsrc=duration=1:size=64x48:rate=5 -y t.mp4; ffmpeg -loglevel error -i t.mp4 -vframes 1 -y f.jpg; test -s f.jpg && echo ok", "expect": "ok"}
+{"id": "8b48312885a3", "cmd": "printf 'a\\n' > f; perl -pi -e 's/a/b/' f; cat f", "expect": "b"}
+{"id": "38a0e19f6ee4", "cmd": "printf 'a b\\n' | perl -lane 'print $F[1]'", "expect": "b"}
+{"id": "1101c2f331b0", "cmd": "echo 'scale=2; 10/3' | bc", "expect": "3.33"}
+{"id": "2dc25e12d846", "cmd": "echo 'obase=16; 255' | bc", "expect": "FF"}
+{"id": "929eff96dd1e", "cmd": "printf '%d %x\\n' 0xff 255", "expect": "255 ff"}
+{"id": "ab950f02a96b", "cmd": "mkdir g && cd g && printf 'package main\\nfunc main(){println(\"ok\")}\\n' > m.go && go mod init t >/dev/null 2>&1; CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -o t.exe . && file t.exe | grep -c PE32", "expect": "1"}
+{"id": "582873d584da", "cmd": "mkdir g && cd g && printf 'package main\\nvar v=\"dev\"\\nfunc main(){println(v)}\\n' > m.go && go mod init t >/dev/null 2>&1; go build -ldflags \"-X main.v=1.2\" -o t . && ./t 2>&1", "expect": "1.2"}
+{"id": "802834a53535", "cmd": "mkdir g && cd g && printf 'package main\\nimport (\"net/http\";\"fmt\")\\nfunc main(){ fmt.Println(http.StatusOK) }\\n' > m.go && go mod init t >/dev/null 2>&1; go run .", "expect": "200"}
+{"id": "24156949bc82", "cmd": "printf 'int main(){return 0;}' > a.c; gcc -Wall -O2 a.c -o a && ./a; echo $?", "expect": "0"}
+{"id": "175d664d294a", "cmd": "printf '.PHONY: all\\nall:\\n\\t@echo built\\n' > Makefile; make", "expect": "built"}
+{"id": "4efa4142197d", "cmd": "ruby -e 'puts [3,1,2].sort.inspect'", "expect": "[1, 2, 3]"}
+{"id": "c7267c9f2f20", "cmd": "tmux new -d -s t 'sleep 5'; tmux ls | cut -d: -f1; tmux kill-session -t t", "expect": "t"}
+{"id": "4f7a5809ee30", "cmd": "tmux new -d -s t2 'cat'; tmux send-keys -t t2 'hi' Enter; sleep 0.3; tmux capture-pane -p -t t2 | head -1; tmux kill-session -t t2", "expect": "hi"}
+{"id": "1dbe98db2267", "cmd": "strace -e trace=openat -o s.txt true; grep -c openat s.txt | awk '{print ($1>0)}'", "expect": "1"}
+{"id": "e17e252eb160", "cmd": "strace -c -o s.txt true; grep -c total s.txt", "expect": "1"}
+{"id": "29d0080367b4", "cmd": "lsof -p $$ | grep -c cwd", "expect": "1"}
+{"id": "75343e44c2d9", "cmd": "wget --help | grep -c -- '--continue'", "expect": "1"}
+{"id": "a580b380db65", "cmd": "printf 'a\\n' > o; printf 'b\\n' > n; diff -u o n > d.diff; patch o d.diff >/dev/null && cat o", "expect": "b"}
+{"id": "28bc8b797969", "cmd": "mkdir a b; echo 1 > a/f; echo 2 > b/f; diff -rq a b", "expect": "Files a/f and b/f differ"}
+{"id": "449992ddef74", "cmd": "mkdir -p d/e; touch d/a; command -v tree >/dev/null && tree -L 1 d | head -2 | tail -1 || echo \"├── a\"", "expect": "a"}
+{"id": "998ed6c26651", "cmd": "printf 'a\\001b' | cat -v", "expect": "a^Ab"}
+{"id": "9e25a4805232", "cmd": "printf 'a,3\\nb,1\\n' | sort -t, -k2,2n | head -1", "expect": "b,1"}
+{"id": "ccf9a7653854", "cmd": "printf '1 a\\n2 b\\n' > x; printf '1 c\\n' > y; join x y", "expect": "1 a c"}
+{"id": "bbd22a0a9038", "cmd": "printf 'a\\tb\\n' | expand -t 4", "expect": "a   b"}
+{"id": "65b80c904797", "cmd": "printf 'a\\nb\\nc\\n' | tac | head -1", "expect": "c"}
+{"id": "784283422d40", "cmd": "printf 'a\\nb\\n' | cat -n | tail -1 | awk '{print $1}'", "expect": "2"}
+{"id": "70ac3bb6b04f", "cmd": "seq 10 > f; split -l 4 f p_; cat p_* | wc -l", "expect": "10"}
+{"id": "050d93965e76", "cmd": "truncate -s 1M f; stat -c %s f", "expect": "1048576"}
+{"id": "0388a778c0e2", "cmd": "head -c 16 /dev/urandom | od -An -tx1 | wc -w", "expect": "16"}
+{"id": "cc2c39673e1a", "cmd": "touch -d '2026-01-01 00:00:00' f; stat -c %y f | cut -c1-10", "expect": "2026-01-01"}
+{"id": "2fb75c0bb070", "cmd": "touch -d '1 hour ago' m; touch n; find . -newer m -type f | sort | head -1", "expect": "./n"}
+{"id": "9a73199a3938", "cmd": "touch e; find . -maxdepth 1 -type f -empty", "expect": "./e"}
+{"id": "d4047d00ee7a", "cmd": "touch f x; chmod +x x; find . -maxdepth 1 -type f -perm -u+x", "expect": "./x"}
+{"id": "89a3e226bc98", "cmd": "printf aaaa > a; printf aa > b; find . -maxdepth 1 -type f -printf '%s %p\\n' | sort -rn | head -1", "expect": "4 ./a"}
+{"id": "f4417a5389b3", "cmd": "mkdir d; printf aaaa > d/f; du -sb d | cut -f1 | awk '{print ($1>=4)}'", "expect": "1"}
+{"id": "7fa9b73a30b8", "cmd": "touch a b; ls -1 | tr '\\n' ' '", "expect": "a b"}
+{"id": "d2103b294669", "cmd": "printf 'ş' | wc -c", "expect": "2"}
+{"id": "0203ee529f23", "cmd": "printf 'ş' | LC_ALL=en_US.UTF-8 wc -m 2>/dev/null || printf 'ş' | wc -c", "expect": "2"}
+{"id": "236403f44ceb", "cmd": "printf 'b\\nA\\na\\n' | LC_ALL=C sort | tr '\\n' ' '", "expect": "A a b"}
+{"id": "ab2da2dfd2eb", "cmd": "LC_ALL=C ls /nonexistent 2>&1 | grep -c 'No such file'", "expect": "1"}
+{"id": "8075746bb0f6", "cmd": "date -u -d @0 +%Y-%m-%dT%H:%M:%SZ", "expect": "1970-01-01T00:00:00Z"}
+{"id": "ddf0882c1400", "cmd": "date -u -d '2026-11-15 + 3 days' +%F", "expect": "2026-11-18"}
+{"id": "1f054a1af2aa", "cmd": "TZ=Europe/Istanbul date -d '2026-11-15 12:00 UTC' +%H:%M", "expect": "15:00"}
+{"id": "e5b45ba7ad90", "cmd": "date -d 2026-11-15 +%u", "expect": "7"}
+{"id": "00a41678e279", "cmd": "for i in 0 1; do date -d \"2026-11-15 + $i days\" +%a; done | tr '\\n' ' '", "expect": "Sun Mon"}
+{"id": "f089f9062899", "cmd": "a=$(date -d '2026-01-01 00:00:10 UTC' +%s); b=$(date -d '2026-01-01 00:00:00 UTC' +%s); echo $((a-b))", "expect": "10"}
+{"id": "a0b730e14f1b", "cmd": "date +%s | awk '{print length($1)}'", "expect": "10"}
+{"id": "b9e96fe55005", "cmd": "date -u -d @2147483648 +%Y", "expect": "2038"}
+{"id": "199ad294ffdf", "cmd": "a=5; echo $((a*2+1))", "expect": "11"}
+{"id": "c3332da2c793", "cmd": "awk 'BEGIN{printf \"%.1f\\n\", 10/4}'", "expect": "2.5"}
+{"id": "e475f5004b3a", "cmd": "printf 'a,b\\nx,2\\ny,4\\n' | awk -F, 'NR>1 {s+=$2} END {print s/(NR-1)}'", "expect": "3"}
+{"id": "8517cd152f53", "cmd": "printf 'b\\na\\nb\\n' | awk '!seen[$0]++' | tr '\\n' ' '", "expect": "b a"}
+{"id": "e6894eac8ff2", "cmd": "seq 10 | awk 'NR==5'", "expect": "5"}
+{"id": "0e933bbf524d", "cmd": "echo x | awk -v n=hello '{print n, $1}'", "expect": "hello x"}
+{"id": "231d6faf172b", "cmd": "printf 'a 1 50\\nb 2 150\\n' | awk '$3>100 {print $1}'", "expect": "b"}
+{"id": "02e326fcab60", "cmd": "printf 'a\\nstart\\nb\\nend\\nc\\n' | sed -n '/start/,/end/p' | tr '\\n' ' '", "expect": "start b end"}
+{"id": "7d50802327bd", "cmd": "printf 'a\\nb\\n' | sed '$a c' | tr '\\n' ' '", "expect": "a b c"}
+{"id": "b87ddfefaea6", "cmd": "printf 'a  \\n' | sed 's/[ \\t]*$//' | od -c | head -1", "expect": "0000000   a  \\n"}
+{"id": "47fa186bd17b", "cmd": "printf 'a\\tb\\n' | sed -n l", "expect": "a\\tb$"}
+{"id": "63aa1a5cf500", "cmd": "echo 'a12b345' | grep -oE '[0-9]+' | tr '\\n' ' '", "expect": "12 345"}
+{"id": "84e339deb0aa", "cmd": "echo 'price: 42 usd' | grep -oP '\\d+(?= usd)'", "expect": "42"}
+{"id": "0b8f92326d61", "cmd": "echo a > f; grep -h a f", "expect": "a"}
+{"id": "bb35f2507f91", "cmd": "printf 'a\\nb\\n' > p; printf 'a1\\nc\\nb2\\n' | grep -F -f p | tr '\\n' ' '", "expect": "a1 b2"}
+{"id": "aa80ac8d44a6", "cmd": "mkdir -p d/.git; echo x > d/.git/f; echo x > d/g; grep -rl --exclude-dir=.git x d", "expect": "d/g"}
+{"id": "475a72cb75a7", "cmd": "printf '1\\n2\\n3\\n' | xargs -P3 -n1 echo | sort | tr '\\n' ' '", "expect": "1 2 3"}
+{"id": "4eaa8a5659e3", "cmd": "for i in 1 2 3; do (sleep 0.1; echo $i) & done | sort | tr '\\n' ' '; wait", "expect": "1 2 3"}
+{"id": "d02fe874bee7", "cmd": "mkfifo p; (echo hi > p &) ; timeout 2 cat p", "expect": "hi"}
+{"id": "03aa6a53118b", "cmd": "coproc C { cat; }; echo hello >&\"${C[1]}\"; read -r x <&\"${C[0]}\"; echo $x", "expect": "hello"}
+{"id": "3b5179549ab7", "cmd": "printf 'a\\nb\\n' > f; exec 3< f; read -u 3 x; echo $x; exec 3<&-", "expect": "a"}
+{"id": "f20ffd7935fe", "cmd": "printf '%q\\n' 'a b'", "expect": "a\\ b"}
+{"id": "1f930686f8bc", "cmd": "f(){ echo \"result\"; }; x=$(f); echo $x", "expect": "result"}
+{"id": "24b69fd5c56b", "cmd": "s(){ case $1 in start) echo S;; stop) echo T;; *) echo usage;; esac; }; s stop", "expect": "T"}
+{"id": "2f3e1563df49", "cmd": "set -- a \"b c\"; for x in \"$@\"; do echo \"[$x]\"; done", "expect": "[a]\n[b c]"}
+{"id": "2f2bb7d40433", "cmd": "printf 'd=$(cd \"$(dirname \"${BASH_SOURCE[0]}\")\" && pwd); echo ${d##*/}\\n' > s.sh; mkdir sub; mv s.sh sub/; cd /; bash \"$OLDPWD/sub/s.sh\"", "expect": "sub"}
+{"id": "c7480d317f00", "cmd": "printf 'A=1\\nB=\"x y\"\\n' > c.env; . ./c.env; echo \"$A $B\"", "expect": "1 x y"}
+{"id": "424904462dc4", "cmd": "printf 'A=1\\n' > c.env; set -a; . ./c.env; set +a; bash -c 'echo $A'", "expect": "1"}
+{"id": "49d6a4e82bd4", "cmd": "printf 'A=1\\n' > e; grep -c '^A=1$' e", "expect": "1"}
