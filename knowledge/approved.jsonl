@@ -6728,3 +6728,170 @@
 {"id": "a5edc914444c", "cat": "browser", "tip": "A 'Verify you are human' page is a bot check; stop and let the person handle it instead of trying to get around it.", "n": 0, "a": "seed"}
 {"id": "a73fc2cc984d", "cat": "browser", "tip": "'This site can't be reached' with ERR_NAME_NOT_RESOLVED is a DNS problem; with ERR_CONNECTION_REFUSED the server is not listening.", "n": 0, "a": "seed"}
 {"id": "be11182b5c0d", "cat": "browser", "tip": "'Your connection is not private' warnings usually mean a wrong clock or an invalid certificate; never click through them for sites that handle accounts.", "n": 0, "a": "seed"}
+{"id": "8a5f7ba5b4ef", "cat": "gui", "tip": "LibreOffice can convert documents without opening a window: libreoffice --headless --convert-to pdf file.docx writes the PDF next to it.", "n": 0, "a": "seed"}
+{"id": "6d686b561083", "cat": "gui", "tip": "LibreOffice headless conversion fails silently when a LibreOffice window is already open with the same profile; close it or use a separate profile option.", "n": 0, "a": "seed"}
+{"id": "fb0f5321ed8d", "cat": "gui", "tip": "VLC can be controlled from the command line with cvlc, which plays media without the window, useful for scripts and kiosks.", "n": 0, "a": "seed"}
+{"id": "5241209d5f0f", "cat": "gui", "tip": "mpv plays video with hardware decoding on a Pi when started with --hwdec=auto, using much less CPU than software decoding.", "n": 0, "a": "seed"}
+{"id": "7a0f89ffdec0", "cat": "gui", "tip": "Use feh or eog to show an image full screen from a script; feh --fullscreen file works without a desktop menu.", "n": 0, "a": "seed"}
+{"id": "840a706c004e", "cat": "gui", "tip": "Thonny can open a file from the command line: thonny file.py, which is easier than browsing in its open dialog.", "n": 0, "a": "seed"}
+{"id": "77ec40f41425", "cat": "gui", "tip": "Geany, Mousepad and Text Editor accept a file name argument and a +line option in many cases, which opens a file at a given line.", "n": 0, "a": "seed"}
+{"id": "e2af21c00bfb", "cat": "gui", "tip": "For Minecraft Java on a Pi, use a launcher that supports ARM such as Prism Launcher; most Windows launchers do not run there.", "n": 0, "a": "seed"}
+{"id": "a7211f123066", "cat": "gui", "tip": "Minecraft Java needs a Java version that matches the game version: recent versions need Java 21; older ones need Java 17 or 8.", "n": 0, "a": "seed"}
+{"id": "b3a45053faba", "cat": "gui", "tip": "Games and launchers often take a minute or more to start on a Pi; watch the process and the screen before deciding they failed.", "n": 0, "a": "seed"}
+{"id": "6deda32b9f05", "cat": "gui", "tip": "A game window may grab the mouse; press Escape or the game's pause key to get the pointer back before using other windows.", "n": 0, "a": "seed"}
+{"id": "b76517cfeb9e", "cat": "gui", "tip": "Full screen games may change the screen resolution; screenshots then have a different size, so take a new one before computing coordinates.", "n": 0, "a": "seed"}
+{"id": "82856c965152", "cat": "gui", "tip": "To read text inside a game, use the game's own chat or log file when possible; OCR on moving game graphics is unreliable.", "n": 0, "a": "seed"}
+{"id": "9b7d47040ca5", "cat": "gui", "tip": "Minecraft writes its log to logs/latest.log in the game folder; it shows connection errors and crashes more clearly than the screen.", "n": 0, "a": "seed"}
+{"id": "4da16c2d65c7", "cat": "gui", "tip": "In Minecraft Java, the multiplayer server list accepts a server address typed in the Add Server dialog; Direct Connection is quicker for one-off joins.", "n": 0, "a": "seed"}
+{"id": "9c805f02d358", "cat": "gui", "tip": "Desktop notifications can be sent from scripts with notify-send title text, which helps tell the person that a long task finished.", "n": 0, "a": "seed"}
+{"id": "0cf6bd30d291", "cat": "gui", "tip": "xdg-open file opens a file or address with the default program for its type, the same as double clicking it in the file manager.", "n": 0, "a": "seed"}
+{"id": "4f51fc0228b4", "cat": "gui", "tip": "xdg-mime query default type shows which program opens a file type; xdg-mime default app.desktop type changes it.", "n": 0, "a": "seed"}
+{"id": "19f6b9394996", "cat": "gui", "tip": "Autostart a program in the desktop session by placing a .desktop file in ~/.config/autostart.", "n": 0, "a": "seed"}
+{"id": "b4be388a036b", "cat": "gui", "tip": "On Raspberry Pi OS with labwc or wayfire, autostart entries live in different files than on the old LXDE desktop; check which compositor runs first.", "n": 0, "a": "seed"}
+{"id": "cf25cb0b8ba7", "cat": "gui", "tip": "The screen resolution can be read with xrandr on X11; xrandr --output name --mode WIDTHxHEIGHT changes it for the session.", "n": 0, "a": "seed"}
+{"id": "4f54147314b9", "cat": "gui", "tip": "xset s off -dpms disables screen blanking for the current X session, useful for displays that must stay on.", "n": 0, "a": "seed"}
+{"id": "5811a3a9dda2", "cat": "gui", "tip": "xdotool key super opens the start menu on many desktops; typing a program name and pressing Enter launches it.", "n": 0, "a": "seed"}
+{"id": "560a7fa3c8fb", "cat": "gui", "tip": "A program's About dialog or --version shows its version, which helps when instructions differ between versions.", "n": 0, "a": "seed"}
+{"id": "9ad1ef446014", "cat": "gui", "tip": "Settings changed through a GUI are stored in files under ~/.config; editing the file directly is often faster and exact, with the program closed.", "n": 0, "a": "seed"}
+{"id": "c2f6881c117a", "cat": "gui", "tip": "Closing a program with its own Quit menu saves its settings; killing it may lose the last changes.", "n": 0, "a": "seed"}
+{"id": "9db2ba683cc1", "cat": "gui", "tip": "Screen recordings can be made with ffmpeg -f x11grab on X11, which shows exactly what happened during a GUI task.", "n": 0, "a": "seed"}
+{"id": "d24d57f09631", "cat": "gui", "tip": "When a dialog appears asking for a password, it may be a keyring or a polkit prompt; the person must answer it, do not guess.", "n": 0, "a": "seed"}
+{"id": "50ea83770a6f", "cat": "gui", "tip": "The clipboard can be set from scripts with xclip -selection clipboard and read back the same way, a reliable way to move text into GUI apps.", "n": 0, "a": "seed"}
+{"id": "0c0e76349376", "cat": "gui", "tip": "Pasting with ctrl+v into a terminal or some games does not work; use ctrl+shift+v or the program's own paste option.", "n": 0, "a": "seed"}
+{"id": "f332289ec196", "cat": "gui", "tip": "High DPI scaling makes buttons larger on screen than their logical size; accessibility coordinates may then need scaling too.", "n": 0, "a": "seed"}
+{"id": "b891cc85521f", "cat": "gui", "tip": "Two monitors form one large X screen; coordinates of the second monitor start after the width of the first.", "n": 0, "a": "seed"}
+{"id": "8f403a8f7e57", "cat": "gui", "tip": "Virtual keyboards and on screen keyboards can cover the lower part of the screen; close them before clicking there.", "n": 0, "a": "seed"}
+{"id": "085b71ca2383", "cat": "gui", "tip": "If a window cannot be moved with the mouse, alt plus dragging anywhere in it moves it on many window managers.", "n": 0, "a": "seed"}
+{"id": "fe59a02d80fb", "cat": "gui", "tip": "A program started as root shows the root theme and stores settings in root's home; start desktop apps as the session user.", "n": 0, "a": "seed"}
+{"id": "e64061e742c7", "cat": "forms", "tip": "For login forms, check after submitting whether the page or window title changed; a silent failure often keeps the same page with a small red message.", "n": 0, "a": "seed"}
+{"id": "e0487be11b23", "cat": "forms", "tip": "Show password buttons let you verify a typed password visually; hide it again before taking screenshots that others will see.", "n": 0, "a": "seed"}
+{"id": "4388ad036ea3", "cat": "forms", "tip": "A search box often needs Enter or a click on the magnifier icon; typing alone may only show suggestions.", "n": 0, "a": "seed"}
+{"id": "06f591e7982a", "cat": "forms", "tip": "Dropdown lists built from styled divs do not react to keyboard selection like native ones; click to open, then click the option.", "n": 0, "a": "seed"}
+{"id": "5690cc4f3049", "cat": "forms", "tip": "When a form resets after an error, re-enter only the fields that were cleared; check each one instead of assuming they kept their values.", "n": 0, "a": "seed"}
+{"id": "50dba3deb6f4", "cat": "forms", "tip": "Fields that format input as you type, like phone or card numbers, can misplace characters when typing fast; type slowly or paste.", "n": 0, "a": "seed"}
+{"id": "f19212fad9ad", "cat": "forms", "tip": "File upload buttons open the system file dialog; type the full path into it with ctrl+l instead of browsing.", "n": 0, "a": "seed"}
+{"id": "e660086f3a99", "cat": "forms", "tip": "After uploading a file, wait for the progress indicator to finish before submitting the form.", "n": 0, "a": "seed"}
+{"id": "14be54c026c0", "cat": "chromium", "tip": "chromium --app=address opens a page in its own window without tabs and address bar, good for dashboards.", "n": 0, "a": "seed"}
+{"id": "40a0ab8d1a1f", "cat": "chromium", "tip": "Start Chromium with --start-maximized so pages use the whole screen and screenshots show more content.", "n": 0, "a": "seed"}
+{"id": "57ed5ac481ec", "cat": "chromium", "tip": "Chromium's --window-size=width,height and --window-position=x,y place the window exactly for repeatable automation.", "n": 0, "a": "seed"}
+{"id": "2efd09d4ce2d", "cat": "chromium", "tip": "Chromium on a Pi uses less memory with --process-per-site, at the cost of tabs from one site sharing a process.", "n": 0, "a": "seed"}
+{"id": "dcdd5bb62c7a", "cat": "chromium", "tip": "chrome://gpu shows whether hardware acceleration works; on a Pi, disabling it can fix black or flickering pages.", "n": 0, "a": "seed"}
+{"id": "6c729b290905", "cat": "chromium", "tip": "Extensions slow Chromium down on a Pi; use a clean profile for automation.", "n": 0, "a": "seed"}
+{"id": "c08f9819ac65", "cat": "chromium", "tip": "Use chromium --headless=new --screenshot to capture a page image without a visible window.", "n": 0, "a": "seed"}
+{"id": "903f9fe26a93", "cat": "chromium", "tip": "Use chromium --headless=new --dump-dom address to print the rendered HTML of a page, including content built by JavaScript.", "n": 0, "a": "seed"}
+{"id": "35a42454c4a9", "cat": "chromium", "tip": "Use chromium --headless=new --print-to-pdf to save a page as PDF from a script.", "n": 0, "a": "seed"}
+{"id": "de3c390fcd14", "cat": "chromium", "tip": "Chromium's profile is locked while it runs; tools that read cookies or history need it closed or must copy the files first.", "n": 0, "a": "seed"}
+{"id": "8bd7832c34e0", "cat": "chromium", "tip": "Do not delete a person's Chromium profile to fix a problem; it holds their sign-ins and settings. Use a separate profile for tests.", "n": 0, "a": "seed"}
+{"id": "8de9ef6b54f6", "cat": "browser", "tip": "Playwright can connect to an existing Chromium with connect_over_cdp when it was started with a remote debugging port.", "n": 0, "a": "seed"}
+{"id": "8bfc2d0ede8a", "cat": "browser", "tip": "Playwright's locator by role and name, such as get_by_role('button', name='Save'), survives layout changes better than CSS paths.", "n": 0, "a": "seed"}
+{"id": "4e66312c0116", "cat": "browser", "tip": "Playwright waits for elements to be visible and enabled before clicking; avoid fixed sleeps.", "n": 0, "a": "seed"}
+{"id": "f341d59e6945", "cat": "browser", "tip": "Use page.wait_for_load_state('networkidle') carefully; pages with live updates never become idle. Wait for a specific element instead.", "n": 0, "a": "seed"}
+{"id": "2d912b82ec49", "cat": "browser", "tip": "page.content() returns the current DOM as HTML; page.inner_text('body') returns only the visible text, which is far smaller.", "n": 0, "a": "seed"}
+{"id": "273d81771c48", "cat": "browser", "tip": "Iframes are separate documents; elements inside them need the frame's own locator in automation tools.", "n": 0, "a": "seed"}
+{"id": "4f9415c1ae8e", "cat": "browser", "tip": "Shadow DOM hides elements from simple selectors; Playwright pierces open shadow roots automatically, plain DOM queries do not.", "n": 0, "a": "seed"}
+{"id": "cd608b4371cb", "cat": "browser", "tip": "Pages often lazy load images and lists; scroll them into view before reading or screenshotting.", "n": 0, "a": "seed"}
+{"id": "8efe2c7fba2b", "cat": "browser", "tip": "Many sites offer an official API or an export function; use it instead of scraping when you need structured data.", "n": 0, "a": "seed"}
+{"id": "0648e72b0076", "cat": "browser", "tip": "Respect a site's terms and rate limits when reading many pages; add delays and avoid parallel floods.", "n": 0, "a": "seed"}
+{"id": "b9d1f995e54d", "cat": "browser", "tip": "Save a screenshot and the visible text when a web step fails; together they explain most failures without repeating the run.", "n": 0, "a": "seed"}
+{"id": "1c4f43eb377f", "cat": "general", "tip": "A good final report lists what was done, how it was checked, what remains or failed, and the paths and commands needed to use the result.", "n": 0, "a": "seed"}
+{"id": "413c7f5999b0", "cat": "general", "tip": "Before a long build or download, estimate time and space, and tell the person if it will take many minutes.", "n": 0, "a": "seed"}
+{"id": "7037a2091239", "cat": "general", "tip": "When installing software, prefer the distribution package; use downloads from the official project only when the package is missing or too old.", "n": 0, "a": "seed"}
+{"id": "2959b164c910", "cat": "general", "tip": "After an install, run the program once with --version or a simple input to prove that it works.", "n": 0, "a": "seed"}
+{"id": "361a865b06f8", "cat": "general", "tip": "Keep the person's own files safe: never delete or overwrite work folders unless the request is explicit about it.", "n": 0, "a": "seed"}
+{"id": "366a5031ca93", "cat": "general", "tip": "When there are several ways to do a task, choose the one that is easiest to undo and to check.", "n": 0, "a": "seed"}
+{"id": "ee1345af87e1", "cat": "general", "tip": "Note down the exact paths, ports and commands of anything you set up; later tasks and people will need them.", "n": 0, "a": "seed"}
+{"id": "a38df32638ab", "cat": "general", "tip": "If a step needs the internet, check connectivity first; many failures are only a missing connection.", "n": 0, "a": "seed"}
+{"id": "ca47f220d11d", "cat": "general", "tip": "Avoid scanning the whole disk with find or grep; start from the likely folders, the notes and the working directory.", "n": 0, "a": "seed"}
+{"id": "2e708d7999fc", "cat": "general", "tip": "When a program prints a lot, limit the output with tail, head or quiet options so the important lines are not lost.", "n": 0, "a": "seed"}
+{"id": "0debfbba1bfa", "cat": "general", "tip": "If the person seems non technical, avoid asking them technical questions; make a reasonable choice and explain it simply.", "n": 0, "a": "seed"}
+{"id": "3f5b9c17c260", "cat": "general", "tip": "Watch for results that look suspicious, such as all zeros, an empty list or a black image; verify the method before trusting them.", "n": 0, "a": "seed"}
+{"id": "d735a087df16", "cat": "general", "tip": "When a GUI action fails twice, look for a keyboard shortcut, a command line option or a configuration file that does the same.", "n": 0, "a": "seed"}
+{"id": "104ad7f79ec2", "cat": "general", "tip": "Prefer to open the thing the person asked about and leave it on screen at the end, so they can see the result immediately.", "n": 0, "a": "seed"}
+{"id": "a25f39050516", "cat": "general", "tip": "Time stamps in logs show the order of events; compare them with when you ran each step to connect causes and effects.", "n": 0, "a": "seed"}
+{"id": "4c8e831a1c4f", "cat": "general", "tip": "A clean, minimal design that does one job well beats a flashy page full of decoration and filler text; people notice generic AI looking output.", "n": 0, "a": "seed"}
+{"id": "9ef6d5992e1b", "cat": "general", "tip": "Remove placeholder text, sample data and buttons that do nothing before showing a result; they make the whole thing look fake.", "n": 0, "a": "seed"}
+{"id": "e51b13971be2", "cat": "general", "tip": "Test the main use case end to end like a real user would, including closing and reopening, before calling something finished.", "n": 0, "a": "seed"}
+{"id": "348b0f99c7eb", "cat": "python", "tip": "heapq.nlargest and nsmallest return the top items without sorting the whole list.", "n": 0, "a": "seed-verified"}
+{"id": "b6001d710523", "cat": "python", "tip": "bisect.insort keeps a list sorted while inserting, and bisect_left finds where a value belongs.", "n": 0, "a": "seed-verified"}
+{"id": "a0e8411520ad", "cat": "python", "tip": "statistics.mean, median and stdev compute basic statistics without numpy.", "n": 0, "a": "seed-verified"}
+{"id": "556122a38190", "cat": "python", "tip": "math.ceil and math.floor round up and down to whole numbers, and math.prod multiplies all items.", "n": 0, "a": "seed-verified"}
+{"id": "91ee5bb12629", "cat": "python", "tip": "int(text, 16) and format(n, 'x') convert between hexadecimal text and numbers.", "n": 0, "a": "seed-verified"}
+{"id": "9278a421c3a9", "cat": "python", "tip": "bytes.fromhex and bytes.hex convert between hex strings and raw bytes.", "n": 0, "a": "seed-verified"}
+{"id": "c3a553751560", "cat": "python", "tip": "str.encode and bytes.decode convert between text and bytes; always name the encoding, usually utf-8.", "n": 0, "a": "seed-verified"}
+{"id": "016cd9ad693e", "cat": "python", "tip": "struct.pack and unpack read and write binary data such as sensor packets with exact byte layouts.", "n": 0, "a": "seed-verified"}
+{"id": "5dbdca1589f2", "cat": "python", "tip": "int.to_bytes and int.from_bytes convert numbers to bytes with a chosen byte order.", "n": 0, "a": "seed-verified"}
+{"id": "deb846075cd1", "cat": "python", "tip": "zipfile reads and writes zip archives from Python, including listing names without extracting.", "n": 0, "a": "seed-verified"}
+{"id": "caa2bd465297", "cat": "python", "tip": "Check zip member names before extracting archives from others; names with .. or absolute paths can write outside the target folder.", "n": 0, "a": "seed-verified"}
+{"id": "ea3057ea0fd4", "cat": "python", "tip": "tarfile.open with mode 'r:*' reads gzip, bzip2 and xz tar archives automatically.", "n": 0, "a": "seed-verified"}
+{"id": "ce03938ba6c0", "cat": "python", "tip": "gzip.open reads and writes compressed files like normal text files with mode 'rt' or 'wt'.", "n": 0, "a": "seed-verified"}
+{"id": "ab8c4a8d08b4", "cat": "python", "tip": "configparser reads INI style config files with sections and typed getters.", "n": 0, "a": "seed-verified"}
+{"id": "17801bf931a3", "cat": "python", "tip": "tomllib (Python 3.11+) reads TOML files such as pyproject.toml without extra packages; open them in binary mode.", "n": 0, "a": "seed-verified"}
+{"id": "c3a8501aedb8", "cat": "python", "tip": "string.Template substitutes $name placeholders and is safer than format for templates written by users.", "n": 0, "a": "seed-verified"}
+{"id": "ab9f688d600b", "cat": "python", "tip": "difflib.SequenceMatcher gives a similarity ratio between two strings, useful for fuzzy matching of names.", "n": 0, "a": "seed-verified"}
+{"id": "e8a03c48bcc4", "cat": "python", "tip": "difflib.get_close_matches suggests the closest known words to a mistyped one.", "n": 0, "a": "seed-verified"}
+{"id": "afc17d4e2079", "cat": "python", "tip": "difflib.unified_diff produces a diff between two lists of lines, like diff -u.", "n": 0, "a": "seed-verified"}
+{"id": "d747282cd9ed", "cat": "python", "tip": "glob.glob with recursive=True and ** finds files in subfolders using shell style patterns.", "n": 0, "a": "seed-verified"}
+{"id": "fad696521141", "cat": "python", "tip": "fnmatch.fnmatch tests a name against a shell pattern such as *.log without touching the file system.", "n": 0, "a": "seed-verified"}
+{"id": "52ae2bcdb265", "cat": "python", "tip": "os.walk visits every folder below a starting point; edit the dirs list in place to skip folders such as .git.", "n": 0, "a": "seed-verified"}
+{"id": "8e43de26ac01", "cat": "python", "tip": "os.scandir is faster than listdir plus stat calls because it returns file type and size information directly.", "n": 0, "a": "seed-verified"}
+{"id": "958890dee59b", "cat": "python", "tip": "uuid.uuid4 creates random unique ids for files, jobs or records.", "n": 0, "a": "seed-verified"}
+{"id": "12d7c630b582", "cat": "python", "tip": "random.seed makes random sequences repeatable in tests; random.sample picks unique items.", "n": 0, "a": "seed-verified"}
+{"id": "d5c52502919b", "cat": "python", "tip": "pprint.pformat prints nested data structures readably in logs.", "n": 0, "a": "seed-verified"}
+{"id": "a29fc6ddba03", "cat": "python", "tip": "enum.Enum gives named constants that print readably and cannot be confused with plain numbers.", "n": 0, "a": "seed-verified"}
+{"id": "886e4502d736", "cat": "python", "tip": "functools.wraps keeps the name and docstring of a decorated function.", "n": 0, "a": "seed-verified"}
+{"id": "ee1891a0b620", "cat": "python", "tip": "A simple retry decorator with a delay handles flaky network calls without cluttering the main code.", "n": 0, "a": "seed-verified"}
+{"id": "0b2b3ac21bc0", "cat": "python", "tip": "contextlib.contextmanager turns a generator into a with block, a short way to write setup and cleanup code.", "n": 0, "a": "seed-verified"}
+{"id": "cc66d7ffa836", "cat": "python", "tip": "Use __slots__ in classes with many instances to save memory on small devices.", "n": 0, "a": "seed-verified"}
+{"id": "b86ab47a5a0e", "cat": "python", "tip": "property makes a computed attribute that reads like a field and can validate assignments.", "n": 0, "a": "seed-verified"}
+{"id": "4e02f8248d1a", "cat": "python", "tip": "__repr__ should return a string that helps debugging; dataclasses create a good one automatically.", "n": 0, "a": "seed"}
+{"id": "b7143dbcf547", "cat": "python", "tip": "unittest is built in; python3 -m unittest discovers test files named test_*.py.", "n": 0, "a": "seed-verified"}
+{"id": "00edde1b1cc8", "cat": "python", "tip": "assertRaises in unittest checks that code fails the right way, which is as important as checking success.", "n": 0, "a": "seed-verified"}
+{"id": "f089a9a8275f", "cat": "python", "tip": "unittest.mock.patch replaces a function during a test, for example to avoid real network calls.", "n": 0, "a": "seed-verified"}
+{"id": "1b2cfb1e7cdf", "cat": "python", "tip": "doctest runs the examples in docstrings as tests, keeping documentation honest.", "n": 0, "a": "seed-verified"}
+{"id": "20c9cc0e6b78", "cat": "python", "tip": "timeit measures small code snippets reliably by running them many times.", "n": 0, "a": "seed-verified"}
+{"id": "eea817cb1d75", "cat": "python", "tip": "tracemalloc shows which lines allocate the most memory when a script uses too much RAM.", "n": 0, "a": "seed-verified"}
+{"id": "2da7f4fb19dd", "cat": "python", "tip": "gc.collect forces garbage collection; needing it often is a sign of reference cycles or large caches.", "n": 0, "a": "seed"}
+{"id": "19f5fa0ff2cf", "cat": "python", "tip": "sys.getsizeof shows the memory of one object, not of the objects it contains.", "n": 0, "a": "seed-verified"}
+{"id": "fd16f7f14e80", "cat": "python", "tip": "platform.machine and platform.system tell a script which CPU and operating system it runs on.", "n": 0, "a": "seed-verified"}
+{"id": "195e7c2e8004", "cat": "python", "tip": "os.cpu_count gives the number of CPU cores, useful to choose the number of worker threads or processes.", "n": 0, "a": "seed-verified"}
+{"id": "1bc4ed6613a1", "cat": "python", "tip": "multiprocessing.Pool uses several CPU cores for CPU heavy work, which threads cannot do because of the GIL.", "n": 0, "a": "seed-verified"}
+{"id": "7f5bf003296b", "cat": "python", "tip": "socket.create_connection with a timeout tests whether a TCP port is reachable from Python.", "n": 0, "a": "seed-verified"}
+{"id": "9a4f09523f26", "cat": "python", "tip": "socket.gethostname returns the machine's host name.", "n": 0, "a": "seed-verified"}
+{"id": "bb656c657c58", "cat": "python", "tip": "http.server with a BaseHTTPRequestHandler subclass makes a tiny web service without any framework.", "n": 0, "a": "seed-verified"}
+{"id": "3abfa090fdc7", "cat": "python", "tip": "urllib.request.urlopen raises HTTPError for 4xx and 5xx responses; catch it to read the status and body.", "n": 0, "a": "seed-verified"}
+{"id": "78d3b0de2c71", "cat": "python", "tip": "Always pass a timeout to urlopen or requests; the default can wait for minutes on a dead server.", "n": 0, "a": "seed"}
+{"id": "cd599961d652", "cat": "python", "tip": "requests.get(url, timeout=10) with r.raise_for_status() stops early on HTTP errors instead of processing an error page.", "n": 0, "a": "seed"}
+{"id": "6b0d59c6a3d3", "cat": "python", "tip": "Use requests.Session for many requests to the same server; it reuses connections and keeps cookies.", "n": 0, "a": "seed"}
+{"id": "991169fd9399", "cat": "python", "tip": "email.message.EmailMessage builds correct emails with attachments and non English text.", "n": 0, "a": "seed-verified"}
+{"id": "eb33d99582af", "cat": "python", "tip": "date.isocalendar gives the ISO week number used in many reports.", "n": 0, "a": "seed-verified"}
+{"id": "c3ba133acf02", "cat": "python", "tip": "calendar.monthrange gives the weekday of the first day and the number of days in a month.", "n": 0, "a": "seed-verified"}
+{"id": "154081469a64", "cat": "python", "tip": "str.zfill pads numbers with leading zeros, and str.center, ljust and rjust align text in columns.", "n": 0, "a": "seed-verified"}
+{"id": "9c068c3a73f5", "cat": "python", "tip": "str.partition splits once at the first separator and always returns three parts, which avoids index errors.", "n": 0, "a": "seed-verified"}
+{"id": "c4da2ba6f4e4", "cat": "python", "tip": "str.splitlines handles both Unix and Windows line endings, unlike split on a newline.", "n": 0, "a": "seed-verified"}
+{"id": "d1fd8fad30e0", "cat": "python", "tip": "str.translate with str.maketrans replaces many single characters at once, for example Turkish letters to ASCII.", "n": 0, "a": "seed-verified"}
+{"id": "dec09ff067c0", "cat": "python", "tip": "textwrap.shorten cuts long text at a word boundary and adds a marker, good for log lines and titles.", "n": 0, "a": "seed-verified"}
+{"id": "14f5c9dc61eb", "cat": "python", "tip": "html.escape makes text safe to insert into HTML pages.", "n": 0, "a": "seed-verified"}
+{"id": "b6ca07e554ff", "cat": "python", "tip": "ipaddress.ip_address and ip_network validate addresses and check whether one is inside a network.", "n": 0, "a": "seed-verified"}
+{"id": "aeed838567a0", "cat": "python", "tip": "ipaddress tells you whether an address is private or loopback, useful for rejecting requests to internal hosts.", "n": 0, "a": "seed-verified"}
+{"id": "be3527211227", "cat": "python", "tip": "float('nan') never equals itself; use math.isnan to test for it.", "n": 0, "a": "seed-verified"}
+{"id": "1a6937dec066", "cat": "python", "tip": "Sorting mixed None and numbers fails in Python 3; give sorted a key that puts None first or last.", "n": 0, "a": "seed-verified"}
+{"id": "571f291bc23a", "cat": "python", "tip": "list.sort sorts in place and returns None; writing x = x.sort() loses the list.", "n": 0, "a": "seed-verified"}
+{"id": "2d675a13d9f1", "cat": "python", "tip": "Strings are immutable; build long text with a list and ''.join instead of += in a loop.", "n": 0, "a": "seed-verified"}
+{"id": "553bf943fccc", "cat": "python", "tip": "Set operations find common and different items quickly: a & b, a | b and a - b.", "n": 0, "a": "seed-verified"}
+{"id": "711374d6bbb2", "cat": "python", "tip": "dict comprehension inverts a mapping in one line when values are unique.", "n": 0, "a": "seed-verified"}
+{"id": "e77a451be8e9", "cat": "python", "tip": "Use a frozen dataclass or a tuple as a dictionary key; lists and dicts cannot be keys because they are mutable.", "n": 0, "a": "seed-verified"}
+{"id": "6f45080086ae", "cat": "python", "tip": "Chained comparisons like 0 < x < 10 work in Python and read naturally.", "n": 0, "a": "seed-verified"}
+{"id": "4bdb1d373e69", "cat": "python", "tip": "The else clause of a for loop runs only when the loop was not stopped by break, handy for search loops.", "n": 0, "a": "seed-verified"}
+{"id": "e9c0d8438253", "cat": "python", "tip": "Closures capture variables by reference; a lambda in a loop sees the last value unless you bind it with a default argument.", "n": 0, "a": "seed-verified"}
+{"id": "bdd737ba14b3", "cat": "python", "tip": "nonlocal lets an inner function change a variable of the enclosing function.", "n": 0, "a": "seed-verified"}
+{"id": "c72ae8bc44a9", "cat": "python", "tip": "getattr with a default reads optional attributes safely, and hasattr checks for them.", "n": 0, "a": "seed-verified"}
+{"id": "630a1e15da14", "cat": "python", "tip": "isinstance accepts a tuple of types, which checks several types at once.", "n": 0, "a": "seed-verified"}
+{"id": "02790d31ba2e", "cat": "python", "tip": "bool of an empty list, dict, string or zero is False, so if items: is the usual emptiness check.", "n": 0, "a": "seed-verified"}
+{"id": "6f71d1dde14e", "cat": "python", "tip": "print with sep and end controls separators and line endings without building strings.", "n": 0, "a": "seed-verified"}
+{"id": "04948b782339", "cat": "python", "tip": "sys.argv holds command line arguments; sys.argv[0] is the script name itself.", "n": 0, "a": "seed-verified"}
+{"id": "da9ca5e2cf44", "cat": "python", "tip": "Read standard input in a script with sys.stdin to make it usable in pipes.", "n": 0, "a": "seed-verified"}
+{"id": "924e899196ab", "cat": "python", "tip": "os.getpid and os.getppid identify a process and its parent, useful in log lines of multi process programs.", "n": 0, "a": "seed-verified"}
+{"id": "2b02972a4ff8", "cat": "python", "tip": "Path.exists, is_file and is_dir check paths without try and except.", "n": 0, "a": "seed-verified"}
+{"id": "32762e7c48e6", "cat": "python", "tip": "Path.unlink(missing_ok=True) deletes a file without failing when it is already gone.", "n": 0, "a": "seed-verified"}
+{"id": "1d5c6a5cb621", "cat": "python", "tip": "Path.iterdir lists a folder's entries as Path objects; filter with is_file or suffix.", "n": 0, "a": "seed-verified"}
+{"id": "a01c5edfb734", "cat": "python", "tip": "Path.relative_to gives a path relative to another, useful for printing short paths in reports.", "n": 0, "a": "seed-verified"}
