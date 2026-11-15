@@ -2013,3 +2013,73 @@
 {"id": "dcbed30edbee", "cmd": "python3 -c \"\nfrom playwright.sync_api import sync_playwright as sp\nwith sp() as p:\n    b=p.chromium.launch(); pg=b.new_page(); pg.route('http://x.test/**', lambda r: r.fulfill(body='{\\\"a\\\":1}', content_type='application/json')); pg.goto('http://x.test/')\n    print(pg.evaluate('fetch(\\\"/\\\").then(r=>r.headers.get(\\\"content-type\\\"))')); b.close()\"", "expect": "application/json"}
 {"id": "465ed720b1e8", "cmd": "python3 -c \"\nfrom playwright.sync_api import sync_playwright as sp\nwith sp() as p:\n    b=p.chromium.launch(); pg=b.new_page(); pg.route('http://x.test/**', lambda r: r.fulfill(status=503, body='<html>wait</html>', content_type='text/html')); pg.goto('http://x.test/')\n    print(pg.evaluate('fetch(\\\"/\\\").then(r=>r.ok+\\\" \\\"+r.status)')); b.close()\"", "expect": "false 503"}
 {"id": "b1105c03c9bb", "cmd": "python3 -c \"\nfrom playwright.sync_api import sync_playwright as sp\nwith sp() as p:\n    b=p.chromium.launch(); pg=b.new_page(); n=[0]\n    def h(r):\n        n[0]+=1\n        r.fulfill(status=200 if n[0]>2 else 503, body='ok' if n[0]>2 else 'no', content_type='text/plain')\n    pg.route('http://x.test/**', h); pg.goto('http://x.test/')\n    print(pg.evaluate('(async()=>{for(let i=0;i<10;i++){const r=await fetch(\\\"/healthz\\\"); if(r.ok && await r.text()===\\\"ok\\\") return i; await new Promise(r=>setTimeout(r,10))}})()')); b.close()\"", "expect": "1"}
+{"id": "c1691f63b1c8", "cmd": "python3 -c \"\nimport argparse\np=argparse.ArgumentParser(); s=p.add_subparsers(dest='cmd'); a=s.add_parser('start'); a.add_argument('--n',type=int,default=1)\nprint(p.parse_args(['start','--n','3']).n)\"", "expect": "3"}
+{"id": "0589d8d2694f", "cmd": "python3 -c \"\nimport argparse\np=argparse.ArgumentParser(); p.add_argument('--level',choices=['a','b'])\ntry: p.parse_args(['--level','z'])\nexcept SystemExit as e: print(e.code)\" 2>/dev/null", "expect": "2"}
+{"id": "1c50f4b8fe1d", "cmd": "python3 -c \"\nimport argparse\np=argparse.ArgumentParser(); p.add_argument('--color',action=argparse.BooleanOptionalAction,default=True)\nprint(p.parse_args(['--no-color']).color)\"", "expect": "False"}
+{"id": "96f4f214fe96", "cmd": "python3 -c \"\nimport logging, logging.config\nlogging.config.dictConfig({'version':1,'handlers':{'c':{'class':'logging.StreamHandler','stream':'ext://sys.stdout'}},'root':{'level':'INFO','handlers':['c']}})\nlogging.info('hello')\"", "expect": "hello"}
+{"id": "9be545d1a377", "cmd": "python3 -c \"\nimport logging\nlogging.basicConfig(level=logging.WARNING,format='%(name)s:%(message)s')\nlogging.getLogger('net').setLevel(logging.DEBUG); logging.getLogger('net').debug('x'); logging.getLogger('db').debug('y')\" 2>&1", "expect": "net:x"}
+{"id": "1a430441268b", "cmd": "python3 -c \"\nimport logging\nlogging.basicConfig(level=logging.INFO)\nlogging.getLogger().debug('x %s', 1); print('quiet')\" 2>&1", "expect": "quiet"}
+{"id": "2f1cfebb7bc1", "cmd": "python3 -c \"\nimport logging.handlers as h; print(h.SysLogHandler.__name__)\"", "expect": "SysLogHandler"}
+{"id": "bb9ae24c54cd", "cmd": "python3 -c \"\nimport contextvars\nv=contextvars.ContextVar('rid',default='-'); v.set('42'); print(v.get())\"", "expect": "42"}
+{"id": "2294b1a0b971", "cmd": "python3 -c \"\nimport queue\nq=queue.PriorityQueue(); q.put((2,0,'b')); q.put((1,1,'a')); print(q.get()[2])\"", "expect": "a"}
+{"id": "957174b92d86", "cmd": "python3 -c \"\nimport sched,time\ns=sched.scheduler(time.monotonic,time.sleep); s.enter(0.01,1,print,('ran',)); s.run()\"", "expect": "ran"}
+{"id": "58b45c9981ea", "cmd": "python3 -c \"\nfrom fractions import Fraction as F\nprint(F(1,3)+F(1,6))\"", "expect": "1/2"}
+{"id": "fad92a2af5b0", "cmd": "python3 -c \"\nfrom decimal import Decimal as D\nprint(D('2.675').quantize(D('0.01')))\"", "expect": "2.68"}
+{"id": "6e0bb3f96112", "cmd": "python3 -c \"\nimport statistics as s\nprint(s.quantiles([1,2,3,4,5],n=4), s.fmean([1,2,3]))\"", "expect": "[1.5, 3.0, 4.5] 2.0"}
+{"id": "126d7e64ff97", "cmd": "python3 -c \"\nimport array\na=array.array('h',[1,2,3]); a.append(4); print(a.itemsize, len(a))\"", "expect": "2 4"}
+{"id": "57f127f8417c", "cmd": "python3 -c \"\nfrom collections import ChainMap\nc=ChainMap({'a':1},{'a':2,'b':3}); print(c['a'],c['b'])\"", "expect": "1 3"}
+{"id": "e77b12624514", "cmd": "python3 -c \"\nfrom collections import namedtuple as n\nP=n('P','x y'); p=P(1,2); print(p._replace(x=5))\"", "expect": "P(x=5, y=2)"}
+{"id": "7ea49bca76d4", "cmd": "python3 -c \"\nfrom functools import cached_property\nclass A:\n    n=0\n    @cached_property\n    def v(self): A.n+=1; return 5\na=A(); a.v; a.v; print(A.n)\"", "expect": "1"}
+{"id": "161f5231fbb0", "cmd": "python3 -c \"\nfrom dataclasses import dataclass\n@dataclass(frozen=True)\nclass P: x:int\ntry: P(1).x=2\nexcept Exception as e: print(type(e).__name__)\"", "expect": "FrozenInstanceError"}
+{"id": "133524b298f7", "cmd": "python3 -c \"\nfrom dataclasses import dataclass, asdict, replace\n@dataclass\nclass S: a:int=1; b:str='x'\nprint(asdict(replace(S(),a=5)))\"", "expect": "{'a': 5, 'b': 'x'}"}
+{"id": "cd0de9af9e67", "cmd": "python3 -c \"\nfrom enum import Flag, auto\nclass P(Flag): R=auto(); W=auto()\nprint((P.R|P.W).name if hasattr(P.R|P.W,'name') else 'x', P.R in (P.R|P.W))\"", "expect": "R|W True"}
+{"id": "7333b4997ff9", "cmd": "python3 -c \"\nfrom typing import Protocol\nclass C(Protocol):\n    def close(self)->None: ...\nclass F:\n    def close(self): print('closed')\ndef done(x: C): x.close()\ndone(F())\"", "expect": "closed"}
+{"id": "23723d2527c4", "cmd": "python3 -c \"\nimport abc\nclass B(abc.ABC):\n    @abc.abstractmethod\n    def f(self): ...\ntry: B()\nexcept TypeError: print('abstract')\"", "expect": "abstract"}
+{"id": "46e3ba7e5b49", "cmd": "python3 -c \"\nimport fnmatch\nprint(fnmatch.fnmatchcase('a.TXT','*.txt'))\"", "expect": "False"}
+{"id": "7d7049e2fa69", "cmd": "python3 -c \"\nfrom string import Template\nprint(Template('hi \\$name \\$x').safe_substitute(name='A'))\"", "expect": "hi A $x"}
+{"id": "9d8e303eaf92", "cmd": "python3 -c \"\nimport textwrap\nprint(textwrap.indent('a\\nb','> '))\"", "expect": "> a\n> b"}
+{"id": "c5fb1ff5e013", "cmd": "python3 -c \"\nimport shutil\nprint(shutil.get_terminal_size((80,24)).columns>0)\"", "expect": "True"}
+{"id": "62c20536876e", "cmd": "python3 -c \"\nimport zlib\nprint(zlib.crc32(b'hello'))\"", "expect": "907060870"}
+{"id": "e7e227972244", "cmd": "python3 -c \"\nimport zlib\nd=zlib.compress(b'a'*1000); print(len(d)<50, len(zlib.decompress(d)))\"", "expect": "True 1000"}
+{"id": "1d2777bf18d8", "cmd": "python3 -c \"\nprint(bytes.fromhex('de ad be ef').hex())\"", "expect": "deadbeef"}
+{"id": "b2c041b3e22e", "cmd": "python3 -c \"\nimport sys\nsys.stdout.reconfigure(encoding='utf-8'); print('şğ')\"", "expect": "şğ"}
+{"id": "c9fda7ba1f8f", "cmd": "python3 -c \"\nimport sys\nsys.exit('failed')\" 2>&1; echo $?", "expect": "failed\n1"}
+{"id": "f128451f6e00", "cmd": "python3 -c \"\nimport sys; print(len(sys.argv))\" a b", "expect": "3"}
+{"id": "1ca3e36afb23", "cmd": "python3 -c \"\nimport sys; print(isinstance(sys.path,list))\"", "expect": "True"}
+{"id": "eb25cc45b673", "cmd": "python3 -c \"\nimport importlib\nprint(importlib.import_module('json').dumps([1]))\"", "expect": "[1]"}
+{"id": "5d41b1aba6bd", "cmd": "python3 -c \"\ntry: import no_such_module_x\nexcept ImportError: print('missing')\"", "expect": "missing"}
+{"id": "2cd689b56d30", "cmd": "python3 -W error -c \"\nimport warnings\ntry: warnings.warn('x',DeprecationWarning)\nexcept DeprecationWarning: print('error')\"", "expect": "error"}
+{"id": "237cd6d4340b", "cmd": "python3 -c \"\nopen('a','w').write('x')\nwith open('a') as f, open('b','w') as g: g.write(f.read())\nprint(open('b').read())\"", "expect": "x"}
+{"id": "2c4f28910472", "cmd": "python3 -c \"\nfrom contextlib import ExitStack\nwith ExitStack() as s: s.callback(print,'closed'); print('open')\"", "expect": "open\nclosed"}
+{"id": "4c44eaab90dc", "cmd": "python3 -c \"\nimport io, contextlib\nb=io.StringIO()\nwith contextlib.redirect_stdout(b): print('x')\nprint(repr(b.getvalue()))\"", "expect": "'x\\n'"}
+{"id": "3499bdc1673f", "cmd": "python3 -c \"\nimport io\nf=io.StringIO('a\\nb\\n'); print(f.readline().strip(), f.readline().strip())\"", "expect": "a b"}
+{"id": "9b91cfe9b3b9", "cmd": "python3 -c \"\ndef g():\n    try: yield 1; yield 2\n    finally: print('cleanup')\nx=g(); next(x); x.close()\"", "expect": "cleanup"}
+{"id": "498e233d70e4", "cmd": "python3 -c \"\nimport itertools as i\nprint(list(i.pairwise([1,4,9])))\"", "expect": "[(1, 4), (4, 9)]"}
+{"id": "56910f39c5f4", "cmd": "python3 -c \"\nimport itertools as i\nprint(list(i.accumulate([1,2,3])), list(i.takewhile(lambda x:x<3,[1,2,3,1])))\"", "expect": "[1, 3, 6] [1, 2]"}
+{"id": "128bc7f08fe5", "cmd": "python3 -c \"\nprint(any(x>2 for x in iter([1,3,5])))\"", "expect": "True"}
+{"id": "e1750a043a1d", "cmd": "python3 -c \"\nprint(max([{'s':1},{'s':3}],key=lambda x:x['s']), max([],key=len,default=None))\"", "expect": "{'s': 3} None"}
+{"id": "3d10ceb487da", "cmd": "python3 -c \"\nr=[('a',2),('b',1),('c',2)]\nr.sort(key=lambda x:x[0]); r.sort(key=lambda x:x[1],reverse=True); print(r)\"", "expect": "[('a', 2), ('c', 2), ('b', 1)]"}
+{"id": "41f984df530e", "cmd": "python3 -c \"print(', '.join(map(str,[1,2,3])))\"", "expect": "1, 2, 3"}
+{"id": "48277ef21a8a", "cmd": "python3 -c \"\nprint(f'{\\\"ab\\\":<5}|{3.14159:>8.2f}|')\"", "expect": "ab   |    3.14|"}
+{"id": "ef4f75086c36", "cmd": "python3 -c \"\nprint(f'{\\\"a \\\"!r} {1234567:,} {0.256:.1%}')\"", "expect": "'a ' 1,234,567 25.6%"}
+{"id": "70d97e9d78e8", "cmd": "python3 -c \"print((300).bit_length(), (255).bit_count() if hasattr(int,'bit_count') else 8)\"", "expect": "9 8"}
+{"id": "d15ae6ba8906", "cmd": "python3 -c \"print('%s-%03d' % ('a',5))\"", "expect": "a-005"}
+{"id": "222ea3d37888", "cmd": "python3 -c \"print(len(r'C:\\new'), len('C:\\new'))\"", "expect": "6 5"}
+{"id": "454bc0f503c5", "cmd": "python3 -c \"\ns='''a\nb'''\nprint(s.count('\\n'))\"", "expect": "1"}
+{"id": "e0c949d188d3", "cmd": "python3 -c \"print(' Hello World '.strip().lower().replace(' ','-'))\"", "expect": "hello-world"}
+{"id": "7759d269aca9", "cmd": "python3 -c \"\nimport io\nprint([n for n,l in enumerate(io.StringIO('a\\nb\\n'),1) if l.strip()=='b'])\"", "expect": "[2]"}
+{"id": "a569e3c32f4b", "cmd": "python3 -c \"\ntry: list(zip([1,2],[1],strict=True))\nexcept ValueError: print('mismatch')\"", "expect": "mismatch"}
+{"id": "d1ad3f818947", "cmd": "python3 -c \"\nb={1,2,3}; a={2,3,4}; print(a-b, b-a)\"", "expect": "{4} {1}"}
+{"id": "cbf286365835", "cmd": "python3 -c \"\nd={}; d.setdefault('a',[]).append(1); print(d, d.pop('z',None))\"", "expect": "{'a': [1]} None"}
+{"id": "a47d1e58f89a", "cmd": "python3 -c \"\na={'x':{'p':1}}; b={'x':{'q':2}}; print({**a,**b})\"", "expect": "{'x': {'q': 2}}"}
+{"id": "6a5ac4f5540d", "cmd": "python3 -c \"\nimport copy\na={'l':[1]}; b=copy.deepcopy(a); b['l'].append(2); print(a)\"", "expect": "{'l': [1]}"}
+{"id": "9ec7d1ec5aef", "cmd": "python3 -c \"print(isinstance(True,int), isinstance(True,bool))\"", "expect": "True True"}
+{"id": "037980f872a7", "cmd": "python3 -c \"\nimport hashlib; print(hashlib.md5(b'a').hexdigest()[:6])\"", "expect": "0cc175"}
+{"id": "dfa8fc4752b7", "cmd": "python3 -c \"\nd={'a':3,'b':9,'c':1}; print(sorted(d,key=d.get,reverse=True)[:2])\"", "expect": "['b', 'a']"}
+{"id": "5b9505600569", "cmd": "python3 -c \"\nfrom collections import deque\nd=deque([1,2,3],maxlen=3); d.append(4); print(sum(d)/len(d))\"", "expect": "3.0"}
+{"id": "34a62fe96de0", "cmd": "python3 -c \"\nimport math; print(math.hypot(3,4), math.dist((0,0),(6,8)))\"", "expect": "5.0 10.0"}
+{"id": "655148b1099c", "cmd": "python3 -c \"\nc=lambda x,lo,hi: max(lo,min(hi,x)); print(c(150,0,100), c(-5,0,100))\"", "expect": "100 0"}
+{"id": "f2c882aa6565", "cmd": "python3 -c \"\nm=lambda x,a,b,c,d: c+(x-a)*(d-c)/(b-a); print(m(5,0,10,0,100))\"", "expect": "50.0"}
+{"id": "e6d60482a5fc", "cmd": "python3 -c \"\nimport time; print(time.strptime('2026-11-15','%Y-%m-%d').tm_yday)\"", "expect": "319"}
+{"id": "adaa8c4328b7", "cmd": "python3 -c \"\nimport calendar; print(calendar.monthrange(2026,2)[1], calendar.isleap(2028))\"", "expect": "28 True"}
+{"id": "4545d2da263f", "cmd": "python3 -c \"\nimport calendar, datetime as d\nt=d.date(2026,1,31); m=calendar.monthrange(2026,2)[1]; print(d.date(2026,2,min(t.day,m)))\"", "expect": "2026-02-28"}
