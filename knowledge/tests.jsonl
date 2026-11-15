@@ -2083,3 +2083,125 @@
 {"id": "e6d60482a5fc", "cmd": "python3 -c \"\nimport time; print(time.strptime('2026-11-15','%Y-%m-%d').tm_yday)\"", "expect": "319"}
 {"id": "adaa8c4328b7", "cmd": "python3 -c \"\nimport calendar; print(calendar.monthrange(2026,2)[1], calendar.isleap(2028))\"", "expect": "28 True"}
 {"id": "4545d2da263f", "cmd": "python3 -c \"\nimport calendar, datetime as d\nt=d.date(2026,1,31); m=calendar.monthrange(2026,2)[1]; print(d.date(2026,2,min(t.day,m)))\"", "expect": "2026-02-28"}
+{"id": "84c55c36a537", "cmd": "python3 -c \"print(list(enumerate('ab', start=1)))\"", "expect": "[(1, 'a'), (2, 'b')]"}
+{"id": "6a51b8188816", "cmd": "python3 -c \"\ntry:\n    list(zip([1,2],[1], strict=True))\nexcept ValueError as e:\n    print('error')\n\"", "expect": "error"}
+{"id": "7872de139993", "cmd": "python3 -c \"\nd={}\nd.setdefault('a',[]).append(1)\nd.setdefault('a',[]).append(2)\nprint(d)\n\"", "expect": "{'a': [1, 2]}"}
+{"id": "5a81f77efb32", "cmd": "python3 -c \"\nr=[('a',1),('a',3),('b',2)]\nprint(sorted(r,key=lambda x:(x[0],-x[1])))\n\"", "expect": "[('a', 3), ('a', 1), ('b', 2)]"}
+{"id": "90848780e179", "cmd": "python3 -c \"print(any(x>2 for x in [1,2,3]), all(x>0 for x in [1,2,3]))\"", "expect": "True True"}
+{"id": "edaeed4d23a1", "cmd": "python3 -c \"print('v1.2'.removeprefix('v'), 'a.txt'.removesuffix('.txt'))\"", "expect": "1.2 a"}
+{"id": "834ca9dcae32", "cmd": "python3 -c \"print(f'{1234567:,} {3.14159:.2f} {42:05d}')\"", "expect": "1,234,567 3.14 00042"}
+{"id": "7aae1e362914", "cmd": "python3 -c \"\nx=5\nprint(f'{x=}')\n\"", "expect": "x=5"}
+{"id": "a417722cb554", "cmd": "python3 -c \"print(int('ff',16), format(255,'x'), f'{5:08b}')\"", "expect": "255 ff 00000101"}
+{"id": "f01632cf5b3f", "cmd": "python3 -c \"\nimport copy\na=[[1]]\nb=copy.copy(a); c=copy.deepcopy(a)\na[0].append(2)\nprint(b, c)\n\"", "expect": "[[1, 2]] [[1]]"}
+{"id": "7a43cebb70f2", "cmd": "python3 -c \"\nitems=[1,2,3,4]\nif (n:=len(items))>3: print(n)\n\"", "expect": "4"}
+{"id": "1e6696885fdd", "cmd": "python3 -c \"\nimport contextlib\nwith contextlib.suppress(FileNotFoundError):\n    open('/nonexistent/x')\nprint('ok')\n\"", "expect": "ok"}
+{"id": "f228c8bdb7c8", "cmd": "python3 -c \"\nfrom functools import lru_cache\n@lru_cache(maxsize=None)\ndef f(n): return n*2\nf(1); f(1)\nprint(f.cache_info().hits)\n\"", "expect": "1"}
+{"id": "8c783a910086", "cmd": "python3 -c \"\nfrom pathlib import Path\np=Path('a')/'b.tar'\nprint(p, p.suffix, p.stem)\n\"", "expect": "a/b.tar .tar b"}
+{"id": "347468dbc364", "cmd": "python3 -c \"\nfrom pathlib import Path\nimport tempfile\np=Path(tempfile.mkdtemp())/'a.txt'\np.write_text('merhaba ğüşiöç', encoding='utf-8')\nprint(p.read_text(encoding='utf-8'))\n\"", "expect": "merhaba ğüşiöç"}
+{"id": "3ef3c5769359", "cmd": "python3 -c \"print('i'.upper(), 'I'.lower())\"", "expect": "I i"}
+{"id": "d0dd7497b274", "cmd": "python3 -c \"\nimport unicodedata\na='ç'; b='ç'\nprint(a==b, unicodedata.normalize('NFC',a)==unicodedata.normalize('NFC',b))\n\"", "expect": "False True"}
+{"id": "7d6b030187c3", "cmd": "python3 -c \"\nimport json\nprint(json.dumps({'a':'şğü'}, ensure_ascii=False))\n\"", "expect": "{\"a\": \"şğü\"}"}
+{"id": "953ec669fc97", "cmd": "python3 -c \"\nimport json\nprint(json.dumps({'b':1,'a':2}, separators=(',',':'), sort_keys=True))\n\"", "expect": "{\"a\":2,\"b\":1}"}
+{"id": "fa8852346b43", "cmd": "python3 -c \"\nfrom datetime import datetime, timezone\nd=datetime.now(timezone.utc)\nprint(d.tzinfo)\n\"", "expect": "UTC"}
+{"id": "75201ec8f6c7", "cmd": "python3 -c \"\nfrom datetime import datetime\nfrom zoneinfo import ZoneInfo\nd=datetime(2026,1,1,12,tzinfo=ZoneInfo('UTC')).astimezone(ZoneInfo('Europe/Istanbul'))\nprint(d.hour)\n\"", "expect": "15"}
+{"id": "e9540793cc81", "cmd": "python3 -c \"\nfrom datetime import date, timedelta\nprint(date(2026,1,30)+timedelta(days=3))\n\"", "expect": "2026-02-02"}
+{"id": "435d683d32ec", "cmd": "python3 -c \"\nfrom datetime import datetime\nd=datetime.fromisoformat('2026-03-04T05:06:07')\nprint(d.isoformat())\n\"", "expect": "2026-03-04T05:06:07"}
+{"id": "fa6cf5fa62a6", "cmd": "python3 -c \"\nimport time\na=time.monotonic(); b=time.monotonic()\nprint(b>=a)\n\"", "expect": "True"}
+{"id": "b14755db3b1f", "cmd": "python3 -c \"\nimport secrets\nprint(len(secrets.token_urlsafe(32))>=40)\n\"", "expect": "True"}
+{"id": "e977d43bc261", "cmd": "python3 -c \"\nimport hashlib\nprint(hashlib.sha256(b'abc').hexdigest()[:16])\n\"", "expect": "ba7816bf8f01cfea"}
+{"id": "7a7ac988870c", "cmd": "python3 -c \"\nimport hmac\nprint(len(hmac.new(b'k', b'm', 'sha256').hexdigest()))\n\"", "expect": "64"}
+{"id": "ced36a629418", "cmd": "python3 -c \"\nimport uuid\nprint(len(uuid.uuid4().hex))\n\"", "expect": "32"}
+{"id": "76798176420e", "cmd": "python3 -c \"\nimport struct\nb=struct.pack('<I',258)\nprint(b, struct.unpack('<I',b)[0])\n\"", "expect": "b'\\x02\\x01\\x00\\x00' 258"}
+{"id": "d7dc14e8ca0b", "cmd": "python3 -c \"print(b'\\x01\\xab'.hex(), bytes.fromhex('01ab'))\"", "expect": "01ab b'\\x01\\xab'"}
+{"id": "a82b91b9ec0f", "cmd": "python3 -c \"\nimport re\nprint(bool(re.match(r'\\d+','12ab')), bool(re.fullmatch(r'\\d+','12ab')))\n\"", "expect": "True False"}
+{"id": "ff0d9ca4e4ef", "cmd": "python3 -c \"\nimport re\nprint(re.findall(r'\\d+','a1b22c333'))\n\"", "expect": "['1', '22', '333']"}
+{"id": "1cb231d355b6", "cmd": "python3 -c \"\nimport re\nprint(re.sub(r'\\d+', lambda m: str(int(m.group())*2), 'a1 b20'))\n\"", "expect": "a2 b40"}
+{"id": "1c24157639b4", "cmd": "python3 -c \"print('a=b=c'.partition('='), 'abc'.partition('='))\"", "expect": "('a', '=', 'b=c') ('abc', '', '')"}
+{"id": "f4e8708c12a6", "cmd": "python3 -c \"\nimport itertools\nprint(list(itertools.islice(itertools.count(5),3)))\n\"", "expect": "[5, 6, 7]"}
+{"id": "20dec6ba497a", "cmd": "python3 -c \"\nimport itertools\nprint([(k,len(list(g))) for k,g in itertools.groupby('aabaa')])\n\"", "expect": "[('a', 2), ('b', 1), ('a', 2)]"}
+{"id": "67482b0e99c6", "cmd": "python3 -c \"\nfrom collections import Counter\nprint(Counter('abracadabra').most_common(2))\n\"", "expect": "[('a', 5), ('b', 2)]"}
+{"id": "5649e4f089cc", "cmd": "python3 -c \"\nfrom collections import deque\nd=deque(maxlen=3)\nfor i in range(5): d.append(i)\nprint(list(d))\n\"", "expect": "[2, 3, 4]"}
+{"id": "8c5a12fad00f", "cmd": "python3 -c \"\nimport heapq\nprint(heapq.nlargest(2,[5,1,9,3]))\n\"", "expect": "[9, 5]"}
+{"id": "cbf70845170b", "cmd": "python3 -c \"\nimport bisect\na=[1,3,5]\nbisect.insort(a,4)\nprint(a, bisect.bisect_left(a,5))\n\"", "expect": "[1, 3, 4, 5] 3"}
+{"id": "d917dbb0d132", "cmd": "python3 -c \"\nfrom dataclasses import dataclass\n@dataclass(frozen=True)\nclass P: x:int\nprint(P(1), P(1)==P(1))\n\"", "expect": "P(x=1) True"}
+{"id": "e046f4be97ea", "cmd": "python3 -c \"\nfrom dataclasses import dataclass, field\n@dataclass\nclass A: items:list=field(default_factory=list)\na=A(); b=A(); a.items.append(1)\nprint(b.items)\n\"", "expect": "[]"}
+{"id": "c78b8211d64c", "cmd": "python3 -c \"\nfrom enum import Enum\nclass S(Enum):\n    ON=1\n    OFF=2\nprint(S.ON.name, S(2))\n\"", "expect": "ON S.OFF"}
+{"id": "0ae0c5e2f383", "cmd": "python3 -c \"\nfrom typing import TypedDict\nclass D(TypedDict):\n    a:int\nprint(D(a=1))\n\"", "expect": "{'a': 1}"}
+{"id": "e670e9abfeec", "cmd": "python3 -c \"\nfrom abc import ABC, abstractmethod\nclass A(ABC):\n    @abstractmethod\n    def f(self): ...\ntry:\n    A()\nexcept TypeError:\n    print('abstract')\n\"", "expect": "abstract"}
+{"id": "c914375d3073", "cmd": "python3 -c \"\nclass A:\n    __slots__=('x',)\na=A()\ntry:\n    a.y=1\nexcept AttributeError:\n    print('blocked')\n\"", "expect": "blocked"}
+{"id": "adb0abe7d711", "cmd": "python3 -c \"\nclass A:\n    def __init__(s): s._v=0\n    @property\n    def v(s): return s._v\n    @v.setter\n    def v(s,x):\n        if x<0: raise ValueError\n        s._v=x\na=A(); a.v=3\nprint(a.v)\n\"", "expect": "3"}
+{"id": "a74821148889", "cmd": "python3 -c \"\nfrom contextlib import contextmanager\n@contextmanager\ndef c():\n    print('in'); yield; print('out')\nwith c(): pass\n\"", "expect": "in\nout"}
+{"id": "1d6651b82ca7", "cmd": "python3 -c \"\ndef g():\n    for i in range(3): yield i*i\nprint(sum(g()))\n\"", "expect": "5"}
+{"id": "52e145f5c423", "cmd": "python3 -c \"\nimport asyncio\nasync def f(x):\n    await asyncio.sleep(0.01); return x\nasync def m():\n    print(await asyncio.gather(f(1),f(2)))\nasyncio.run(m())\n\"", "expect": "[1, 2]"}
+{"id": "0a26d6da3363", "cmd": "python3 -c \"\nimport asyncio\nasync def m():\n    try:\n        await asyncio.wait_for(asyncio.sleep(1), 0.01)\n    except asyncio.TimeoutError:\n        print('timeout')\nasyncio.run(m())\n\"", "expect": "timeout"}
+{"id": "12e64bd751a2", "cmd": "python3 -c \"\nimport asyncio\nasync def m():\n    q=asyncio.Queue(maxsize=2)\n    await q.put(1)\n    print(await q.get())\nasyncio.run(m())\n\"", "expect": "1"}
+{"id": "f2bf745dcab8", "cmd": "python3 -c \"\nimport asyncio\nasync def m():\n    l=asyncio.Lock()\n    async with l:\n        print(l.locked())\nasyncio.run(m())\n\"", "expect": "True"}
+{"id": "8c8a6da44c89", "cmd": "python3 -c \"\nimport asyncio\nasync def m():\n    print(await asyncio.to_thread(sum,[1,2,3]))\nasyncio.run(m())\n\"", "expect": "6"}
+{"id": "5e30e585e72b", "cmd": "python3 -c \"\nimport threading\ne=threading.Event()\nt=threading.Thread(target=lambda: e.wait(5))\nt.start(); e.set(); t.join()\nprint('stopped')\n\"", "expect": "stopped"}
+{"id": "298cde3804fb", "cmd": "python3 -c \"\nfrom concurrent.futures import ThreadPoolExecutor\nwith ThreadPoolExecutor(2) as ex:\n    print(list(ex.map(lambda x:x*2,[1,2,3])))\n\"", "expect": "[2, 4, 6]"}
+{"id": "8b860dfc1af4", "cmd": "python3 -c \"\nimport queue\nq=queue.Queue()\nq.put(1)\nprint(q.get(timeout=1))\n\"", "expect": "1"}
+{"id": "2d2036c16ae8", "cmd": "python3 -c \"\nimport shutil\nprint(shutil.which('python3') is not None, shutil.which('no-such-tool-xyz'))\n\"", "expect": "True None"}
+{"id": "b4acb51cbb44", "cmd": "python3 -c \"\nimport tempfile, os\nwith tempfile.TemporaryDirectory() as d:\n    p=d\nprint(os.path.exists(p))\n\"", "expect": "False"}
+{"id": "e48fa21e8469", "cmd": "python3 -c \"\nimport os\nprint(os.environ.get('NO_SUCH_VAR_XYZ','default'))\n\"", "expect": "default"}
+{"id": "6be2082d9c95", "cmd": "python3 -c \"\nimport argparse\np=argparse.ArgumentParser()\np.add_argument('--n',type=int,default=3)\nprint(p.parse_args(['--n','5']).n)\n\"", "expect": "5"}
+{"id": "d5c66e11a458", "cmd": "python3 -c \"\nimport logging\nprint(logging.getLogger('a.b').name)\n\"", "expect": "a.b"}
+{"id": "d5723add1908", "cmd": "python3 -c \"\nimport pytest\nprint(hasattr(pytest.mark,'parametrize'))\n\"", "expect": "True"}
+{"id": "dc6e4f1c2522", "cmd": "python3 -c \"\nfrom unittest.mock import patch\nimport os\nwith patch.dict(os.environ,{'X':'1'}):\n    print(os.environ['X'])\nprint('X' in os.environ)\n\"", "expect": "1\nFalse"}
+{"id": "cf6d7bd376a0", "cmd": "python3 -O -c \"\nassert False\nprint('skipped')\n\"", "expect": "skipped"}
+{"id": "c403ce3362d2", "cmd": "python3 -c \"\nimport sys\ndef main(): return 3\ntry:\n    sys.exit(main())\nexcept SystemExit as e:\n    print(e.code)\n\"", "expect": "3"}
+{"id": "403705f42c2c", "cmd": "python3 -c \"\nimport signal\nprint(signal.getsignal(signal.SIGTERM) is not None)\n\"", "expect": "True"}
+{"id": "7160cd30fb8b", "cmd": "python3 -c \"\nimport sqlite3\nc=sqlite3.connect(':memory:')\nc.execute('create table t(id int)')\nc.execute('insert into t values(?)',(5,))\nprint(c.execute('select id from t where id=?',(5,)).fetchone())\n\"", "expect": "(5,)"}
+{"id": "a67da22d19b8", "cmd": "python3 -c \"\nimport sqlite3\nc=sqlite3.connect(':memory:'); c.row_factory=sqlite3.Row\nc.execute('create table t(a int,b int)'); c.execute('insert into t values(1,2)')\nr=c.execute('select * from t').fetchone()\nprint(r['b'])\n\"", "expect": "2"}
+{"id": "9842e96d5671", "cmd": "python3 -c \"\nimport sqlite3\nc=sqlite3.connect(':memory:')\nc.execute('create table t(a int)')\ntry:\n    with c:\n        c.execute('insert into t values(1)')\n        raise RuntimeError\nexcept RuntimeError: pass\nprint(c.execute('select count(*) from t').fetchone()[0])\n\"", "expect": "0"}
+{"id": "7848463205cc", "cmd": "python3 -c \"\nimport sqlite3, tempfile, os\np=os.path.join(tempfile.mkdtemp(),'a.db')\nc=sqlite3.connect(p)\nprint(c.execute('pragma journal_mode=wal').fetchone()[0])\n\"", "expect": "wal"}
+{"id": "ad804a2f17e7", "cmd": "python3 -c \"\nimport csv, io\nr=csv.DictReader(io.StringIO('a,b\\n1,2\\n'))\nprint(next(r))\n\"", "expect": "{'a': '1', 'b': '2'}"}
+{"id": "11c616b58685", "cmd": "python3 -c \"\nimport statistics as s\nprint(s.mean([1,2,100]), s.median([1,2,100]))\n\"", "expect": "34.333333333333336 2"}
+{"id": "efdfe9a744f8", "cmd": "python3 -c \"\nimport math\nprint(0.1+0.2==0.3, math.isclose(0.1+0.2,0.3))\n\"", "expect": "False True"}
+{"id": "48f0056bdc3c", "cmd": "python3 -c \"\nfrom decimal import Decimal\nprint(Decimal('0.1')+Decimal('0.2'))\n\"", "expect": "0.3"}
+{"id": "39f184eb9efe", "cmd": "python3 -c \"\nfrom fractions import Fraction\nprint(Fraction(1,3)+Fraction(1,6))\n\"", "expect": "1/2"}
+{"id": "a16150dd4284", "cmd": "python3 -c \"print(round(2.5), round(3.5))\"", "expect": "2 4"}
+{"id": "c21780199a10", "cmd": "python3 -c \"\nimport tracemalloc\ntracemalloc.start()\na=[0]*1000\nprint(tracemalloc.get_traced_memory()[0]>0)\n\"", "expect": "True"}
+{"id": "a265e821b3b2", "cmd": "python3 -c \"\nimport timeit\nprint(timeit.timeit('1+1',number=1000)>=0)\n\"", "expect": "True"}
+{"id": "17545dde567b", "cmd": "python3 -m venv --help | head -1", "expect": "usage: venv"}
+{"id": "878f85db27ce", "cmd": "python3 -m pip --version | cut -c1-3", "expect": "pip"}
+{"id": "dddb608a4b8e", "cmd": "python3 -c \"print('flask==3.0.0'.split('==')[1])\"", "expect": "3.0.0"}
+{"id": "0be29b393e10", "cmd": "python3 -X dev -c \"print('dev ok')\"", "expect": "dev ok"}
+{"id": "2f257f3fd4ce", "cmd": "echo '{\"a\":1}' | python3 -m json.tool", "expect": "{\n    \"a\": 1\n}"}
+{"id": "c0bc8ee548df", "cmd": "bash -c 'set -e; false; echo no' ; echo $?", "expect": "1"}
+{"id": "ffb85139ef97", "cmd": "bash -c 'v=\"a b\"; set -- $v; echo $#; set -- \"$v\"; echo $#'", "expect": "2\n1"}
+{"id": "c9f93ab9b58f", "cmd": "bash -c 'd=$(mktemp -d); trap \"rm -rf $d\" EXIT; test -d $d && echo made'", "expect": "made"}
+{"id": "958b9afdaa36", "cmd": "bash -c 'unset v; echo ${v:-fallback}'", "expect": "fallback"}
+{"id": "fad049638b4d", "cmd": "bash -c '[[ abc == a* ]] && echo match'", "expect": "match"}
+{"id": "838f55f65653", "cmd": "bash -c 'a=(one \"two words\"); echo ${#a[@]}'", "expect": "2"}
+{"id": "3de5ec52e76e", "cmd": "printf ' a\\\\b\\n' | bash -c 'while IFS= read -r l; do echo \"[$l]\"; done'", "expect": "[ a\\b]"}
+{"id": "5be1209eb393", "cmd": "bash -c 'command -v bash >/dev/null && echo yes'", "expect": "yes"}
+{"id": "8e1780b2047d", "cmd": "printf 'a\\nb\\na\\n' | sort | uniq -c | sort -rn | head -1 | awk '{print $1, $2}'", "expect": "2 a"}
+{"id": "a2c82533d966", "cmd": "echo 'a,b,c' | cut -d, -f2", "expect": "b"}
+{"id": "77baf5bdb825", "cmd": "echo hi | tee /dev/null", "expect": "hi"}
+{"id": "a57c3bfaf075", "cmd": "timeout 0.2 sleep 5; echo $?", "expect": "124"}
+{"id": "50e51aeaf21e", "cmd": "printf 'a\\nb' | wc -l", "expect": "1"}
+{"id": "0a88e070b604", "cmd": "bash -c 'a=$(mktemp); b=$(mktemp); cmp -s $a $b && echo same'", "expect": "same"}
+{"id": "2592890600aa", "cmd": "printf 'abcdef' | head -c 3", "expect": "abc"}
+{"id": "472e162d82c9", "cmd": "seq 1 10 | sed -n '3,4p'", "expect": "3\n4"}
+{"id": "4635ce8dd7f5", "cmd": "printf '1\\n2\\n3\\n' | awk '{s+=$1} END{print s}'", "expect": "6"}
+{"id": "8a5aeeb8584d", "cmd": "printf 'a\\r\\n' | tr -d '\\r' | od -c | head -1 | awk '{print $2,$3}'", "expect": "a \\n"}
+{"id": "7a5669b6c1da", "cmd": "date +%Y | wc -c", "expect": "5"}
+{"id": "061370d48fd5", "cmd": "env -i /usr/bin/env | wc -l", "expect": "0"}
+{"id": "f546a8f81095", "cmd": "bash -c 'f=$(mktemp); stat -c %s $f'", "expect": "0"}
+{"id": "a63e7cc676d2", "cmd": "bash -c 'd=$(mktemp -d); find $d -type f -mtime +7 | wc -l'", "expect": "0"}
+{"id": "1c563ddbc85a", "cmd": "bash -c 'trap \"echo bye\" EXIT; exit 0'", "expect": "bye"}
+{"id": "791f354e00b6", "cmd": "bash -c 'f=$(mktemp); flock -n $f true && echo locked-ok'", "expect": "locked-ok"}
+{"id": "dc5477bbb587", "cmd": "echo '{\"a\":\"x\"}' | jq -r .a", "expect": "x"}
+{"id": "80ac8490e5cb", "cmd": "echo '[{\"id\":1,\"n\":1},{\"id\":2,\"n\":2}]' | jq -c 'map(select(.n>1))'", "expect": "[{\"id\":2,\"n\":2}]"}
+{"id": "e3be5a16947b", "cmd": "nproc | grep -E '^[0-9]+$' | wc -l", "expect": "1"}
+{"id": "bdfe73b64cbb", "cmd": "bash -c 'ulimit -n | grep -cE \"^[0-9]+|unlimited\"'", "expect": "1"}
+{"id": "b06ba40bef79", "cmd": "seq 1 5 | shuf -n 1 | grep -cE '^[1-5]$'", "expect": "1"}
+{"id": "b1573feb4720", "cmd": "printf 'abc' | sha256sum | cut -c1-16", "expect": "ba7816bf8f01cfea"}
+{"id": "a033ed7c8905", "cmd": "printf 'a\\tb' | od -c | head -1 | awk '{print $3}'", "expect": "\\t"}
+{"id": "57fcf8083634", "cmd": "bash -c 'd=$(mktemp -d); cd $d; echo x>a; tar -czf t.tgz a; tar -tzf t.tgz'", "expect": "a"}
+{"id": "36e73948e93a", "cmd": "printf 'a\\nb\\n' | grep -v a", "expect": "b"}
+{"id": "adce9cd6d11f", "cmd": "echo 'a.b' | grep -F 'a.b'", "expect": "a.b"}
+{"id": "4ab3c3c5d4e9", "cmd": "seq 1 3 | paste -sd, -", "expect": "1,2,3"}
+{"id": "b93f59338a75", "cmd": "bash -c 'comm -12 <(printf \"a\\nb\\n\") <(printf \"b\\nc\\n\")'", "expect": "b"}
+{"id": "5016911d0449", "cmd": "basename /a/b/c.txt .txt", "expect": "c"}
+{"id": "c479ef226918", "cmd": "bash -c 'd=$(mktemp -d); touch $d/x; ls -1 $d'", "expect": "x"}
