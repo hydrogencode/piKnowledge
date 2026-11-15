@@ -3476,7 +3476,7 @@
 {"id": "84d51c5198df", "cat": "browser", "tip": "readline with for await reads a file line by line with low memory: for await (const line of rl) { ... }.", "n": 0, "a": "seed-verified"}
 {"id": "2f91204450db", "cat": "browser", "tip": "os.cpus().length, os.totalmem() and os.uptime() report the machine state without extra packages.", "n": 0, "a": "seed-verified"}
 {"id": "ecd8d7c7015a", "cat": "browser", "tip": "node --check file.js tests syntax without running, and node --watch file.js restarts a script when it changes in Node 18 and newer.", "n": 0, "a": "seed-verified"}
-{"id": "658d4936c503", "cat": "browser", "tip": "npm ci installs exactly what package-lock.json lists and is faster and safer for servers than npm install; use --omit=dev to skip dev packages.", "n": 0, "a": "seed-verified"}
+{"id": "658d4936c503", "cat": "browser", "tip": "npm ci installs exactly what package-lock.json lists and is faster and safer for servers than npm install; use --omit=dev to skip dev packages.", "n": 0, "a": "seed"}
 {"id": "18c62162ecba", "cat": "browser", "tip": "npm audit lists known problems in packages and npm outdated shows newer versions; update one package at a time and test after each.", "n": 0, "a": "seed-verified"}
 {"id": "a707b95970b2", "cat": "browser", "tip": "Set \"type\": \"module\" in package.json to use import and export in .js files; otherwise use require or name files .mjs.", "n": 0, "a": "seed-verified"}
 {"id": "66afa9b17b1e", "cat": "browser", "tip": "Top level await works in ES modules: await fetch(url) without a wrapper function in a .mjs file.", "n": 0, "a": "seed-verified"}
