@@ -1208,3 +1208,68 @@
 {"id": "d943ba60d215", "cmd": "bash -c 'echo hi > f; gzip -k f; zcat f.gz; ls f'", "expect": "hi\nf"}
 {"id": "157b87d05816", "cmd": "bash -c 'echo hi | gzip -c | gunzip -c'", "expect": "hi"}
 {"id": "0bef67e77e25", "cmd": "bash -c 'printf \"ş\" | od -An -tx1'", "expect": " c5 9f"}
+{"id": "1dd6fb77c126", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git status -s'", "expect": "A  f"}
+{"id": "a62d86e75387", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm c && echo b > f && git restore f && cat f'", "expect": "a"}
+{"id": "cd1cc4211e28", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm old && git commit -q --amend -m new && git log -1 --format=%s'", "expect": "new"}
+{"id": "f62dd80ecfe3", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm one && git log --oneline | wc -l'", "expect": "1"}
+{"id": "2d9c54d34842", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm \"first\" && git log --format=%s'", "expect": "first"}
+{"id": "11a752331d6d", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm c && git switch -qc dev && git branch --show-current'", "expect": "dev"}
+{"id": "2277a383c591", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm c && git switch -qc t && echo b > g && git add g && git commit -qm d && git switch -q - && git branch -d t 2>&1 | head -1'", "expect": "error: the branch 't' is not fully merged"}
+{"id": "bbef39fd432b", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm c && git switch -qc t && echo b > g && git add g && git commit -qm d && git switch -q - && git merge -q --no-ff t -m m && git log --oneline | wc -l'", "expect": "3"}
+{"id": "136d3d8511db", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm c && echo b > f && git stash -q && cat f && git stash pop -q && cat f'", "expect": "a\nb"}
+{"id": "d418b7e1f88e", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm c && echo b > f && git commit -qam d && git reset -q --soft HEAD~1 && git status -s'", "expect": "M  f"}
+{"id": "bd0cbf2a4534", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm c && echo b > f && git commit -qam d && git reset -q --hard HEAD~1 && git reset -q --hard HEAD@{1} && cat f'", "expect": "b"}
+{"id": "23b962312cc8", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm c && git tag -a v1.0 -m rel && git tag -l'", "expect": "v1.0"}
+{"id": "a2e8366ba5ee", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm c && echo b > f && git commit -qam d && git diff HEAD~1 --stat | tail -1'", "expect": " 1 file changed, 1 insertion(+), 1 deletion(-)"}
+{"id": "ac8fc3d4065b", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm c && echo b > f && git commit -qam d && git show HEAD~1:f'", "expect": "a"}
+{"id": "55f3dea9f688", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm c && git blame f | grep -c t'", "expect": "1"}
+{"id": "42d90d6f808a", "cmd": "bash -c 'git bisect -h 2>&1 | head -1 | grep -c usage'", "expect": "1"}
+{"id": "b8b66a1e57c3", "cmd": "bash -c 'git init -q r && cd r && echo hello > f && git add f && git grep -n hello'", "expect": "f:1:hello"}
+{"id": "38b736a969b9", "cmd": "bash -c 'git init -q r && cd r && echo x > a.log && echo \"*.log\" > .gitignore && git status -s'", "expect": "?? .gitignore"}
+{"id": "7f4c2b6d6696", "cmd": "bash -c 'git init -q r && cd r && echo \"*.log\" > .gitignore && touch a.log && git check-ignore a.log'", "expect": "a.log"}
+{"id": "93c4cf62171f", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm c && git rm -q --cached f && ls && git status -s'", "expect": "f\nD  f\n?? f"}
+{"id": "50e8849ab9ad", "cmd": "bash -c 'git config --global user.name x && git config --global user.name'", "expect": "x"}
+{"id": "db6af3893667", "cmd": "bash -c 'git init -q r && cd r && git config pull.rebase true && git config pull.rebase'", "expect": "true"}
+{"id": "0dbe1ecc51c7", "cmd": "bash -c 'git pull -h 2>&1 | grep -c rebase'", "expect": "1"}
+{"id": "296f4a085ffb", "cmd": "bash -c 'git push -h 2>&1 | grep -c force-with-lease'", "expect": "1"}
+{"id": "cbe5cbe35ab0", "cmd": "bash -c 'git init -q r && cd r && git remote add origin /x && git remote set-url origin /y && git remote get-url origin'", "expect": "/y"}
+{"id": "38c6996dccc8", "cmd": "bash -c 'git init -q s && cd s && echo a > f && git add f && git commit -qm c && cd .. && git clone -q --depth 1 file://$PWD/s c && git -C c rev-list --count HEAD'", "expect": "1"}
+{"id": "0421b22ce54b", "cmd": "bash -c 'git init -q r && cd r && touch junk && git clean -n'", "expect": "Would remove junk"}
+{"id": "39d294aa0ecb", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm one && echo b > f && git commit -qam two && git log --format=%s | head -1'", "expect": "two"}
+{"id": "d865b9c0a1a9", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm c && echo n > new && git commit -qam d 2>&1 | head -1; git status -s'", "expect": "?? new"}
+{"id": "1a7e4b12bb4f", "cmd": "bash -c 'git init -q r && cd r && printf \"a \\n\" > f && git add f && git diff --cached --check | head -1'", "expect": "f:1: trailing whitespace."}
+{"id": "4f355b98978a", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm c && git switch -qc t && echo b > f && git commit -qam t && git switch -q - && echo c > f && git commit -qam m && git merge t >/dev/null 2>&1; git merge --abort && git status -s | wc -l'", "expect": "0"}
+{"id": "a898da424ff3", "cmd": "bash -c 'git submodule -h 2>&1 | head -1 | grep -c usage'", "expect": "1"}
+{"id": "c930dab2690f", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm c && git worktree add -q ../w -b t && ls ../w'", "expect": "f"}
+{"id": "976af408e703", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm c && git rev-parse --short HEAD | awk \"{print length(\\$1)>=7}\"'", "expect": "1"}
+{"id": "9a9987cb2b89", "cmd": "bash -c 'git init -q r && mkdir r/s && cd r/s && git rev-parse --show-toplevel | grep -c r$'", "expect": "1"}
+{"id": "1c9bc844cc70", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm c && git rev-list --count HEAD'", "expect": "1"}
+{"id": "b13bbe7d5e06", "cmd": "bash -c 'git init -q r && cd r && printf \"* text=auto\\n\" > .gitattributes && cat .gitattributes'", "expect": "* text=auto"}
+{"id": "e52d68d5fd11", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git update-index --chmod=+x f && git ls-files -s | cut -c1-6'", "expect": "100755"}
+{"id": "7a3e7ba42e39", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm c && git log --oneline | wc -l'", "expect": "1"}
+{"id": "82f8cf48951b", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm \"Subject\" -m \"Body text\" && git log -1 --format=%b'", "expect": "Body text"}
+{"id": "6c0ebac0e794", "cmd": "bash -c 'GIT_TERMINAL_PROMPT=0 git ls-remote file:///nonexistent 2>&1 | head -1 | grep -c fatal'", "expect": "1"}
+{"id": "43d7dc397f25", "cmd": "bash -c 'git init -q r && git -C r rev-parse --is-inside-work-tree'", "expect": "true"}
+{"id": "c0fb63876a7d", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm c && git log --since=\"1 day ago\" --format=%s'", "expect": "c"}
+{"id": "a6120919dff4", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm c && echo b > g && git add g && git commit -qm d && git diff --name-only HEAD~1'", "expect": "g"}
+{"id": "900c2c705e96", "cmd": "bash -c 'git update-index -h 2>&1 | head -1 | grep -c usage'", "expect": "1"}
+{"id": "9b09fdcd09c5", "cmd": "bash -c 'git init -q r && cd r && git config core.hooksPath .githooks && git config core.hooksPath'", "expect": ".githooks"}
+{"id": "9e791a093575", "cmd": "bash -c 'git init -q r && cd r && printf \"#!/bin/sh\\nexit 1\\n\" > .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit && echo a > f && git add f && git commit -qm c; echo $?'", "expect": "1"}
+{"id": "c35636a23802", "cmd": "bash -c 'git config --global alias.st status && git config --get alias.st'", "expect": "status"}
+{"id": "d586908ee468", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm c && git for-each-ref --format=%\\(refname:short\\) refs/heads | head -1 | wc -l'", "expect": "1"}
+{"id": "064bd28f64f2", "cmd": "bash -c 'git init -q r && cd r && echo a > f && git add f && git commit -qm c && git switch -qc t && echo b > g && git add g && git commit -qm d && git log master..t --format=%s 2>/dev/null || git log main..t --format=%s'", "expect": "d"}
+{"id": "537b02cf976f", "cmd": "bash -c 'getent hosts localhost | head -1 | awk \"{print \\$2}\"'", "expect": "localhost"}
+{"id": "a4ec93ed18b7", "cmd": "bash -c 'cat /proc/sys/net/ipv4/ip_local_port_range | awk \"{print (\\$1>1023)}\"'", "expect": "1"}
+{"id": "1db99a2bb350", "cmd": "bash -c 'python3 -c \"import http; print(http.HTTPStatus(429).phrase)\"'", "expect": "Too Many Requests"}
+{"id": "b56561023412", "cmd": "bash -c 'python3 -c \"import http; print(http.HTTPStatus(503).phrase)\"'", "expect": "Service Unavailable"}
+{"id": "b24479d22848", "cmd": "bash -c 'python3 -c \"import hashlib,base64; print(base64.b64encode(hashlib.sha1(b\\\"dGhlIHNhbXBsZSBub25jZQ==258EAFA5-E914-47DA-95CA-C5AB0DC85B11\\\").digest()).decode())\"'", "expect": "s3pPLMBiTxaQ9kYGzzhZRbK+xOo="}
+{"id": "f8f8f8ae23df", "cmd": "bash -c 'python3 -c \"print(1 if 6<30 else 0)\"'", "expect": "1"}
+{"id": "fb1ab5e8b3df", "cmd": "bash -c 'python3 -c \"print([min(2**i,30) for i in range(7)])\"'", "expect": "[1, 2, 4, 8, 16, 30, 30]"}
+{"id": "efcdc4bd519c", "cmd": "bash -c 'python3 -c \"\nimport socket\ns=socket.socket(); s.setsockopt(socket.SOL_SOCKET,socket.SO_KEEPALIVE,1); print(s.getsockopt(socket.SOL_SOCKET,socket.SO_KEEPALIVE)>0)\"'", "expect": "True"}
+{"id": "6baef7365024", "cmd": "bash -c 'date +%Y | awk \"{print (\\$1>=2024)}\"'", "expect": "1"}
+{"id": "fa698e4461bd", "cmd": "bash -c 'python3 -c \"\nimport gzip; d=b\\\"abc\\\"*1000; print(len(gzip.compress(d))<len(d)/10)\"'", "expect": "True"}
+{"id": "b111519f0eb9", "cmd": "bash -c 'python3 -c \"print(\\\"max-age=\\\"+str(60*60*24*365))\"'", "expect": "max-age=31536000"}
+{"id": "c43d5f9a5c94", "cmd": "bash -c 'python3 -c \"print(\\\"Access-Control-Allow-Origin\\\".lower())\"'", "expect": "access-control-allow-origin"}
+{"id": "f51ad6381b91", "cmd": "bash -c 'python3 -c \"\nfrom http.cookies import SimpleCookie\nc=SimpleCookie(); c[\\\"s\\\"]=\\\"v\\\"; c[\\\"s\\\"][\\\"httponly\\\"]=True; c[\\\"s\\\"][\\\"secure\\\"]=True; c[\\\"s\\\"][\\\"samesite\\\"]=\\\"Lax\\\"; print(c.output(header=\\\"\\\"))\"'", "expect": " s=v; HttpOnly; SameSite=Lax; Secure"}
+{"id": "41d00be6c7e2", "cmd": "bash -c 'python3 -c \"\nfrom collections import deque\nimport time\nw=deque()\nfor i in range(5): w.append(i)\nprint(len(w)>3)\"'", "expect": "True"}
+{"id": "901990ef7c16", "cmd": "bash -c 'python3 -c \"\nimport hmac,hashlib\na=hmac.new(b\\\"k\\\",b\\\"body\\\",hashlib.sha256).hexdigest(); b=hmac.new(b\\\"k\\\",b\\\"body\\\",hashlib.sha256).hexdigest(); print(hmac.compare_digest(a,b))\"'", "expect": "True"}
