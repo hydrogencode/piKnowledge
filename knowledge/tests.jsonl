@@ -1801,3 +1801,86 @@
 {"id": "81c46a1f661e", "cmd": "node -e 'console.log(typeof require(\"http\").createServer)'", "expect": "function"}
 {"id": "3cd1378e3235", "cmd": "node -e 'const m={js:\"text/javascript\",css:\"text/css\"}; console.log(m.js)'", "expect": "text/javascript"}
 {"id": "632012c82eb7", "cmd": "node -e 'console.log(\"application/json; charset=utf-8\".split(\";\")[0])'", "expect": "application/json"}
+{"id": "17787ce54157", "cmd": "ps -o rss= -p $$ | awk '{print ($1>0)}'", "expect": "1"}
+{"id": "f85ebe94f4e2", "cmd": "ps aux --sort=-%mem | head -1 | awk '{print $1}'", "expect": "USER"}
+{"id": "1071c2711d13", "cmd": "ps -o stat= -p $$ | cut -c1", "expect": "S"}
+{"id": "5ec80ced02be", "cmd": "tr '\\0' ' ' < /proc/$$/cmdline | wc -w | awk '{print ($1>=1)}'", "expect": "1"}
+{"id": "d2ee8b260ad9", "cmd": "awk '{print NF>=3}' /proc/loadavg", "expect": "1"}
+{"id": "03d2aa18096d", "cmd": "grep -c MemAvailable /proc/meminfo", "expect": "1"}
+{"id": "65a2e7af71e1", "cmd": "grep -c processor /proc/cpuinfo | awk '{print ($1>=1)}'", "expect": "1"}
+{"id": "9684030df161", "cmd": "awk '{print ($1>0)}' /proc/uptime", "expect": "1"}
+{"id": "115250b4af83", "cmd": "grep -c lo: /proc/net/dev", "expect": "1"}
+{"id": "d0e3f09794f0", "cmd": "echo 45123 | awk '{printf \"%.1f\\n\", $1/1000}'", "expect": "45.1"}
+{"id": "d2a6ad81fc9e", "cmd": "sleep 5 & p=$!; kill $p; wait $p 2>/dev/null; echo $?", "expect": "143"}
+{"id": "eaf5e55e3c26", "cmd": "sleep 7 & pgrep -f 'sleep 7' | wc -l | awk '{print ($1>=1)}'; kill %1", "expect": "1"}
+{"id": "08f7d207fa63", "cmd": "nice -n 5 sh -c 'nice'", "expect": "5"}
+{"id": "1ea4fe53dae2", "cmd": "ionice -c3 true 2>/dev/null; echo $?", "expect": "0"}
+{"id": "91e1b3525c90", "cmd": "ulimit -n | awk '{print ($1>=256)}'", "expect": "1"}
+{"id": "c13b1b20aa3f", "cmd": "bash -c '[ \"$(id -u)\" -ge 0 ] && echo checked'", "expect": "checked"}
+{"id": "b0d077ac31b0", "cmd": "mkdir d; touch d/f; chmod -R u+rwX d; stat -c %A d | cut -c1-4", "expect": "drwx"}
+{"id": "b38348a20973", "cmd": "stat -c %A /tmp | grep -c 't$'", "expect": "1"}
+{"id": "f628ef1ec82f", "cmd": "ls -ld . | cut -c1-1", "expect": "d"}
+{"id": "5268aaace938", "cmd": "env -i FOO=1 printenv FOO", "expect": "1"}
+{"id": "fed599407f14", "cmd": "A=1; bash -c 'echo \"[$A]\"'; export A; bash -c 'echo \"[$A]\"'", "expect": "[]\n[1]"}
+{"id": "24bf8553c24c", "cmd": "type cd | head -1", "expect": "cd is a shell builtin"}
+{"id": "7c7bb6c07dc6", "cmd": "hash -r; echo $?", "expect": "0"}
+{"id": "093543632b71", "cmd": "command -v bash | grep -c bash", "expect": "1"}
+{"id": "ca8114d13d07", "cmd": "ln -s /bin/sh s; readlink -f s | grep -c sh", "expect": "1"}
+{"id": "98baccd1411f", "cmd": "ldd /bin/sh | grep -c libc", "expect": "1"}
+{"id": "32d7b0536cf1", "cmd": "printf 'xx\\0version 1.2\\0yy' > b; strings b | grep -c version", "expect": "1"}
+{"id": "17553d767aa5", "cmd": "printf 'PK\\003\\004' | head -c 2", "expect": "PK"}
+{"id": "cf6386ed3853", "cmd": "printf 'a\\nb\\na\\n' | sort | uniq -d", "expect": "a"}
+{"id": "7befad073222", "cmd": "printf 'a\\nb\\n' > x; printf 'b\\nc\\n' > y; comm -3 x y | tr -d '\\t' | tr '\\n' ' '", "expect": "a c"}
+{"id": "ec144060be07", "cmd": "echo x | tee -a log >/dev/null; echo y | tee -a log >/dev/null; wc -l < log", "expect": "2"}
+{"id": "2c0befdb8e4c", "cmd": "printf 'a b\\nc\\n' | xargs -d '\\n' -n1 echo | head -1", "expect": "a b"}
+{"id": "f75428c29b7f", "cmd": "shopt -s globstar 2>/dev/null; mkdir -p d/e; touch d/e/a.txt; bash -O globstar -c 'for f in **/*.txt; do echo $f; done'", "expect": "d/e/a.txt"}
+{"id": "6f7b98e6a665", "cmd": "s=abcdefg; echo ${#s} ${s:2:3} ${s: -3}", "expect": "7 cde efg"}
+{"id": "96b40f653d8e", "cmd": "s='hello world'; [[ $s == *wor* ]] && echo yes", "expect": "yes"}
+{"id": "6ccd96f049f7", "cmd": "[[ 10-20 =~ ^([0-9]+)-([0-9]+)$ ]] && echo ${BASH_REMATCH[2]}", "expect": "20"}
+{"id": "ee96ab6d7e8c", "cmd": "f(){ echo ${1:-world}; }; f; f you", "expect": "world\nyou"}
+{"id": "f5e464aa7e3c", "cmd": "for x in a b c; do echo -n $x; done; echo", "expect": "abc"}
+{"id": "bf5cf5dc3393", "cmd": "for i in 1 2 3; do for j in 1 2; do [ $i = 2 ] && break 2; echo $i$j; done; done | tr '\\n' ' '", "expect": "11 12"}
+{"id": "d86716afa559", "cmd": "n=0; until [ $n -ge 3 ]; do n=$((n+1)); done; echo $n", "expect": "3"}
+{"id": "fdbe8c17165a", "cmd": "u(){ cat <<EOF\nusage: $0 name\nEOF\n}; u | wc -l", "expect": "1"}
+{"id": "a5cfeb42ad7c", "cmd": "f(){ echo log >&2; echo value; }; x=$(f 2>/dev/null); echo $x", "expect": "value"}
+{"id": "b2b4f2ba6696", "cmd": "false | true; echo ${PIPESTATUS[0]}${PIPESTATUS[1]}", "expect": "10"}
+{"id": "31948965842e", "cmd": "bash -c 'set -e; echo a | grep -q b || true; echo continued'", "expect": "continued"}
+{"id": "89df7e475e7a", "cmd": "bash -c 'set -E; trap \"echo failed at line \\$LINENO\" ERR; false; true' 2>&1", "expect": "failed at line 1"}
+{"id": "00008be95dc3", "cmd": "a=(x 'y z'); declare -p a", "expect": "declare -a a=([0]=\"x\" [1]=\"y z\")"}
+{"id": "7d5537f32096", "cmd": "a=hello; n=a; echo ${!n}", "expect": "hello"}
+{"id": "26ec5016e2ef", "cmd": "printf '%(%Y)T\\n' -1 | awk '{print ($1>=2024)}'", "expect": "1"}
+{"id": "2b339bfbffd1", "cmd": "echo | { read -t 1 x; echo $?; }", "expect": "0"}
+{"id": "7f81e29ad748", "cmd": "touch -d '1 hour ago' old; touch new; [ new -nt old ] && echo newer", "expect": "newer"}
+{"id": "b15853300979", "cmd": "f=$(mktemp --suffix=.json); case $f in *.json) echo json;; esac; rm -f $f", "expect": "json"}
+{"id": "34f3500c47b6", "cmd": "echo a > a; echo b > b; cp -n a b; cat b", "expect": "b"}
+{"id": "4524ee1758b3", "cmd": "mkdir r1 r2; ln -sfn r1 cur; ln -sfn r2 cur; readlink cur", "expect": "r2"}
+{"id": "a477862dc4be", "cmd": "touch a.txt b.txt; for f in *.txt; do mv -- \"$f\" \"${f%.txt}.md\"; done; ls | tr '\\n' ' '", "expect": "a.md b.md"}
+{"id": "9928050653ab", "cmd": "touch A.TXT b.txt; find . -iname '*.txt' | wc -l", "expect": "2"}
+{"id": "f67d73de37ae", "cmd": "mkdir -p a b/c; find . -mindepth 1 -maxdepth 1 -type d | sort | tr '\\n' ' '", "expect": "./a ./b"}
+{"id": "6a14ea172c2c", "cmd": "touch x.tmp; find . -name '*.tmp' -print | wc -l", "expect": "1"}
+{"id": "c900bb8d8a3a", "cmd": "mkdir d; head -c 30000 /dev/zero > d/f; du -s d | awk '{print ($1>=20)}'", "expect": "1"}
+{"id": "09d9d8442510", "cmd": "printf 'a\\nb\\nc\\n' | head -n -1 | tr '\\n' ' '", "expect": "a b"}
+{"id": "95742487c7cd", "cmd": "tail --help | grep -c -- '-F'", "expect": "1"}
+{"id": "8fed3a781222", "cmd": "echo ok | less -R | head -1", "expect": "ok"}
+{"id": "8ac770565edb", "cmd": "printf '1\\n2\\n' > a; printf 'x\\ny\\n' > b; paste -d, a b | tr '\\n' ' '", "expect": "1,x 2,y"}
+{"id": "e97df9c9058d", "cmd": "printf 'a,2\\nb,10\\n' | sort -t, -k2,2n | tail -1", "expect": "b,10"}
+{"id": "21ad5aa2cf41", "cmd": "printf 'a\\nb\\n' > f; wc -l < f", "expect": "2"}
+{"id": "9814be03d952", "cmd": "tr -dc 'a-z0-9' < /dev/urandom | head -c 16 | wc -c", "expect": "16"}
+{"id": "98fd2a0e0b56", "cmd": "seq 1 1000 | wc -l", "expect": "1000"}
+{"id": "ce206726662f", "cmd": "time true 2>&1 | grep -c real", "expect": "1"}
+{"id": "09738fda1ed0", "cmd": "timeout 0.1 sleep infinity; echo $?", "expect": "124"}
+{"id": "1b5c37315fa6", "cmd": "python3 -m http.server --help | head -1 | grep -c usage", "expect": "1"}
+{"id": "4ef1be38641d", "cmd": "timeout 1 bash -c '</dev/tcp/127.0.0.1/1' 2>/dev/null; echo $?", "expect": "1"}
+{"id": "49bedc0f1095", "cmd": "bash -c 'echo ${BASH_VERSION:+bash}'", "expect": "bash"}
+{"id": "eaa6ce03b3b3", "cmd": "bash -c 'a=(1 2); echo ${#a[@]}'", "expect": "2"}
+{"id": "fcbcb49d96e7", "cmd": "bash -n /dev/stdin <<< 'echo ok'; echo $?", "expect": "0"}
+{"id": "fc6768585b8c", "cmd": "bash -x -c 'echo hi' 2>&1 | head -1", "expect": "+ echo hi"}
+{"id": "d4b97670de84", "cmd": "log(){ printf '%s %s\\n' \"$(date -u +%FT%TZ)\" \"$*\"; }; log hi | awk '{print $2}'", "expect": "hi"}
+{"id": "2a832137ed80", "cmd": "bash -c 'echo $$ > l; kill -0 $(cat l) && echo alive'", "expect": "alive"}
+{"id": "30fc3c657ee6", "cmd": "bash -c 'exec echo wrapped'", "expect": "wrapped"}
+{"id": "4e2eeaabb3e1", "cmd": "yes | head -1", "expect": "y"}
+{"id": "42953163da61", "cmd": "env -i /bin/sh -c 'echo ${HOME:-nohome}'", "expect": "nohome"}
+{"id": "534e61c09a18", "cmd": "grep -c '^NAME=' /etc/os-release", "expect": "1"}
+{"id": "529fcb605fde", "cmd": "getent passwd root | cut -d: -f1", "expect": "root"}
+{"id": "c908c2082975", "cmd": "tmux -V | grep -c tmux", "expect": "1"}
+{"id": "5c409b90d4eb", "cmd": "tmux new -d -s s1 'sleep 3'; tmux has-session -t s1 && echo yes; tmux kill-session -t s1", "expect": "yes"}
