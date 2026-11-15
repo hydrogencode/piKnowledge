@@ -2067,3 +2067,133 @@
 {"id": "c6f5aa933ca6", "cat": "files", "tip": "Before you delete with a wildcard, run ls with the same pattern and read the list; rm -i asks for each file and is worth the seconds in a folder you do not know.", "n": 0, "a": "seed-verified"}
 {"id": "90dc7228f8e1", "cat": "files", "tip": "Move deleted files to a trash instead of removing them: install trash-cli and use trash-put file, trash-list and trash-restore.", "n": 0, "a": "seed"}
 {"id": "7ed839fa117b", "cat": "files", "tip": "Put scripts you run often into ~/bin or /usr/local/bin and make them executable; check that the folder is in PATH with echo $PATH.", "n": 0, "a": "seed-verified"}
+{"id": "1a74e5abfbee", "cat": "shell", "tip": "cron fields are minute hour day-of-month month day-of-week; */5 * * * * means every five minutes and 0 3 * * 1 means Mondays at 03:00.", "n": 0, "a": "seed"}
+{"id": "29f16e42d441", "cat": "shell", "tip": "Cron uses the system time zone; check with timedatectl, and remember that a job at 02:30 can be skipped or repeated on the day the clock changes.", "n": 0, "a": "seed"}
+{"id": "48119beb0db0", "cat": "shell", "tip": "A cron job that prints something sends it by mail on many systems; add >/dev/null 2>&1 or a log file to a job that runs often.", "n": 0, "a": "seed"}
+{"id": "b58194b504de", "cat": "shell", "tip": "systemd timers are the modern replacement for cron: they log to the journal, can catch up after downtime with Persistent=true and show their next run with systemctl list-timers.", "n": 0, "a": "seed"}
+{"id": "89f58fb15eda", "cat": "shell", "tip": "at now + 10 minutes runs a command once after a delay, and atq lists waiting jobs; it needs the atd service and suits one time tasks.", "n": 0, "a": "seed"}
+{"id": "f524a3dda396", "cat": "shell", "tip": "id -un prints your user name and whoami does the same; id -u prints the number, and 0 means root.", "n": 0, "a": "seed-verified"}
+{"id": "995ed553aa03", "cat": "shell", "tip": "getent passwd name shows the account entry including home folder and shell; getent group name lists the members of a group.", "n": 0, "a": "seed-verified"}
+{"id": "aa7d93eaff4b", "cat": "shell", "tip": "useradd -m -s /bin/bash name creates a user with a home folder, and passwd name sets the password; adduser asks the questions for you on Debian.", "n": 0, "a": "seed"}
+{"id": "8f250dc355fa", "cat": "shell", "tip": "usermod -aG sudo name gives a user administrator rights on Debian and Ubuntu; the user must log in again, check with id name.", "n": 0, "a": "seed"}
+{"id": "6e9c49d07c69", "cat": "shell", "tip": "A service account without login: useradd -r -s /usr/sbin/nologin name; it can own files and run services but nobody can log in as it.", "n": 0, "a": "seed"}
+{"id": "368a7cc2a4d4", "cat": "shell", "tip": "sudo -l shows what you may run with sudo, and visudo edits the sudoers file with a syntax check so you cannot lock yourself out.", "n": 0, "a": "seed"}
+{"id": "83467b380df6", "cat": "shell", "tip": "last shows recent logins and reboots, lastb shows failed logins (as root) and w shows who is logged in now and what they run.", "n": 0, "a": "seed"}
+{"id": "dbf14a789a50", "cat": "shell", "tip": "who -b prints the time of the last boot, and uptime -p prints the running time in words.", "n": 0, "a": "seed-verified"}
+{"id": "109573468929", "cat": "shell", "tip": "dmesg -T shows kernel messages with readable times, and dmesg --level=err,warn shows only problems.", "n": 0, "a": "seed"}
+{"id": "0beb090f3f18", "cat": "shell", "tip": "journalctl -k -b lists kernel messages of this boot, a good place to see USB, disk and power problems.", "n": 0, "a": "seed"}
+{"id": "fe621d5d9239", "cat": "shell", "tip": "lsmod lists loaded kernel modules, modprobe name loads one and modprobe -r name removes it; modinfo name shows its parameters.", "n": 0, "a": "seed"}
+{"id": "942e6f3e8fc2", "cat": "shell", "tip": "sysctl -a | grep name searches kernel settings, sysctl -w name=value changes one until the next boot and a file in /etc/sysctl.d makes it permanent.", "n": 0, "a": "seed"}
+{"id": "635d263177e0", "cat": "shell", "tip": "sysctl vm.swappiness shows how eagerly Linux swaps; a low value such as 10 keeps programs in RAM longer and is kinder to an SD card.", "n": 0, "a": "seed"}
+{"id": "3fb65007a749", "cat": "shell", "tip": "/proc/meminfo has all memory numbers; MemAvailable is the best answer to how much memory programs can still use, better than the free column.", "n": 0, "a": "seed-verified"}
+{"id": "5c7ec25d15a7", "cat": "shell", "tip": "/proc/loadavg shows the load of the last 1, 5 and 15 minutes; a load above the number of cores means processes are waiting.", "n": 0, "a": "seed-verified"}
+{"id": "30055ad14bc1", "cat": "shell", "tip": "nproc prints the number of processor cores that programs may use, which is the number to compare a load average with.", "n": 0, "a": "seed-verified"}
+{"id": "b0d037ee392d", "cat": "shell", "tip": "/proc/PID/status and /proc/PID/cmdline show the state and the full command line of a running process; tr '\\0' ' ' < /proc/PID/cmdline makes the arguments readable.", "n": 0, "a": "seed-verified"}
+{"id": "964abc27fb6f", "cat": "shell", "tip": "ls -l /proc/PID/exe shows which program file a process really runs, and ls -l /proc/PID/cwd its working folder.", "n": 0, "a": "seed-verified"}
+{"id": "55a82f88e67d", "cat": "shell", "tip": "ps -eo pid,ppid,%cpu,%mem,etime,cmd --sort=-%mem | head shows the top memory users with how long they run.", "n": 0, "a": "seed-verified"}
+{"id": "ae582c190a43", "cat": "shell", "tip": "ps -o pid,ni,cmd -p PID shows the nice value of one process, and ps -ejH or pstree -p shows the process tree.", "n": 0, "a": "seed-verified"}
+{"id": "8be067400d99", "cat": "shell", "tip": "kill PID sends SIGTERM, which lets a program clean up; kill -9 PID cannot be caught and should be the last choice.", "n": 0, "a": "seed"}
+{"id": "fd5a619d3017", "cat": "shell", "tip": "kill -0 PID sends no signal and only tells through its exit code whether the process exists and may be signalled.", "n": 0, "a": "seed-verified"}
+{"id": "27b3faefcbf8", "cat": "shell", "tip": "kill -HUP PID makes many daemons reload their configuration, and kill -USR1 is used by some programs to rotate logs or print status.", "n": 0, "a": "seed"}
+{"id": "b997d998be2f", "cat": "shell", "tip": "A zombie process is a finished child that its parent did not collect; it uses no memory and goes away when the parent ends or is restarted.", "n": 0, "a": "seed"}
+{"id": "946bc440a646", "cat": "shell", "tip": "wait in a shell script waits for all background jobs, and wait PID for one; $! holds the number of the last background job.", "n": 0, "a": "seed-verified"}
+{"id": "1a1239dde5a7", "cat": "shell", "tip": "Run commands in parallel from a script with & and wait, or with xargs -P; limit the number so a small board is not overloaded.", "n": 0, "a": "seed-verified"}
+{"id": "6552074f9cb3", "cat": "shell", "tip": "command & disown keeps a job alive after the terminal closes; setsid command starts it in its own session so no hangup signal reaches it.", "n": 0, "a": "seed-verified"}
+{"id": "21d89314503b", "cat": "shell", "tip": "exec replaces the shell with a program in a script, so no extra process stays; it is good at the end of a start script.", "n": 0, "a": "seed-verified"}
+{"id": "d78367fee19b", "cat": "shell", "tip": "Use a here string to feed text to a command: grep -c a <<< \"banana\" avoids a pipe and an extra echo.", "n": 0, "a": "seed-verified"}
+{"id": "5a18a12d6a45", "cat": "shell", "tip": "In bash, set -o pipefail makes a pipeline fail when any part fails, otherwise only the exit code of the last command counts.", "n": 0, "a": "seed-verified"}
+{"id": "539aa2d14fe0", "cat": "shell", "tip": "PIPESTATUS is an array with the exit codes of every part of the last pipeline in bash: false | true; echo ${PIPESTATUS[@]} prints 1 0.", "n": 0, "a": "seed-verified"}
+{"id": "3d1a59fbb927", "cat": "shell", "tip": "Use [[ -n \"$var\" ]] to test for a non empty value and ${var:-} inside set -u scripts so an unset variable does not stop the script.", "n": 0, "a": "seed-verified"}
+{"id": "9c10e2806330", "cat": "shell", "tip": "Arithmetic in bash: ((i++)) returns status 1 when the old value was 0, which stops scripts under set -e; use i=$((i+1)) instead.", "n": 0, "a": "seed-verified"}
+{"id": "4621644c7471", "cat": "shell", "tip": "Do not parse ls; use globs, find -print0 with read -d '' or find -exec. File names can contain spaces and newlines.", "n": 0, "a": "seed-verified"}
+{"id": "a929c8916cde", "cat": "shell", "tip": "find -print0 | while IFS= read -r -d '' f; do ...; done handles every possible file name inside a loop.", "n": 0, "a": "seed-verified"}
+{"id": "11cb13e1be27", "cat": "shell", "tip": "A subshell in parentheses runs in its own environment: (cd /tmp && command) does not change the folder of the script.", "n": 0, "a": "seed-verified"}
+{"id": "b75d542dd928", "cat": "shell", "tip": "Functions can return text only through output; capture it with result=$(function) and use return only for a status code from 0 to 255.", "n": 0, "a": "seed-verified"}
+{"id": "eb2e85a100e4", "cat": "shell", "tip": "Use readarray or mapfile -t to read lines into an array, and \"${arr[@]}\" with quotes to pass them on without splitting.", "n": 0, "a": "seed-verified"}
+{"id": "37a1374743c8", "cat": "shell", "tip": "printf -v var '%s-%s' a b stores formatted text in a variable without a subshell, faster than var=$(printf ...) in loops.", "n": 0, "a": "seed-verified"}
+{"id": "ecb69e85d90a", "cat": "shell", "tip": "declare -p name prints how a variable is defined, including arrays, which helps debugging scripts.", "n": 0, "a": "seed-verified"}
+{"id": "9cf070325628", "cat": "shell", "tip": "type name tells whether a word is an alias, function, builtin or file; type -a name shows all matches in order.", "n": 0, "a": "seed-verified"}
+{"id": "634f931e2f40", "cat": "shell", "tip": "bash -n script checks only the syntax without running anything, and shellcheck script finds common mistakes.", "n": 0, "a": "seed-verified"}
+{"id": "68a198ac9a01", "cat": "shell", "tip": "bash -u script and set -u stop at the first use of an unset variable, which finds typos in variable names.", "n": 0, "a": "seed-verified"}
+{"id": "d5d770ce7834", "cat": "shell", "tip": "In a script, cd \"$(dirname \"$0\")\" moves to the script's own folder, so relative paths work whatever the current folder was.", "n": 0, "a": "seed"}
+{"id": "e7be0ef14fd7", "cat": "shell", "tip": "readlink -f \"$0\" gives the real path of a script even when it was called through a link, the base for finding files next to it.", "n": 0, "a": "seed-verified"}
+{"id": "f18f92d33809", "cat": "shell", "tip": "Check for root at the start of scripts that need it: if [ \"$(id -u)\" -ne 0 ]; then echo \"run with sudo\"; exit 1; fi.", "n": 0, "a": "seed-verified"}
+{"id": "6e72734787b4", "cat": "shell", "tip": "echo \"text\" >&2 sends a message to standard error, so it does not mix with the output a script returns to other programs.", "n": 0, "a": "seed-verified"}
+{"id": "610180bbe52d", "cat": "shell", "tip": "Use exit codes consistently in scripts: 0 for success and different small numbers for different failures, so callers and systemd can react.", "n": 0, "a": "seed-verified"}
+{"id": "7ac0227a387b", "cat": "shell", "tip": "A lock file with mkdir is atomic: if mkdir /tmp/job.lock 2>/dev/null; then ...; rmdir /tmp/job.lock; fi stops two runs at once without extra tools.", "n": 0, "a": "seed-verified"}
+{"id": "3578a86decc5", "cat": "shell", "tip": "sleep infinity keeps a process alive without using CPU, which is useful as the main command of a container or a test.", "n": 0, "a": "seed-verified"}
+{"id": "850181705fdf", "cat": "shell", "tip": "seq -f '%03g' 1 3 prints numbers with leading zeros, and seq 10 -2 0 counts down in steps.", "n": 0, "a": "seed-verified"}
+{"id": "13bf61d28884", "cat": "shell", "tip": "printf '%s\\n' {a..e} prints letters from a to e, one per line, a quick way to make test data.", "n": 0, "a": "seed-verified"}
+{"id": "ee2060f13037", "cat": "shell", "tip": "Use the shell's built in test of a number: [[ $x =~ ^[0-9]+$ ]] is true only when the value is made of digits.", "n": 0, "a": "seed-verified"}
+{"id": "17bfecdece92", "cat": "shell", "tip": "BASH_REMATCH holds the groups of the last =~ match, so you can pull parts out of a string without sed.", "n": 0, "a": "seed-verified"}
+{"id": "ee30d07b286a", "cat": "shell", "tip": "Compare versions with sort -V: printf '%s\\n' 1.10 1.9 | sort -V | tail -1 prints 1.10, because the comparison is numeric per part.", "n": 0, "a": "seed-verified"}
+{"id": "99be1a0f9e9b", "cat": "shell", "tip": "du -sb file prints the size in bytes exactly, and stat -c %s file does the same; use them in scripts instead of parsing ls.", "n": 0, "a": "seed-verified"}
+{"id": "3c00c853564e", "cat": "shell", "tip": "numfmt --to=iec 123456789 converts a number of bytes to a readable size, and numfmt --from=iec 2K converts the other way.", "n": 0, "a": "seed-verified"}
+{"id": "6b376f9200c2", "cat": "shell", "tip": "date -d \"2026-12-25\" +%A prints the weekday of a date, and date -d \"+3 days\" +%F computes a future date in a script.", "n": 0, "a": "seed-verified"}
+{"id": "6b30b689f9ef", "cat": "shell", "tip": "date -u +%Y-%m-%dT%H:%M:%SZ prints the time in the ISO 8601 UTC format used by logs and APIs.", "n": 0, "a": "seed-verified"}
+{"id": "4ac4b6cfd40e", "cat": "shell", "tip": "TZ=Europe/Istanbul date shows the time in another time zone for one command, without changing the system setting.", "n": 0, "a": "seed-verified"}
+{"id": "58f57bfb9565", "cat": "shell", "tip": "expr and bc can calculate but the shell does integer math by itself with $(( )); for floating point use awk 'BEGIN{print 10/4}'.", "n": 0, "a": "seed-verified"}
+{"id": "af491c1162e9", "cat": "shell", "tip": "awk -v name=value passes a shell value into awk safely; never build the awk program by pasting a variable into it.", "n": 0, "a": "seed-verified"}
+{"id": "2b50819bc9ca", "cat": "shell", "tip": "awk 'NR==FNR{a[$1]=$2; next} $1 in a {print $0, a[$1]}' file1 file2 joins two files on the first column without sorting.", "n": 0, "a": "seed-verified"}
+{"id": "a39a8b113e4f", "cat": "shell", "tip": "awk '{ $1=\"\"; print substr($0,2) }' removes the first column and keeps the rest of the line as it is.", "n": 0, "a": "seed-verified"}
+{"id": "b6bb833581cc", "cat": "shell", "tip": "awk 'END{print NR}' counts lines, and awk 'length($0)>m{m=length($0)} END{print m}' finds the longest line.", "n": 0, "a": "seed-verified"}
+{"id": "541e2e2127ca", "cat": "shell", "tip": "sed -n '$p' prints the last line, sed '1d' deletes the first and sed '$!N;s/\\n/ /' joins every two lines.", "n": 0, "a": "seed-verified"}
+{"id": "12599ba56dd5", "cat": "shell", "tip": "sed -E 's/([0-9]+)-([0-9]+)/\\2-\\1/' swaps two numbers using groups; -E enables extended regular expressions without backslashes.", "n": 0, "a": "seed-verified"}
+{"id": "ac303b04310f", "cat": "shell", "tip": "sed '/start/,/end/d' deletes a block between two marker lines, and sed '/pattern/a new line' adds a line after each match.", "n": 0, "a": "seed-verified"}
+{"id": "3e9ad41d4cb6", "cat": "shell", "tip": "sed 's/[[:space:]]*$//' removes trailing spaces from every line, and sed 's/^[[:space:]]*//' removes leading spaces.", "n": 0, "a": "seed-verified"}
+{"id": "e42849ee2b25", "cat": "shell", "tip": "sed -i '/^$/N;/^\\n$/D' file squeezes several empty lines into one, a cleanup for log and text files.", "n": 0, "a": "seed-verified"}
+{"id": "a77b846ee70a", "cat": "shell", "tip": "grep -c '' file counts lines even when the last line has no newline, which wc -l misses.", "n": 0, "a": "seed-verified"}
+{"id": "5c4a5ff2f939", "cat": "shell", "tip": "grep -rl text folder lists the files that contain the text, and grep -rL text folder lists the files that do not.", "n": 0, "a": "seed-verified"}
+{"id": "58b2d771f1e3", "cat": "shell", "tip": "grep --exclude-dir=.git --exclude-dir=node_modules -r text . skips folders that only waste time.", "n": 0, "a": "seed-verified"}
+{"id": "c37b20d40bbd", "cat": "shell", "tip": "grep -P uses Perl regular expressions with lookahead and \\d, available in GNU grep: grep -oP '(?<=id=)\\d+' prints only the number after id=.", "n": 0, "a": "seed-verified"}
+{"id": "e526885fe5e7", "cat": "shell", "tip": "grep -m1 pattern stops after the first match, a speed gain on big files; grep -x matches whole lines only.", "n": 0, "a": "seed-verified"}
+{"id": "524d39523a6b", "cat": "shell", "tip": "zgrep and zcat read compressed log files directly, so you can search old rotated logs without unpacking them.", "n": 0, "a": "seed-verified"}
+{"id": "4d3211082f1f", "cat": "shell", "tip": "tr -s '\\n' removes empty lines and tr '[:upper:]' '[:lower:]' lowercases text for plain ASCII; Turkish dotted letters need other tools.", "n": 0, "a": "seed-verified"}
+{"id": "798edb1cc61f", "cat": "shell", "tip": "uniq only removes neighbouring duplicates, so sort first; sort -u does both at once and uniq -d shows only the repeated lines.", "n": 0, "a": "seed-verified"}
+{"id": "383d4f74ac97", "cat": "shell", "tip": "sort -t, -k2,2nr sorts a CSV by the second column as a number in reverse; -k2,2 limits the key to one column.", "n": 0, "a": "seed-verified"}
+{"id": "fa528f28b392", "cat": "shell", "tip": "head -c 100 file prints the first 100 bytes, and tail -c 100 the last; useful for peeking into big or binary files.", "n": 0, "a": "seed-verified"}
+{"id": "a2062b333901", "cat": "shell", "tip": "head -n -1 prints everything except the last line, and tail -n +2 everything except the first.", "n": 0, "a": "seed-verified"}
+{"id": "ce737ca17684", "cat": "shell", "tip": "split -l 1000 file part_ cuts a text file into pieces of 1000 lines, and csplit splits at patterns.", "n": 0, "a": "seed-verified"}
+{"id": "d37905523bb0", "cat": "shell", "tip": "wc -L file prints the length of the longest line, and wc -m counts characters instead of bytes.", "n": 0, "a": "seed-verified"}
+{"id": "70d6d0610fcb", "cat": "shell", "tip": "fmt -w 60 text wraps paragraphs at a width, and fold -s -w 60 breaks lines at spaces.", "n": 0, "a": "seed-verified"}
+{"id": "b3d46422372b", "cat": "shell", "tip": "od -An -tx1 file prints bytes as hexadecimal without addresses, and od -An -c shows control characters, a quick look into a file.", "n": 0, "a": "seed-verified"}
+{"id": "0060ea1b15d4", "cat": "shell", "tip": "printf and echo -n differ between shells; in scripts use printf '%s' for text without a newline.", "n": 0, "a": "seed-verified"}
+{"id": "15f345cec642", "cat": "shell", "tip": "Use $'...' for special characters in bash: $'\\t' is a tab and $'\\n' a newline, handy in tr and cut.", "n": 0, "a": "seed-verified"}
+{"id": "6a7049e9a315", "cat": "shell", "tip": "Brace expansion happens before variables, so {1..$n} does not work; use seq or a for ((i=1;i<=n;i++)) loop.", "n": 0, "a": "seed-verified"}
+{"id": "d2b059df8a09", "cat": "shell", "tip": "trap 'echo error on line $LINENO' ERR shows where a script failed when set -e stops it.", "n": 0, "a": "seed-verified"}
+{"id": "d52d3e010622", "cat": "shell", "tip": "trap '' INT ignores Ctrl+C in a script section, and trap - INT restores the default.", "n": 0, "a": "seed-verified"}
+{"id": "70adea0e9eff", "cat": "shell", "tip": "getopts is built in and handles short options; for long options such as --name use a while loop with case on $1 and shift.", "n": 0, "a": "seed-verified"}
+{"id": "4aebae58cecb", "cat": "shell", "tip": "Use ${1:?usage: script file} at the top of a script to stop with a message when a required argument is missing.", "n": 0, "a": "seed-verified"}
+{"id": "5e05d56c1eac", "cat": "shell", "tip": "Use basename \"$0\" for the program name in usage messages and \"$#\" for the number of arguments.", "n": 0, "a": "seed-verified"}
+{"id": "708bca0e12d3", "cat": "shell", "tip": "In bash, $SECONDS counts the seconds since the shell started, a simple timer without date.", "n": 0, "a": "seed-verified"}
+{"id": "ac4d54700d4b", "cat": "shell", "tip": "Run a command with a changed locale for stable output: LC_ALL=C sort gives byte order and the same result on every computer.", "n": 0, "a": "seed-verified"}
+{"id": "328a5d03b86f", "cat": "shell", "tip": "Use LC_ALL=C grep for faster searches in big ASCII files; UTF-8 locales make grep slower.", "n": 0, "a": "seed-verified"}
+{"id": "528aa57969c6", "cat": "shell", "tip": "env -i bash --noprofile --norc starts a clean shell, the quick way to test a script without your own settings.", "n": 0, "a": "seed-verified"}
+{"id": "be2ecf0a383e", "cat": "shell", "tip": "Shell options: shopt -s extglob enables patterns such as !(*.log) and +(a|b); shopt -s dotglob makes * match hidden files too.", "n": 0, "a": "seed-verified"}
+{"id": "db2cde6e5e14", "cat": "shell", "tip": "globstar with shopt -s globstar lets ** match folders recursively: ls **/*.py lists every Python file below.", "n": 0, "a": "seed-verified"}
+{"id": "dd154514f269", "cat": "shell", "tip": "cp --reflink=auto and cp --sparse=always save space on file systems that support them; on ext4 they do nothing special but do no harm.", "n": 0, "a": "seed-verified"}
+{"id": "c44da2ab8e09", "cat": "shell", "tip": "install -m 755 file /usr/local/bin/ copies a file and sets the mode in one step; install -d makes folders with a mode.", "n": 0, "a": "seed-verified"}
+{"id": "b6e9969bfb8e", "cat": "shell", "tip": "truncate -s 0 file empties a file without deleting it, so programs that hold it open keep writing to the same file; truncate -s 1G makes a sparse file.", "n": 0, "a": "seed-verified"}
+{"id": "5daa361aec6d", "cat": "shell", "tip": "tee -a log appends, and command 2>&1 | tee log shows output on the screen while saving it, handy for long installs.", "n": 0, "a": "seed-verified"}
+{"id": "809a56600af8", "cat": "shell", "tip": "script -q -c \"command\" log runs a command in a pseudo terminal and records everything, useful for programs that behave differently without a terminal.", "n": 0, "a": "seed"}
+{"id": "0eb43022c357", "cat": "shell", "tip": "stdbuf -oL command makes a program flush output line by line, so a pipe or log shows lines at once instead of in big chunks.", "n": 0, "a": "seed-verified"}
+{"id": "9f9a6141368b", "cat": "shell", "tip": "unbuffer from the expect package or python3 -u fixes delayed output in pipes; without it a program that writes to a pipe buffers its output.", "n": 0, "a": "seed-verified"}
+{"id": "6ec15530c1c0", "cat": "shell", "tip": "yes '' | head -n 3 | wc -l prints three empty lines; yes y | command answers every question of an installer with y.", "n": 0, "a": "seed-verified"}
+{"id": "0b047a0d7267", "cat": "shell", "tip": "A program that asks for input can be fed with printf 'a\\nb\\n' | program, and with expect when it needs a real terminal.", "n": 0, "a": "seed-verified"}
+{"id": "61c8fb826112", "cat": "shell", "tip": "watch -n1 'command' repeats every second; watch -g stops when the output changes, which suits waiting for a state.", "n": 0, "a": "seed-verified"}
+{"id": "237bb42d77d2", "cat": "shell", "tip": "timeout --foreground 5 command works for commands that read from the terminal, and timeout -k 2 5 command sends a kill two seconds after the first stop signal fails.", "n": 0, "a": "seed-verified"}
+{"id": "ad2f3c3bd128", "cat": "shell", "tip": "nohup writes to nohup.out when output is not redirected; always redirect with nohup command >log 2>&1 & to control the file.", "n": 0, "a": "seed-verified"}
+{"id": "3cbed762dd42", "cat": "shell", "tip": "pidof name prints the process numbers of a program by exact name, and pgrep -x name does the same with matching on the exact name.", "n": 0, "a": "seed-verified"}
+{"id": "098c227d7090", "cat": "shell", "tip": "killall name ends all processes with that exact name, pkill -f pattern matches the whole command line; check with pgrep -af first.", "n": 0, "a": "seed-verified"}
+{"id": "e6be20c667ac", "cat": "shell", "tip": "lsof -i :8000 shows which process listens on a port, and fuser -n tcp 8000 does the same; ss -ltnp is usually already installed.", "n": 0, "a": "seed-verified"}
+{"id": "cde2a4c2a980", "cat": "shell", "tip": "A process that listens on a port should be started by a service manager; if you started it by hand in a terminal it ends when the terminal closes.", "n": 0, "a": "seed"}
+{"id": "00b2d175839b", "cat": "shell", "tip": "ulimit -a lists the limits of the shell; ulimit -u shows the process limit, and a fork bomb protection sets it low for normal users.", "n": 0, "a": "seed-verified"}
+{"id": "3f506ad1662c", "cat": "shell", "tip": "ionice -c3 command runs with idle disk priority and nice -n 19 with the lowest CPU priority, ideal for backups on a Raspberry Pi.", "n": 0, "a": "seed"}
+{"id": "57b2d9f7a5fe", "cat": "shell", "tip": "taskset -c 0 command pins a process to the first CPU core, and taskset -p PID shows the current mask; this helps measure or limit a program.", "n": 0, "a": "seed-verified"}
+{"id": "5f610c38d952", "cat": "shell", "tip": "free -m shows megabytes and free -h shows human sizes; the available column counts memory that can be freed, so a low free value alone is no problem.", "n": 0, "a": "seed-verified"}
+{"id": "6f69a67cacf7", "cat": "shell", "tip": "vmstat 1 5 prints memory, swap, disk and CPU activity every second five times; a high si and so means the system is swapping.", "n": 0, "a": "seed-verified"}
+{"id": "6223c15fea41", "cat": "shell", "tip": "uptime shows the load averages; on a four core computer a load of 4 means all cores are fully used.", "n": 0, "a": "seed-verified"}
+{"id": "95536043534b", "cat": "shell", "tip": "lscpu shows the processor model, number of cores and architecture, and lsblk shows disks; lspci and lsusb list the devices on those buses.", "n": 0, "a": "seed-verified"}
+{"id": "1bd78b3384e3", "cat": "shell", "tip": "hostname -I prints all IP addresses of the computer in one line, the quickest way to find the address of a Pi.", "n": 0, "a": "seed"}
+{"id": "cd8ca7843105", "cat": "shell", "tip": "uname -a prints kernel version and architecture; uname -m alone gives aarch64, armv7l or x86_64, the first thing to check before downloading a program.", "n": 0, "a": "seed-verified"}
+{"id": "e76bf9c46ea4", "cat": "shell", "tip": "cat /etc/os-release shows the distribution and version, and lsb_release -a does the same where installed; look here before you follow a guide.", "n": 0, "a": "seed-verified"}
