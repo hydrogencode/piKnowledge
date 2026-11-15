@@ -630,3 +630,109 @@
 {"id": "8fd2fee87060", "cmd": "systemd-analyze timestamp \"2026-12-31 23:59:00\" | grep -c 'UTC'", "expect": "1"}
 {"id": "c0fa625ab773", "cmd": "systemd-escape -p /var/log", "expect": "var-log"}
 {"id": "429588ef0732", "cmd": "systemd-path system-state-private | grep -c '/'", "expect": "1"}
+{"id": "9dd4958abe9b", "cmd": "python3 -c \"print('cabxbac'.strip('abc'))\"", "expect": "x"}
+{"id": "a0703a7bbd43", "cmd": "python3 -c \"print('a.b.c'.rsplit('.', 1))\"", "expect": "['a.b', 'c']"}
+{"id": "c3e86ededfbf", "cmd": "python3 -c \"print('a\\nb\\n'.splitlines(), 'a\\nb\\n'.split('\\n'))\"", "expect": "['a', 'b'] ['a', 'b', '']"}
+{"id": "9e2d8110d72c", "cmd": "python3 -c \"print('42'.zfill(5), '-4'.zfill(4))\"", "expect": "00042 -004"}
+{"id": "93c1373e5a2f", "cmd": "python3 -c \"print(f'[{\\\"ab\\\":^6}]')\"", "expect": "[  ab  ]"}
+{"id": "0fd3a7b4eab3", "cmd": "python3 -c \"print('²'.isdigit(), '²'.isdecimal())\"", "expect": "True False"}
+{"id": "26c641ca1298", "cmd": "python3 -c \"print('hello'.translate(str.maketrans('el','ip')))\"", "expect": "hippo"}
+{"id": "e9f32938fb79", "cmd": "python3 -c \"print('{a}-{b}'.format_map({'a':1,'b':2}))\"", "expect": "1-2"}
+{"id": "81c987e14cdd", "cmd": "python3 -c \"print('%s' % ((1,2),))\"", "expect": "(1, 2)"}
+{"id": "ea481d3ed7ee", "cmd": "python3 -c \"print(int('0x1f',16), int('0b101',0), hex(255))\"", "expect": "31 5 0xff"}
+{"id": "ce40ba78e1c0", "cmd": "python3 -c \"print(len(str(2**1000)))\"", "expect": "302"}
+{"id": "b60315970444", "cmd": "python3 -c \"print(0.1+0.2==0.3, round(0.1+0.2,2)==0.3)\"", "expect": "False True"}
+{"id": "79002b919a9c", "cmd": "python3 -c \"from decimal import Decimal as D; print(D('1.10')+D('2.20'))\"", "expect": "3.30"}
+{"id": "8cb372c32a87", "cmd": "python3 -c \"from fractions import Fraction as F; print(F('0.25'), F(1,3)+F(1,6))\"", "expect": "1/4 1/2"}
+{"id": "6688365e2250", "cmd": "python3 -c \"print(round(2.5), round(3.5))\"", "expect": "2 4"}
+{"id": "0219f9a737e4", "cmd": "python3 -c \"import math; print(int(-1.5), math.floor(-1.5), math.ceil(-1.5))\"", "expect": "-1 -2 -1"}
+{"id": "6ca83c7a3a6e", "cmd": "python3 -c \"print(-7//2, -7%2)\"", "expect": "-4 1"}
+{"id": "8595a4f5ac87", "cmd": "python3 -c \"import statistics as s; print(s.median([3,1,2]), s.mean([1,2,3,4]))\"", "expect": "2 2.5"}
+{"id": "ddb6a989f9e8", "cmd": "python3 -c \"import random; random.seed(1); a=random.sample(range(10),3); random.seed(1); print(a==random.sample(range(10),3))\"", "expect": "True"}
+{"id": "87ca501bef38", "cmd": "python3 -c \"import random; print(len(random.choices('ab',weights=[5,1],k=3)))\"", "expect": "3"}
+{"id": "afec40dfa5f9", "cmd": "python3 -c \"import math; print(math.hypot(3,4), math.dist((0,0),(6,8)))\"", "expect": "5.0 10.0"}
+{"id": "fa32e9154899", "cmd": "python3 -c \"import math; print(round(math.degrees(math.atan2(1,1))))\"", "expect": "45"}
+{"id": "8fb9716afc22", "cmd": "python3 -c \"print(max(0, min(10, 15)), max(0, min(10, -3)))\"", "expect": "10 0"}
+{"id": "d8d1a944faf8", "cmd": "python3 -c \"print(0 + (10-0)*0.25, (5-0)/(10-0)*(200-100)+100)\"", "expect": "2.5 150.0"}
+{"id": "f8529350b49a", "cmd": "python3 -c \"import bisect; a=[1,3,5]; bisect.insort(a,4); print(a, bisect.bisect_left(a,3))\"", "expect": "[1, 3, 4, 5] 1"}
+{"id": "264d683cb694", "cmd": "python3 -c \"import heapq; print(heapq.nsmallest(2,[5,1,4,2]))\"", "expect": "[1, 2]"}
+{"id": "ee8b3e9df183", "cmd": "python3 -c \"print(sorted([('b',1),('a',1),('c',2)], key=lambda x:(-x[1],x[0])))\"", "expect": "[('c', 2), ('a', 1), ('b', 1)]"}
+{"id": "02eae489ce24", "cmd": "python3 -c \"print([3,1].sort())\"", "expect": "None"}
+{"id": "e16a010826ae", "cmd": "python3 -c \"print([i for i,v in enumerate('abca') if v=='a'])\"", "expect": "[0, 3]"}
+{"id": "e1ea2db51a3b", "cmd": "python3 -c \"print({'a':1}.pop('b', None))\"", "expect": "None"}
+{"id": "cb93ce51c083", "cmd": "python3 -c \"print(dict(sorted({'a':2,'b':1}.items(), key=lambda kv: kv[1])))\"", "expect": "{'b': 1, 'a': 2}"}
+{"id": "6350c960acd2", "cmd": "python3 -c \"print(list(dict.fromkeys([3,1,3,2])))\"", "expect": "[3, 1, 2]"}
+{"id": "61d4539ff3eb", "cmd": "python3 -c \"from collections import ChainMap as C; print(C({'a':1},{'a':2,'b':3})['b'])\"", "expect": "3"}
+{"id": "aff2b7eb8ad7", "cmd": "python3 -c \"from collections import namedtuple as n; P=n('P','x y'); print(P(1,2).y)\"", "expect": "2"}
+{"id": "a27b53df367a", "cmd": "python3 -c \"print(type((1,)).__name__, type((1)).__name__)\"", "expect": "tuple int"}
+{"id": "127eeb97794d", "cmd": "python3 -c \"f,*r=[1,2,3]; print(r); a,b=1,2; a,b=b,a; print(a,b)\"", "expect": "[2, 3]"}
+{"id": "cacd1e896c0f", "cmd": "python3 -c \"a,_=(1,2); print(a)\"", "expect": "1"}
+{"id": "fe7572a52395", "cmd": "python3 -c \"s={1}; s.discard(2); print(s)\"", "expect": "{1}"}
+{"id": "73981f687bb7", "cmd": "python3 -c \"print({frozenset([1,2]): 'x'}[frozenset([2,1])])\"", "expect": "x"}
+{"id": "48938a8f6360", "cmd": "python3 -c \"a=[1,2]; print(a==[1,2], a is [1,2])\"", "expect": "True False"}
+{"id": "a699c47e125b", "cmd": "python3 -c \"print(int('1000')==int('1000'), 'a'*1==('a'))\"", "expect": "True True"}
+{"id": "e74ef4209d89", "cmd": "python3 -c \"x=5; print(0<x<10)\"", "expect": "True"}
+{"id": "eb9771cb5682", "cmd": "python3 -c \"print('' or 'default', 'a' and 'b')\"", "expect": "default b"}
+{"id": "8d105d3b33b8", "cmd": "python3 -c \"print(bool([]), bool(0), bool('0'))\"", "expect": "False False True"}
+{"id": "9720dd5268a6", "cmd": "python3 -c \"x=3; print('big' if x>2 else 'small')\"", "expect": "big"}
+{"id": "4672d4b35cb9", "cmd": "python3 -c \"print([i for i,_ in enumerate('abc')])\"", "expect": "[0, 1, 2]"}
+{"id": "aeb7fc322a5a", "cmd": "python3 -c \"print(list(reversed([1,2,3])))\"", "expect": "[3, 2, 1]"}
+{"id": "0a80563b8ea4", "cmd": "python3 -c \"import itertools as i; print(len(list(i.product('ab',repeat=2))), len(list(i.combinations('abc',2))))\"", "expect": "4 3"}
+{"id": "2749cd090fc9", "cmd": "python3 -c \"import itertools as i; print(list(i.accumulate([1,2,3])))\"", "expect": "[1, 3, 6]"}
+{"id": "c6bcd99628d6", "cmd": "python3 -c \"import itertools as i; print(list(i.islice(i.count(10,5),3)))\"", "expect": "[10, 15, 20]"}
+{"id": "539e0238ed7d", "cmd": "python3 -c \"import itertools as i; print(list(i.zip_longest([1,2],[3],fillvalue=0)))\"", "expect": "[(1, 3), (2, 0)]"}
+{"id": "6323611b38ba", "cmd": "python3 -c \"import itertools as i; print(list(i.takewhile(lambda x:x<3,[1,2,3,1])))\"", "expect": "[1, 2]"}
+{"id": "8363f0d975f5", "cmd": "python3 -c \"import functools as f; print(f.partial(pow, 2)(5))\"", "expect": "32"}
+{"id": "a653937e7df2", "cmd": "python3 -c \"import math; print(math.prod([1,2,3,4]))\"", "expect": "24"}
+{"id": "c80c81fc8723", "cmd": "python3 -c \"print([f() for f in [lambda i=i: i for i in range(3)]])\"", "expect": "[0, 1, 2]"}
+{"id": "53150dd75d81", "cmd": "python3 -c \"from typing import TypedDict, Literal; print(Literal['a'] is not None)\"", "expect": "True"}
+{"id": "08c5776f1477", "cmd": "python3 -c \"from __future__ import annotations; print(1)\"", "expect": "1"}
+{"id": "93f8ad329e69", "cmd": "printf 'a\\nb\\n' | python3 -c \"import sys; print(sum(1 for _ in sys.stdin))\"", "expect": "2"}
+{"id": "1c3720c8020b", "cmd": "python3 -c \"print(1,2,3,sep='-')\"", "expect": "1-2-3"}
+{"id": "61326192951a", "cmd": "echo ' 5 ' | python3 -c \"print(int(input().strip())+1)\"", "expect": "6"}
+{"id": "f4fffc2c674a", "cmd": "python3 -c \"from pathlib import Path; p=Path('/a/b.tar.gz'); print(p.suffix, p.stem, p.parent)\"", "expect": ".gz b.tar /a"}
+{"id": "6be9893bc8c7", "cmd": "python3 -c \"from pathlib import Path; print(Path('a/b.txt').with_suffix('.bak'))\"", "expect": "a/b.bak"}
+{"id": "d8c165878613", "cmd": "python3 -c \"from pathlib import Path; print(Path('.').resolve().is_absolute())\"", "expect": "True"}
+{"id": "fee0ea4d3177", "cmd": "python3 -c \"import os; print(os.getenv('ZZ_NO'), os.getenv('ZZ_NO','x'))\"", "expect": "None x"}
+{"id": "b5690e1b4922", "cmd": "python3 -c \"import os; print(os.path.expanduser('~/x').endswith('/x'), '~' in os.path.expanduser('~/x'))\"", "expect": "True False"}
+{"id": "0a0bfb5d74ed", "cmd": "python3 -c \"import os; os.makedirs('a/b', exist_ok=True); os.makedirs('a/b', exist_ok=True); print(os.path.isdir('a/b'))\"", "expect": "True"}
+{"id": "911119c098a4", "cmd": "python3 -c \"import os; os.kill(os.getpid(), 0); print('alive')\"", "expect": "alive"}
+{"id": "a51c1d68fa5c", "cmd": "python3 -c \"import os; print(len(os.urandom(16)))\"", "expect": "16"}
+{"id": "3c74520405a5", "cmd": "python3 -c \"from datetime import datetime; print(datetime.strptime('2026-01-02','%Y-%m-%d').month)\"", "expect": "1"}
+{"id": "8181a6dc4562", "cmd": "python3 -c \"from datetime import datetime,timezone; print(datetime.fromtimestamp(0, tz=timezone.utc).year)\"", "expect": "1970"}
+{"id": "0e92b8e00d60", "cmd": "python3 -c \"import calendar; print(calendar.monthrange(2026,2)[1])\"", "expect": "28"}
+{"id": "18e6d5fed205", "cmd": "python3 -c \"from datetime import date; print(date(2026,11,15).weekday())\"", "expect": "6"}
+{"id": "8e4219f07c3e", "cmd": "python3 -c \"import multiprocessing as m; print(m.cpu_count()>=1)\"", "expect": "True"}
+{"id": "387a7f54266d", "cmd": "python3 -c \"print(__name__)\"", "expect": "__main__"}
+{"id": "65375752b790", "cmd": "python3 -c \"import shlex; print(shlex.quote('a b; c'), shlex.split('a \\\"b c\\\"'))\"", "expect": "'a b; c' ['a', 'b c']"}
+{"id": "cae81f0d34ca", "cmd": "python3 -c \"import signal; print(hasattr(signal,'alarm'))\"", "expect": "True"}
+{"id": "4a7b95474b22", "cmd": "python3 -c \"import socket; print(socket.gethostbyname('localhost'))\" | grep -c 127", "expect": "1"}
+{"id": "ed745f7821e3", "cmd": "python3 -c \"import struct; print(struct.unpack('>I', struct.pack('>I', 7))[0])\"", "expect": "7"}
+{"id": "a8e9e37eccb7", "cmd": "python3 -c \"import selectors; print(selectors.DefaultSelector.__name__)\"", "expect": "EpollSelector"}
+{"id": "0a49786dd167", "cmd": "python3 -c \"import urllib.request; print(urllib.request.urlopen.__name__)\"", "expect": "urlopen"}
+{"id": "1c7b5ff94abd", "cmd": "python3 -c \"import json; print(json.loads(json.dumps({1:'a'})))\"", "expect": "{'1': 'a'}"}
+{"id": "9d93ac4765d1", "cmd": "python3 -c \"import tomllib; print(tomllib.loads('a = 1')['a'])\"", "expect": "1"}
+{"id": "11fad9bd0b31", "cmd": "python3 -c \"print(int.from_bytes(b'\\x01\\x00','little'), b'\\x01\\x02'.hex())\"", "expect": "1 0102"}
+{"id": "c24fbebe3607", "cmd": "python3 -c \"import zlib; print(zlib.crc32(b'abc'))\"", "expect": "891568578"}
+{"id": "a793b9c080f8", "cmd": "python3 -c \"import hmac; print(len(hmac.new(b'k', b'm', 'sha256').hexdigest()))\"", "expect": "64"}
+{"id": "dda84297b0d3", "cmd": "python3 -c \"import secrets; print(len(secrets.token_hex(16)))\"", "expect": "32"}
+{"id": "b30e328a34c8", "cmd": "python3 -c \"import hashlib; print(len(hashlib.scrypt(b'p', salt=b's'*16, n=2**14, r=8, p=1)))\"", "expect": "64"}
+{"id": "148327818b94", "cmd": "python3 -c \"import ssl; c=ssl.create_default_context(); print(c.verify_mode.name)\"", "expect": "CERT_REQUIRED"}
+{"id": "8efa6047768f", "cmd": "python3 -c \"import importlib.util as u; print(u.find_spec('json') is not None, u.find_spec('zz_none') is None)\"", "expect": "True True"}
+{"id": "bfc0dc5b1018", "cmd": "python3 -c \"import sys; print(sys.version_info >= (3, 8), sys.platform.startswith('linux'))\"", "expect": "True True"}
+{"id": "20a3224c0beb", "cmd": "python3 -m site | grep -c sys.path", "expect": "1"}
+{"id": "44017b5d2db8", "cmd": "python3 -c \"import sys; print(sys.executable.endswith('python3') or 'python' in sys.executable)\"", "expect": "True"}
+{"id": "570f4f5d14be", "cmd": "python3 -m venv v && v/bin/python -c \"import sys; print(sys.prefix.endswith('v'))\"", "expect": "True"}
+{"id": "c9def7158cb3", "cmd": "python3 -m pip --version | grep -c pip", "expect": "1"}
+{"id": "6d63d89ccdea", "cmd": "python3 -m pip show pip | grep -c Version", "expect": "1"}
+{"id": "0cdd3bfeb61a", "cmd": "python3 -c \"import tomllib; print(tomllib.loads('[project]\\nname=\\\"a\\\"')['project']['name'])\"", "expect": "a"}
+{"id": "0c6d296a1627", "cmd": "echo 'x=' >bad.py; python3 -m compileall -q . 2>&1 | grep -c -i 'syntaxerror'", "expect": "1"}
+{"id": "d57b0ae9ead8", "cmd": "python3 -W error -c \"import warnings; warnings.warn('x')\" 2>&1 | grep -c UserWarning", "expect": "1"}
+{"id": "23a80dd32f56", "cmd": "python3 -O -c \"assert False; print('skipped')\"", "expect": "skipped"}
+{"id": "8dc7dcb6f07b", "cmd": "python3 -c \"import code; print(code.InteractiveConsole.__name__)\"", "expect": "InteractiveConsole"}
+{"id": "bbc5f5bf7894", "cmd": "python3 -m pydoc json | head -3 | grep -c -i json", "expect": "1"}
+{"id": "061b4ec2dad5", "cmd": "python3 -c \"print('append' in dir([]))\"", "expect": "True"}
+{"id": "efe96169193a", "cmd": "python3 -c \"import inspect; print(inspect.signature(lambda a, b=2: 0))\"", "expect": "(a, b=2)"}
+{"id": "2bb111c485d7", "cmd": "python3 -c \"import sys, threading; print(callable(sys.excepthook), callable(threading.excepthook))\"", "expect": "True True"}
+{"id": "89572905ef11", "cmd": "python3 -X faulthandler -c \"import faulthandler; print(faulthandler.is_enabled())\"", "expect": "True"}
+{"id": "fedd28776b75", "cmd": "python3 -c \"import gc; print(gc.collect()>=0)\"", "expect": "True"}
