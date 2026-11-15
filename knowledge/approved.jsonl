@@ -1638,7 +1638,7 @@
 {"id": "c445cc695397", "cat": "python", "tip": "str.startswith accepts a tuple: name.endswith(('.jpg', '.png')) checks several endings at once.", "n": 0, "a": "seed-verified"}
 {"id": "e01fce9ff748", "cat": "python", "tip": "Use round(x, 2) for display only; floats are inexact, so compare with math.isclose and use decimal.Decimal for money.", "n": 0, "a": "seed-verified"}
 {"id": "a11f7c3d4a90", "cat": "python", "tip": "divmod(a, b) returns quotient and remainder together, for example minutes and seconds from a number of seconds.", "n": 0, "a": "seed-verified"}
-{"id": "3b5001cee144", "cat": "python", "tip": "min(items, key=...) and max(items, key=...) return the whole item with the smallest or largest key; add default=None for empty lists.", "n": 0, "a": "seed-verified"}
+{"id": "3b5001cee144", "cat": "python", "tip": "min(items, key=...) and max(items, key=...) return the whole item with the smallest or largest key; add default=None for empty lists.", "n": 0, "a": "seed"}
 {"id": "1d626d343f2a", "cat": "python", "tip": "Slicing: items[::-1] reverses a list, items[-3:] gives the last three and items[::2] every second item.", "n": 0, "a": "seed-verified"}
 {"id": "3a9cd544515e", "cat": "python", "tip": "sys.getsizeof shows only the shallow size of an object; for real memory use tracemalloc or the memory column in top.", "n": 0, "a": "seed"}
 {"id": "0fff496379ac", "cat": "python", "tip": "urllib.parse.urlparse splits a URL and parse_qs reads the query; urlencode builds one with correct escaping.", "n": 0, "a": "seed-verified"}
@@ -2390,14 +2390,14 @@
 {"id": "8cb372c32a87", "cat": "python", "tip": "fractions.Fraction(1, 3) keeps exact fractions, and Fraction('0.25') gives 1/4, useful for exact ratios.", "n": 0, "a": "seed-verified"}
 {"id": "6688365e2250", "cat": "python", "tip": "round(2.5) gives 2 and round(3.5) gives 4, because Python rounds half to even; use Decimal with ROUND_HALF_UP for school rounding.", "n": 0, "a": "seed-verified"}
 {"id": "0219f9a737e4", "cat": "python", "tip": "math.floor, math.ceil and int differ for negative numbers: int(-1.5) is -1, math.floor(-1.5) is -2.", "n": 0, "a": "seed-verified"}
-{"id": "6ca83c7a3a6e", "cat": "python", "tip": "a // b rounds down toward minus infinity and a % b has the sign of b, so -7 // 2 is -4 and -7 % 2 is 1.", "n": 0, "a": "seed-verified"}
+{"id": "6ca83c7a3a6e", "cat": "python", "tip": "a // b rounds down toward minus infinity and a % b has the sign of b, so -7 // 2 is -4 and -7 % 2 is 1.", "n": 0, "a": "seed"}
 {"id": "8595a4f5ac87", "cat": "python", "tip": "statistics.mean, median and stdev give simple statistics without numpy; statistics.median_low and median_high pick real data points.", "n": 0, "a": "seed-verified"}
 {"id": "ddb6a989f9e8", "cat": "python", "tip": "random.sample(items, 3) picks three different items, random.choice picks one and random.shuffle shuffles a list in place; use random.seed(1) to repeat a test.", "n": 0, "a": "seed-verified"}
 {"id": "87ca501bef38", "cat": "python", "tip": "random.choices(items, weights=[5,1], k=3) picks with replacement and weights, for example for a loot table in a game.", "n": 0, "a": "seed-verified"}
 {"id": "afec40dfa5f9", "cat": "python", "tip": "math.hypot(x, y) gives the distance from the origin and math.dist(p, q) the distance between two points, with fewer rounding errors than a hand made formula.", "n": 0, "a": "seed-verified"}
 {"id": "fa32e9154899", "cat": "python", "tip": "math.atan2(y, x) gives the angle of a direction in all four quadrants; math.degrees converts it, a basic tool for aiming in games and robots.", "n": 0, "a": "seed-verified"}
-{"id": "8fb9716afc22", "cat": "python", "tip": "Clamp a value with max(low, min(high, x)); a small function clamp(x, lo, hi) keeps sensor values and slider positions inside limits.", "n": 0, "a": "seed-verified"}
-{"id": "d8d1a944faf8", "cat": "python", "tip": "Linear interpolation is a + (b - a) * t with t from 0 to 1; map a value from one range to another with (x - a1) / (a2 - a1) * (b2 - b1) + b1.", "n": 0, "a": "seed-verified"}
+{"id": "8fb9716afc22", "cat": "python", "tip": "Clamp a value with max(low, min(high, x)); a small function clamp(x, lo, hi) keeps sensor values and slider positions inside limits.", "n": 0, "a": "seed"}
+{"id": "d8d1a944faf8", "cat": "python", "tip": "Linear interpolation is a + (b - a) * t with t from 0 to 1; map a value from one range to another with (x - a1) / (a2 - a1) * (b2 - b1) + b1.", "n": 0, "a": "seed"}
 {"id": "f8529350b49a", "cat": "python", "tip": "bisect.bisect_left(sorted_list, x) finds a place in a sorted list in logarithmic time, and bisect.insort inserts and keeps the order.", "n": 0, "a": "seed-verified"}
 {"id": "264d683cb694", "cat": "python", "tip": "heapq.nsmallest(3, items) and nlargest return the extremes without sorting everything, and heapq.heappush with heappop makes a priority queue.", "n": 0, "a": "seed-verified"}
 {"id": "ee8b3e9df183", "cat": "python", "tip": "sorted(items, key=str.lower) sorts ignoring case, and sorted with a tuple key such as (-score, name) sorts by score descending and name ascending.", "n": 0, "a": "seed-verified"}
