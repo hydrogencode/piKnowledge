@@ -25,6 +25,21 @@ It never holds anything personal.
 
 The rules live in `scripts/scrub.py`; the agent embeds a byte-identical copy.
 
+## Trust levels and verification
+
+Every line of `approved.jsonl` has a trust label in the field `a`:
+
+* `seed-verified`: written by the maintainer **and** a test command proves what it says. The test is stored in `knowledge/tests.jsonl`.
+  The workflow `verify-tested-tips` runs every stored test on a clean runner every week (and whenever the tests change). A test that
+  still passes keeps the label; a test that fails drops the tip back to `seed`. A test whose program is missing on the runner is
+  skipped and changes nothing. The latest result is in `knowledge/verify-report.json`.
+* `seed`: written by the maintainer without a test (for example advice about hardware, habits or other things a clean runner cannot try).
+  It becomes trusted through the community route above: two confirmations from different accounts, or removal after two refutations.
+* Tips that agents submitted themselves use the confirm/refute route only.
+
+Agents show all of them as unverified hints. `tests.jsonl` is changed only by the repository owner and is never filled from issues, so
+nothing a stranger writes is ever run.
+
 ## Setup for the repository owner
 
 1. Create a **public** repository, push these files to `main`.
