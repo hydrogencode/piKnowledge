@@ -1884,3 +1884,74 @@
 {"id": "529fcb605fde", "cmd": "getent passwd root | cut -d: -f1", "expect": "root"}
 {"id": "c908c2082975", "cmd": "tmux -V | grep -c tmux", "expect": "1"}
 {"id": "5c409b90d4eb", "cmd": "tmux new -d -s s1 'sleep 3'; tmux has-session -t s1 && echo yes; tmux kill-session -t s1", "expect": "yes"}
+{"id": "a914d5989ca4", "cmd": "python3 -m http.server 8731 --bind 127.0.0.1 >/dev/null 2>&1 & p=$!; sleep 1; curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8731/; kill $p", "expect": "200"}
+{"id": "c00436495555", "cmd": "python3 -m http.server 8732 --bind 127.0.0.1 >/dev/null 2>&1 & p=$!; sleep 1; curl -sI http://127.0.0.1:8732/ | head -1 | cut -d' ' -f2; kill $p", "expect": "200"}
+{"id": "afe5dea7eeca", "cmd": "python3 -m http.server 8733 --bind 127.0.0.1 >/dev/null 2>&1 & p=$!; sleep 1; curl -sL -o /dev/null -w '%{url_effective}' http://127.0.0.1:8733/; kill $p", "expect": "http://127.0.0.1:8733/"}
+{"id": "45b449670324", "cmd": "curl --help all | grep -c -- '--data-binary'", "expect": "1"}
+{"id": "70e406138daf", "cmd": "python3 -m http.server 8734 --bind 127.0.0.1 >/dev/null 2>&1 & p=$!; sleep 1; curl -s --create-dirs -o out/index.html http://127.0.0.1:8734/; kill $p; test -s out/index.html && echo saved", "expect": "saved"}
+{"id": "8b536b711e94", "cmd": "curl -s --connect-timeout 1 --max-time 2 http://127.0.0.1:1/; echo $?", "expect": "7"}
+{"id": "5f9523ed5b1e", "cmd": "curl -sf http://127.0.0.1:1/ >/dev/null; echo $?", "expect": "7"}
+{"id": "0c9e409e5aca", "cmd": "curl --help all | grep -c -- '--resolve'", "expect": "1"}
+{"id": "10704de87d2f", "cmd": "python3 -m http.server 8735 --bind 127.0.0.1 >/dev/null 2>&1 & p=$!; sleep 1; curl -s --compressed -o /dev/null -w '%{size_download}' http://127.0.0.1:8735/ | awk '{print ($1>0)}'; kill $p", "expect": "1"}
+{"id": "10e18e28f501", "cmd": "python3 -m http.server 8736 --bind 127.0.0.1 >/dev/null 2>&1 & p=$!; sleep 1; curl -s -o /dev/null -w '%{time_total}' http://127.0.0.1:8736/ | awk '{print ($1<5)}'; kill $p", "expect": "1"}
+{"id": "4bba6b980d61", "cmd": "curl --help all | grep -c -- '--cacert'", "expect": "1"}
+{"id": "3a599527436b", "cmd": "curl --help all | grep -c -- '--retry-all-errors'", "expect": "1"}
+{"id": "b433281ffd96", "cmd": "curl -sS http://127.0.0.1:1/ 2>&1 | grep -c 'Failed to connect'", "expect": "1"}
+{"id": "ed87317a38d5", "cmd": "curl -s -G --data-urlencode 'q=a b' -o /dev/null -w '%{url_effective}' http://127.0.0.1:1/ 2>/dev/null; echo", "expect": ""}
+{"id": "f9bd50a741dd", "cmd": "wget --help | grep -c -- '--spider'", "expect": "1"}
+{"id": "bf1b9be72f9c", "cmd": "python3 -m http.server 8737 --bind 127.0.0.1 >/dev/null 2>&1 & p=$!; sleep 1; python3 -c \"\nimport urllib.request as u\nprint(u.urlopen('http://127.0.0.1:8737/',timeout=5).status)\"; kill $p", "expect": "200"}
+{"id": "e4b14728c8e3", "cmd": "python3 -c \"\nimport urllib.request as u, urllib.error as e\ntry: u.urlopen('http://127.0.0.1:1/',timeout=2)\nexcept e.URLError as x: print('url error')\"", "expect": "url error"}
+{"id": "b329176790f7", "cmd": "python3 -m http.server 8738 --bind 127.0.0.1 >/dev/null 2>&1 & p=$!; sleep 1; python3 -c \"\nimport urllib.request as u\nb=u.urlopen('http://127.0.0.1:8738/',timeout=5).read()\nprint(b.startswith(b'<'))\"; kill $p", "expect": "True"}
+{"id": "d95c555ebd67", "cmd": "python3 -c \"\nimport socketserver, threading, socket\nclass H(socketserver.StreamRequestHandler):\n    def handle(self): self.wfile.write(self.rfile.readline().upper())\ns=socketserver.ThreadingTCPServer(('127.0.0.1',0),H); threading.Thread(target=s.serve_forever,daemon=True).start()\nc=socket.create_connection(s.server_address); c.sendall(b'hi\\n'); print(c.recv(10)); s.shutdown()\"", "expect": "b'HI\\n'"}
+{"id": "4a8a79764937", "cmd": "python3 -c \"\nimport socket\na,b=socket.socketpair(); a.settimeout(0.1)\ntry: a.recv(1)\nexcept socket.timeout: print('timeout')\"", "expect": "timeout"}
+{"id": "23ad0a7a41f9", "cmd": "python3 -c \"\nimport struct, socket\na,b=socket.socketpair(); m=b'hello'; a.sendall(struct.pack('>I',len(m))+m)\nn=struct.unpack('>I',b.recv(4))[0]; print(b.recv(n))\"", "expect": "b'hello'"}
+{"id": "c276edb576c0", "cmd": "python3 -c \"\nimport json, socket\na,b=socket.socketpair(); a.sendall((json.dumps({'a':1})+'\\n').encode()); print(json.loads(b.makefile().readline()))\"", "expect": "{'a': 1}"}
+{"id": "0d6960f002ab", "cmd": "python3 -c \"\nimport selectors, socket\ns=selectors.DefaultSelector(); a,b=socket.socketpair(); s.register(b,selectors.EVENT_READ); a.send(b'x'); print(len(s.select(1)))\"", "expect": "1"}
+{"id": "f036ef1dd591", "cmd": "python3 -c \"\nimport socket\nprint(socket.getaddrinfo('localhost',80,socket.AF_INET)[0][4][1])\"", "expect": "80"}
+{"id": "004a8e22c68c", "cmd": "python3 -c \"\nimport socket\nprint(len(socket.gethostname())>0)\"", "expect": "True"}
+{"id": "3712ae79bc74", "cmd": "python3 -c \"\nimport socket\nr=socket.socket(socket.AF_INET,socket.SOCK_DGRAM); r.bind(('127.0.0.1',0)); s=socket.socket(socket.AF_INET,socket.SOCK_DGRAM); s.sendto(b'ping',r.getsockname()); print(r.recvfrom(10)[0])\"", "expect": "b'ping'"}
+{"id": "93e5dd28dd0a", "cmd": "python3 -c \"\nimport ssl\nc=ssl.create_default_context(); print(c.verify_mode==ssl.CERT_REQUIRED, c.check_hostname)\"", "expect": "True True"}
+{"id": "aa7b95a6cc55", "cmd": "python3 -c \"\nimport ssl; print(callable(ssl.get_server_certificate))\"", "expect": "True"}
+{"id": "1789bd03f13d", "cmd": "python3 -c \"\nfrom http.cookies import SimpleCookie\nc=SimpleCookie('a=1; b=2'); print(c['b'].value)\"", "expect": "2"}
+{"id": "ccb8ed5f884b", "cmd": "python3 -c \"\nimport ipaddress as i\nprint(any(i.ip_address(a).is_private for a in ['192.168.1.1']))\"", "expect": "True"}
+{"id": "696c1ce539e2", "cmd": "python3 -c \"\nfrom urllib.parse import urljoin, urlparse\nprint(urljoin('https://h.test/a/b','../c'), urlparse('https://H.test:8080/x').hostname)\"", "expect": "https://h.test/c h.test"}
+{"id": "ecbb3383687a", "cmd": "python3 -c \"\nfrom urllib.parse import quote\nprint(quote('a b/ş',safe=''))\"", "expect": "a%20b%2F%C5%9F"}
+{"id": "e9c4216443ad", "cmd": "python3 -c \"\nprint('bücher.example'.encode('idna'))\"", "expect": "b'xn--bcher-kva.example'"}
+{"id": "713895908eff", "cmd": "python3 -c \"\nimport mimetypes as m\nprint(m.guess_type('a.css')[0], m.guess_type('a.js')[0])\"", "expect": "text/css text/javascript"}
+{"id": "0781c6153e1e", "cmd": "python3 -c \"\nfrom http import HTTPStatus as H\nprint(H.NOT_FOUND.value, H(429).phrase)\"", "expect": "404 Too Many Requests"}
+{"id": "894228f2d669", "cmd": "python3 -c \"\nv='120'; print(int(v) if v.isdigit() else 0)\"", "expect": "120"}
+{"id": "a47716009cff", "cmd": "python3 -c \"\nimport time\ntokens=5; rate=1; last=time.monotonic(); cap=5\ndef take():\n    global tokens,last\n    now=time.monotonic(); tokens=min(cap,tokens+(now-last)*rate); last=now\n    if tokens>=1: tokens-=1; return True\n    return False\nprint([take() for _ in range(7)].count(True))\"", "expect": "5"}
+{"id": "2a2714cad7e0", "cmd": "python3 -c \"\nfrom collections import deque\nimport time\nw=deque(); now=time.time()\nfor t in [now-70,now-30,now-5]: w.append(t)\nwhile w and w[0]<now-60: w.popleft()\nprint(len(w))\"", "expect": "2"}
+{"id": "4c4ab27bc2fd", "cmd": "python3 -c \"\nimport random\nrandom.seed(1)\nd=[random.uniform(0,min(30,2**i)) for i in range(5)]; print(all(x<=30 for x in d))\"", "expect": "True"}
+{"id": "94d09920564f", "cmd": "python3 -c \"\nfails=0; open_=False\nfor ok in [False,False,False]:\n    fails=0 if ok else fails+1\n    open_=fails>=3\nprint(open_)\"", "expect": "True"}
+{"id": "dab5c87cdf21", "cmd": "python3 -c \"\nimport time\nlast=time.monotonic()-10; interval=2\nprint(time.monotonic()-last>3*interval)\"", "expect": "True"}
+{"id": "e25c8c17af7c", "cmd": "python3 -c \"\ns={'d1':'online'}; s['d1']='offline'; print(s)\"", "expect": "{'d1': 'offline'}"}
+{"id": "107723890f64", "cmd": "python3 -c \"\nimport asyncio\nasync def send(c): await asyncio.sleep(0.01); return c\nasync def main(): print(sorted(await asyncio.gather(*[send(i) for i in range(3)])))\nasyncio.run(main())\"", "expect": "[0, 1, 2]"}
+{"id": "f8b980846f3f", "cmd": "python3 -c \"\nfrom aiohttp import web\nprint(web.WebSocketResponse(max_msg_size=1024)._max_msg_size)\"", "expect": "1024"}
+{"id": "cff8a031afd5", "cmd": "python3 -c \"\nallowed={'https://app.test'}; print('https://evil.test' in allowed)\"", "expect": "False"}
+{"id": "8a4553d57d1e", "cmd": "python3 -c \"\nimport json; print(json.dumps({'type':'hello','v':2}))\"", "expect": "{\"type\": \"hello\", \"v\": 2}"}
+{"id": "93440f538898", "cmd": "python3 -c \"\np={'1':'pending'}; p.pop('1'); print(len(p))\"", "expect": "0"}
+{"id": "6b997fc87394", "cmd": "python3 -c \"\nimport time\ncmd={'exp':time.time()-1}; print(cmd['exp']>time.time())\"", "expect": "False"}
+{"id": "7c1af374ee98", "cmd": "python3 -c \"\nfrom aiohttp import web\nprint(web.WebSocketResponse(compress=False).compress)\"", "expect": "False"}
+{"id": "20204a5a0f77", "cmd": "python3 -c \"\nprint('wss://x.test'.startswith('wss://'))\"", "expect": "True"}
+{"id": "6cbfe3f7d8a3", "cmd": "python3 -c \"\nimport hashlib; print(len(hashlib.sha256(b'tok').hexdigest()))\"", "expect": "64"}
+{"id": "6a8262e464b4", "cmd": "python3 -c \"\nimport secrets; c='%06d'%secrets.randbelow(10**6); print(len(c))\"", "expect": "6"}
+{"id": "9ea58c934555", "cmd": "python3 -c \"\nimport secrets; print(len(secrets.token_urlsafe(32))>=43)\"", "expect": "True"}
+{"id": "7a6356b1c851", "cmd": "python3 -c \"\na=5; print(10**6/a>1000)\"", "expect": "True"}
+{"id": "b51640851ee0", "cmd": "python3 -c \"\nt='abcdef123456'; print(t[:4]+'...')\"", "expect": "abcd..."}
+{"id": "af3b2b2e6c2f", "cmd": "python3 -c \"\nimport configparser\nc=configparser.ConfigParser(interpolation=None); c.read_string('[a]\\np=100%'); print(c['a']['p'])\"", "expect": "100%"}
+{"id": "f7afb3f96d7b", "cmd": "python3 -c \"\nimport os\nopen('a','w').write('1'); open('b','w').write('2'); os.replace('a','b'); print(open('b').read())\"", "expect": "1"}
+{"id": "54ea8cf02fe1", "cmd": "python3 -c \"\nimport os\nopen('p.pid','w').write(str(os.getpid())); pid=int(open('p.pid').read()); os.kill(pid,0); print('alive')\"", "expect": "alive"}
+{"id": "7da603fd730a", "cmd": "python3 -c \"\nimport fcntl\nf=open('l','w'); fcntl.flock(f,fcntl.LOCK_EX); fcntl.flock(f,fcntl.LOCK_UN); print('ok')\"", "expect": "ok"}
+{"id": "88bc383794e9", "cmd": "python3 -c \"\nimport os\nos.makedirs('a/b',exist_ok=True); os.makedirs('a/b',exist_ok=True); print(os.path.isdir('a/b'))\"", "expect": "True"}
+{"id": "ddd98da472c7", "cmd": "python3 -c \"\nimport shutil,os\nos.mkdir('d'); shutil.rmtree('d'); print(os.path.exists('d'))\"", "expect": "False"}
+{"id": "ed93fcb13c4c", "cmd": "python3 -c \"\nimport os\nopen('t','w').close(); os.symlink('t','l'); print(os.path.islink('l'), os.lstat('l').st_size==1)\"", "expect": "True True"}
+{"id": "dcf957a03bd9", "cmd": "python3 -c \"\nimport tempfile,os,stat\nfd,p=tempfile.mkstemp(); print(oct(stat.S_IMODE(os.stat(p).st_mode))); os.close(fd); os.remove(p)\"", "expect": "0o600"}
+{"id": "bfb067b7082d", "cmd": "python3 -c \"\nimport zipfile\nz=zipfile.ZipInfo('../x'); print('..' in z.filename)\"", "expect": "True"}
+{"id": "cd5880afb9ce", "cmd": "python3 -c \"\nimport tarfile; print(hasattr(tarfile,'data_filter'))\"", "expect": "True"}
+{"id": "3de9babcef03", "cmd": "python3 -c \"\nimport json\nopen('a.json','w').write('{\\\"a\\\":');\ntry: json.load(open('a.json'))\nexcept json.JSONDecodeError: print('partial')\"", "expect": "partial"}
+{"id": "d06bef487c54", "cmd": "python3 -c \"\nimport json,os\nd={'a':1}; json.dump(d,open('k.tmp','w')); os.replace('k.tmp','k.json'); print(json.load(open('k.json')))\"", "expect": "{'a': 1}"}
+{"id": "8e18cbe0eebf", "cmd": "python3 -c \"\nimport sqlite3; print(sqlite3.sqlite_version_info>=(3,8))\"", "expect": "True"}
+{"id": "e21d6b427563", "cmd": "python3 -c \"\nimport csv\nprint(csv.Sniffer().sniff('a;b\\n1;2').delimiter)\"", "expect": ";"}
+{"id": "e4a7b73f33ae", "cmd": "python3 -c \"\nimport os\nos.makedirs('d/e'); os.symlink('..','d/e/up'); print(sum(1 for _ in os.walk('d')))\"", "expect": "2"}
+{"id": "3a46c83f771f", "cmd": "python3 -c \"\nimport os\nopen('g','w').write('abc'); print(os.path.getsize('g'))\"", "expect": "3"}
