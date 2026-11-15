@@ -2212,3 +2212,102 @@
 {"id": "9c602f86385e", "cmd": "bash -c 'd=$(mktemp -d); cd $d; printf \"404 not found\" > f; test $(stat -c %s f) -lt 1000 && echo small'", "expect": "small"}
 {"id": "33c9e1d40c9a", "cmd": "bash -c 'd=$(mktemp -d); cd $d; printf \"#!/bin/sh\\necho ran\\n\" > s.sh; chmod +x s.sh; ./s.sh'", "expect": "ran"}
 {"id": "8193fa24eb1b", "cmd": "bash -c 'uname -m | grep -cE \"^[a-z0-9_]+$\"'", "expect": "1"}
+{"id": "7bcc96a8ae59", "cmd": "python3 -c \"from pathlib import Path; p=Path('t.txt'); p.write_text('ç', encoding='utf-8'); print(p.read_text(encoding='utf-8')=='ç')\"", "expect": "True"}
+{"id": "401dd74cd76e", "cmd": "python3 -c \"from pathlib import Path; p=Path('a/b.tar.gz'); print(p.with_suffix('.zip').name, p.stem)\"", "expect": "b.tar.zip b.tar"}
+{"id": "f2091d9c4175", "cmd": "python3 -c \"from pathlib import Path; Path('d/e').mkdir(parents=True); Path('d/e/x.py').touch(); Path('d/y.py').touch(); print(sorted(str(p) for p in Path('d').rglob('*.py')))\"", "expect": "['d/e/x.py', 'd/y.py']"}
+{"id": "81b29d214a14", "cmd": "python3 -c \"from pathlib import Path; Path('a/b').mkdir(parents=True, exist_ok=True); Path('a/b').mkdir(parents=True, exist_ok=True); print(Path('a/b').is_dir())\"", "expect": "True"}
+{"id": "d41250a51be0", "cmd": "python3 -c \"import json; print(json.dumps({'ad':'Şule'}, ensure_ascii=False))\"", "expect": "{\"ad\": \"Şule\"}"}
+{"id": "43b19e9d49f1", "cmd": "python3 -c \"import json; print(json.dumps({'b':1,'a':2}, indent=2, sort_keys=True).splitlines()[1].strip())\"", "expect": "\"a\": 2,"}
+{"id": "b65e2faa4a9a", "cmd": "python3 -c \"import json; print(json.loads(json.dumps((1,2))))\"", "expect": "[1, 2]"}
+{"id": "b211fae43ff0", "cmd": "python3 -c \"import json\ntry: json.loads('{\\\"a\\\": 1,}')\nexcept json.JSONDecodeError as e: print(e.lineno, e.colno > 1)\"", "expect": "1 True"}
+{"id": "e610a4a233c4", "cmd": "python3 -c \"import json; open('f.jsonl','w').write('{\\\"a\\\":1}\\nbad\\n{\\\"a\\\":2}\\n'); ok=[]\nfor l in open('f.jsonl'):\n    try: ok.append(json.loads(l)['a'])\n    except ValueError: pass\nprint(ok)\"", "expect": "[1, 2]"}
+{"id": "d02254b34970", "cmd": "python3 -c \"import shlex; print(shlex.quote(\\\"it's\\\"))\"", "expect": "'it'\"'\"'s'"}
+{"id": "79997d772cb5", "cmd": "python3 -c \"import shlex; print(shlex.split('cp \\\"my file\\\" dest'))\"", "expect": "['cp', 'my file', 'dest']"}
+{"id": "62e841dbef2c", "cmd": "python3 -c \"import argparse; p=argparse.ArgumentParser(); p.add_argument('--n', type=int, default=3); print(p.parse_args(['--n','5']).n)\"", "expect": "5"}
+{"id": "759154505545", "cmd": "python3 -c \"import logging,sys; logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(levelname)s %(message)s'); logging.info('started')\"", "expect": "INFO started"}
+{"id": "b9c5f12f4209", "cmd": "python3 -c \"import logging.handlers as h; x=h.RotatingFileHandler('a.log', maxBytes=100, backupCount=2); print(x.maxBytes, x.backupCount)\"", "expect": "100 2"}
+{"id": "f9692b2a8620", "cmd": "python3 -c \"from datetime import datetime, timezone; print(datetime.now(timezone.utc).tzinfo)\"", "expect": "UTC"}
+{"id": "60daad184885", "cmd": "python3 -c \"from datetime import datetime; from zoneinfo import ZoneInfo; d=datetime(2026,1,1,12,tzinfo=ZoneInfo('UTC')); print(d.astimezone(ZoneInfo('Europe/Istanbul')).hour)\"", "expect": "15"}
+{"id": "f40840fd8a06", "cmd": "python3 -c \"from datetime import datetime; print(datetime.fromisoformat('2026-03-04T05:06:07').isoformat())\"", "expect": "2026-03-04T05:06:07"}
+{"id": "30cd29758114", "cmd": "python3 -c \"import time; a=time.monotonic(); time.sleep(0.05); print(time.monotonic()-a >= 0.05)\"", "expect": "True"}
+{"id": "767e44a22504", "cmd": "python3 -c \"from datetime import datetime; print((datetime(2026,1,2)-datetime(2026,1,1)).total_seconds())\"", "expect": "86400.0"}
+{"id": "49eb4da3ab00", "cmd": "python3 -c \"from collections import Counter; print(Counter('abracadabra').most_common(2))\"", "expect": "[('a', 5), ('b', 2)]"}
+{"id": "935ded007342", "cmd": "python3 -c \"from collections import defaultdict; d=defaultdict(list); d['x'].append(1); print(dict(d))\"", "expect": "{'x': [1]}"}
+{"id": "528e94f333c1", "cmd": "python3 -c \"from collections import deque; d=deque(maxlen=3); [d.append(i) for i in range(5)]; print(list(d))\"", "expect": "[2, 3, 4]"}
+{"id": "ae60b3407786", "cmd": "python3 -c \"from dataclasses import dataclass\n@dataclass\nclass P: x: int; y: int = 0\nprint(P(1)==P(1,0), P(2))\"", "expect": "True P(x=2, y=0)"}
+{"id": "6909addf7478", "cmd": "python3 -c \"print(list(enumerate('ab', start=1)))\"", "expect": "[(1, 'a'), (2, 'b')]"}
+{"id": "a71507fc47ac", "cmd": "python3 -c \"\ntry: list(zip([1,2],[1], strict=True))\nexcept ValueError: print('mismatch')\"", "expect": "mismatch"}
+{"id": "2a778171825e", "cmd": "python3 -c \"r=[{'a':1,'b':1},{'a':1,'b':3},{'a':0,'b':2}]; print([x['b'] for x in sorted(r, key=lambda x:(x['a'],-x['b']))])\"", "expect": "[2, 3, 1]"}
+{"id": "79b419c3154d", "cmd": "python3 -c \"print(any(x>2 for x in [1,3]), all(x>2 for x in [1,3]))\"", "expect": "True False"}
+{"id": "6d4d3a3d3c49", "cmd": "python3 -c \"x=3.14159; n=1234567; print(f'{x:.2f} {n:,} {7:05d}')\"", "expect": "3.14 1,234,567 00007"}
+{"id": "a4f62e79ecb2", "cmd": "python3 -c \"x=4; print(f'{x*2=}')\"", "expect": "x*2=8"}
+{"id": "804e988d93b4", "cmd": "python3 -c \"print('report.txt'.removesuffix('.txt'), 'report.txt'.strip('.txt'))\"", "expect": "report repor"}
+{"id": "3efc66393961", "cmd": "python3 -c \"print('Straße'.casefold()=='STRASSE'.casefold())\"", "expect": "True"}
+{"id": "a015f55ac999", "cmd": "python3 -c \"print('I'.lower(), 'i'.upper())\"", "expect": "i I"}
+{"id": "36236bd9d1f5", "cmd": "python3 -c \"import unicodedata as u; a='é'; b='é'; print(a==b, u.normalize('NFC',a)==b)\"", "expect": "False True"}
+{"id": "2a1109518d80", "cmd": "python3 -c \"import re; r=re.compile(r'(?P<k>\\w+)=(?P<v>\\d+)'); m=r.search('x=42'); print(m.group('k'), m.group('v'))\"", "expect": "x 42"}
+{"id": "f57a1024b192", "cmd": "python3 -c \"import re; print(re.findall(r'(a|b)c','acbc'), re.findall(r'(?:a|b)c','acbc'))\"", "expect": "['a', 'b'] ['ac', 'bc']"}
+{"id": "b240a27e0abe", "cmd": "python3 -c \"import re; print(re.sub(r'\\d+', lambda m: str(int(m.group())*2), 'a1 b20'))\"", "expect": "a2 b40"}
+{"id": "52398a30df6c", "cmd": "python3 -c \"\ntry: int('x')\nexcept ValueError as e: print(type(e).__name__)\"", "expect": "ValueError"}
+{"id": "84d04a4787f5", "cmd": "python3 -c \"\ndef f():\n    try: return 'body'\n    finally: print('cleanup')\nprint(f())\"", "expect": "cleanup"}
+{"id": "ddd402416b22", "cmd": "python3 -c \"import os, contextlib\nwith contextlib.suppress(FileNotFoundError): os.remove('nope')\nprint('ok-continued')\"", "expect": "ok-continued"}
+{"id": "a8a65b7580f3", "cmd": "python3 -c \"\ntry:\n    try: 1/0\n    except ZeroDivisionError as e: raise ValueError('wrapped') from e\nexcept ValueError as e: print(type(e.__cause__).__name__)\"", "expect": "ZeroDivisionError"}
+{"id": "92622ff1f6dc", "cmd": "python3 -c \"open('m.py','w').write('X=1\\nif __name__==\\\"__main__\\\": print(\\\"ran\\\")\\n'); import sys; sys.path.insert(0,'.'); import m; print('imported', m.X)\"", "expect": "imported 1"}
+{"id": "cd5b44709cc7", "cmd": "python3 -c \"open('random.py','w').write('X=1\\n')\" && python3 -c \"import random; print(hasattr(random,'randint'))\"", "expect": "False"}
+{"id": "fe95ba825200", "cmd": "python3 -m venv --without-pip v && test -x v/bin/python && v/bin/python -c \"import sys; print(sys.prefix != sys.base_prefix)\"", "expect": "True"}
+{"id": "da3f227c8aaf", "cmd": "python3 -c \"import sys, os; print(os.path.exists(sys.executable))\"", "expect": "True"}
+{"id": "08441ca6f4c7", "cmd": "python3 -c \"import importlib.util as u; print(u.find_spec('json') is not None, u.find_spec('no_such_mod_x') is None)\"", "expect": "True True"}
+{"id": "99fcf2cf9e9c", "cmd": "python3 -c \"import threading,time; e=threading.Event(); out=[]\ndef w():\n    while not e.is_set(): time.sleep(0.01)\n    out.append('stopped')\nt=threading.Thread(target=w); t.start(); e.set(); t.join(); print(out[0])\"", "expect": "stopped"}
+{"id": "f315a53f9592", "cmd": "python3 -c \"import threading; n=[0]; L=threading.Lock()\ndef f():\n    for _ in range(10000):\n        with L: n[0]+=1\nts=[threading.Thread(target=f) for _ in range(4)]; [t.start() for t in ts]; [t.join() for t in ts]; print(n[0])\"", "expect": "40000"}
+{"id": "fa0c701c4198", "cmd": "python3 -c \"import queue,threading; q=queue.Queue(); threading.Thread(target=lambda: q.put('job')).start(); print(q.get(timeout=2))\"", "expect": "job"}
+{"id": "0053a98ca0b3", "cmd": "python3 -c \"from concurrent.futures import ThreadPoolExecutor as T; print(list(T(4).map(lambda x: x*x, [1,2,3])))\"", "expect": "[1, 4, 9]"}
+{"id": "b582babd31a6", "cmd": "python3 -c \"import threading,time; t=threading.Thread(target=time.sleep, args=(10,), daemon=True); t.start(); print('main done')\"", "expect": "main done"}
+{"id": "1e18de2f7f14", "cmd": "python3 -c \"import asyncio\nasync def f(x):\n    await asyncio.sleep(0.01); return x\nasync def main(): print(await asyncio.gather(f(1), f(2)))\nasyncio.run(main())\"", "expect": "[1, 2]"}
+{"id": "bdf697702b22", "cmd": "python3 -c \"import asyncio\nasync def main():\n    try: await asyncio.wait_for(asyncio.sleep(1), 0.05)\n    except asyncio.TimeoutError: print('too slow')\nasyncio.run(main())\"", "expect": "too slow"}
+{"id": "d6f25559772a", "cmd": "python3 -c \"import asyncio,time\nasync def main():\n    await asyncio.to_thread(time.sleep, 0.01); print('ran in thread')\nasyncio.run(main())\"", "expect": "ran in thread"}
+{"id": "333702fa09f5", "cmd": "python3 -c \"import csv,io; s=io.StringIO(); csv.writer(s).writerow(['a,b','c']); print(s.getvalue().strip())\"", "expect": "\"a,b\",c"}
+{"id": "c64abfc70c43", "cmd": "python3 -c \"import sqlite3; c=sqlite3.connect(':memory:'); c.execute('create table t(n)'); c.execute('insert into t values (?)', (\\\"x'); drop table t;--\\\",)); print(c.execute('select count(*) from t').fetchone()[0])\"", "expect": "1"}
+{"id": "f2b91efc4376", "cmd": "python3 -c \"import sqlite3; c=sqlite3.connect('d.db'); c.execute('create table t(n)')\nwith c: c.execute('insert into t values (1)')\nprint(sqlite3.connect('d.db').execute('select count(*) from t').fetchone()[0])\"", "expect": "1"}
+{"id": "70fe2a670248", "cmd": "python3 -c \"import sqlite3; c=sqlite3.connect(':memory:'); c.row_factory=sqlite3.Row; print(c.execute('select 5 as n').fetchone()['n'])\"", "expect": "5"}
+{"id": "68e16946ce14", "cmd": "python3 -c \"import sqlite3; print(sqlite3.connect('w.db').execute('pragma journal_mode=wal').fetchone()[0])\"", "expect": "wal"}
+{"id": "cba7eb7136ed", "cmd": "python3 -c \"import hashlib; open('f','wb').write(b'abc'); h=hashlib.sha256()\nwith open('f','rb') as f:\n    for b in iter(lambda: f.read(65536), b''): h.update(b)\nprint(h.hexdigest()[:8])\"", "expect": "ba7816bf"}
+{"id": "c714f2e3fadc", "cmd": "python3 -c \"import secrets; t=secrets.token_urlsafe(16); print(len(t) >= 20)\"", "expect": "True"}
+{"id": "729edef5c850", "cmd": "python3 -c \"import hmac; print(hmac.compare_digest('abc','abc'), hmac.compare_digest('abc','abd'))\"", "expect": "True False"}
+{"id": "2782d1c45667", "cmd": "python3 -c \"from urllib.parse import urlencode; print(urlencode({'q':'a b&c'}))\"", "expect": "q=a+b%26c"}
+{"id": "1799e8e6149f", "cmd": "python3 -c \"from urllib.parse import urlparse, parse_qs; u=urlparse('http://h:8080/p?x=1&x=2'); print(u.port, u.path, parse_qs(u.query)['x'])\"", "expect": "8080 /p ['1', '2']"}
+{"id": "52e502cc467c", "cmd": "python3 -c \"from functools import lru_cache\n@lru_cache(maxsize=None)\ndef fib(n): return n if n<2 else fib(n-1)+fib(n-2)\nprint(fib(80))\"", "expect": "23416728348467685"}
+{"id": "8ee1ec070b45", "cmd": "python3 -c \"from functools import partial; p=partial(int, base=2); print(p('101'))\"", "expect": "5"}
+{"id": "b0b729d2d9ea", "cmd": "python3 -c \"\ndef nums():\n    for i in range(3): yield i*i\nprint(sum(nums()))\"", "expect": "5"}
+{"id": "974b10edcfd7", "cmd": "python3 -c \"g=(x for x in range(3)); print(list(g), list(g))\"", "expect": "[0, 1, 2] []"}
+{"id": "fa175568fff5", "cmd": "python3 -c \"import copy; a=[[1]]; b=copy.copy(a); c=copy.deepcopy(a); a[0].append(2); print(b, c)\"", "expect": "[[1, 2]] [[1]]"}
+{"id": "e4a45759372c", "cmd": "python3 -c \"g=[[0]*2]*2; g[0][0]=1; h=[[0]*2 for _ in range(2)]; h[0][0]=1; print(g, h)\"", "expect": "[[1, 0], [1, 0]] [[1, 0], [0, 0]]"}
+{"id": "736f06bf3d73", "cmd": "python3 -c \"from decimal import Decimal as D; print(D('0.1')+D('0.2'), D(0.1)==D('0.1'))\"", "expect": "0.3 False"}
+{"id": "4a6220287cf7", "cmd": "python3 -c \"print(-7//2, int(-7/2))\"", "expect": "-4 -3"}
+{"id": "db08a852718a", "cmd": "python3 -c \"a=[1]; b=[1]; print(a==b, a is b)\"", "expect": "True False"}
+{"id": "5ff1ca28b5d2", "cmd": "python3 -c \"d={}; print(d.get('x', 0)); d.setdefault('y', []).append(1); print(d)\"", "expect": "{'y': [1]}"}
+{"id": "5f25fd57e1ff", "cmd": "python3 -c \"print({'a':1,'b':1} | {'b':2})\"", "expect": "{'a': 1, 'b': 2}"}
+{"id": "38b9d5f60acd", "cmd": "python3 -c \"d={'a':1,'b':2}\nfor k in list(d):\n    if d[k]==1: del d[k]\nprint(d)\"", "expect": "{'b': 2}"}
+{"id": "84021af3cb21", "cmd": "python3 -c \"first,*rest=[1,2,3]; print(first, rest)\"", "expect": "1 [2, 3]"}
+{"id": "faad15e3f9c5", "cmd": "python3 -c \"import io; f=io.StringIO('a\\nb\\n'); out=[]\nwhile (line := f.readline()): out.append(line.strip())\nprint(out)\"", "expect": "['a', 'b']"}
+{"id": "be02cfdc3c81", "cmd": "python3 -c \"\ncmd=['go','north']\nmatch cmd:\n    case ['go', d]: print('moving', d)\n    case _: print('?')\"", "expect": "moving north"}
+{"id": "23d15f73b587", "cmd": "python3 -c \"\ndef f(x: int) -> int: return x\nprint(f('text'))\"", "expect": "text"}
+{"id": "dfee980a0575", "cmd": "python3 -c \"import textwrap; print(repr(textwrap.dedent('''\n    a\n      b\n''')))\"", "expect": "'\\na\\n  b\\n'"}
+{"id": "0bb53165b599", "cmd": "python3 -c \"import shutil; print(shutil.which('sh') is not None, shutil.which('no-such-prog-x'))\"", "expect": "True None"}
+{"id": "3acfced8713b", "cmd": "python3 -c \"import shutil,os; os.makedirs('s'); open('s/a','w').close(); os.makedirs('d'); shutil.copytree('s','d',dirs_exist_ok=True); print(os.listdir('d'))\"", "expect": "['a']"}
+{"id": "cdf6106fee7e", "cmd": "python3 -c \"import shutil,os,zipfile; os.makedirs('src'); open('src/x','w').write('1'); f=shutil.make_archive('out','zip','src'); print(zipfile.ZipFile(f).namelist())\"", "expect": "['x']"}
+{"id": "50dc3d42fa06", "cmd": "python3 -c \"import os; print(os.environ.get('NO_SUCH_VAR_X', 'default'))\"", "expect": "default"}
+{"id": "d3f1e29cdcc5", "cmd": "NUM=0 python3 -c \"import os; v=os.environ['NUM']; print(bool(v), v not in ('0','false','no',''))\"", "expect": "True False"}
+{"id": "ad7fff43f6b6", "cmd": "python3 -c \"import signal,os,time\nsignal.signal(signal.SIGTERM, lambda s,f: (print('cleaning up'), exit(0)))\nos.kill(os.getpid(), signal.SIGTERM); time.sleep(1)\"", "expect": "cleaning up"}
+{"id": "60849bc7bc21", "cmd": "python3 -c \"import sys; print('err', file=sys.stderr); print('out')\" 2>/dev/null", "expect": "out"}
+{"id": "334f59d893fc", "cmd": "python3 -c \"print('x', flush=True)\" | cat", "expect": "x"}
+{"id": "e9520a4a43a7", "cmd": "python3 -c \"import sys; sys.exit(3)\"; echo \"code $?\"", "expect": "code 3"}
+{"id": "8b05b519fe34", "cmd": "python3 -X importtime -c \"import json\" 2>&1 | grep -q \"json\" && echo shown", "expect": "shown"}
+{"id": "d33056009fea", "cmd": "python3 -c \"import cProfile; cProfile.run('sum(range(10))')\" | grep -c \"function calls\"", "expect": "1"}
+{"id": "5d26ac04e447", "cmd": "printf 'if 1:\\n\\tx=1\\n        y=2\\n' > t.py && python3 t.py 2>&1 | grep -cE \"TabError|IndentationError\"", "expect": "1"}
+{"id": "494b1d4ddc15", "cmd": "python3 -c \"\nn=1\ndef f():\n    n += 1\ntry: f()\nexcept UnboundLocalError: print('UnboundLocalError')\"", "expect": "UnboundLocalError"}
+{"id": "f02303476fe3", "cmd": "python3 -c \"import sys; print(sys.getrecursionlimit())\"", "expect": "1000"}
+{"id": "8ad3d77bd03b", "cmd": "python3 -c \"open('l.txt','wb').write('ş'.encode('cp1254')); print(open('l.txt', encoding='utf-8', errors='replace').read()=='�')\"", "expect": "True"}
+{"id": "696838dbd8ca", "cmd": "python3 -c \"print(int('08'))\"", "expect": "8"}
+{"id": "fcaaf144e1f3", "cmd": "python3 -c \"from pathlib import Path; print(Path('a') / 'b' / 'c.txt')\"", "expect": "a/b/c.txt"}
+{"id": "0b128f0d4d02", "cmd": "python3 -c \"import os; print(os.path.expanduser('~') != '~')\"", "expect": "True"}
+{"id": "dfed35a4a235", "cmd": "python3 -c \"from pathlib import Path; base=Path('.').resolve(); p=(base/'../etc').resolve(); print(p.is_relative_to(base))\"", "expect": "False"}

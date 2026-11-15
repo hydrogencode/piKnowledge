@@ -6082,3 +6082,227 @@
 {"id": "3ab7c7521ee4", "cat": "general", "tip": "On the first failed command, ask for stronger help or look more carefully at the error output; do not wait for several failures, because weak guesses compound and one early wrong assumption ruins the later steps.", "n": 0, "a": "seed"}
 {"id": "8193fa24eb1b", "cat": "general", "tip": "A launcher or game for Windows and Java may not run on a Raspberry Pi; check the architecture with uname -m and the Java version with java -version before spending time on installation.", "n": 0, "a": "seed-verified"}
 {"id": "a873c602a6ef", "cat": "general", "tip": "Servers on free hosting such as Aternos sleep when empty; the server must be started in the panel before anyone can join, and a launcher with offline accounts needs online-mode off on the server.", "n": 0, "a": "seed"}
+{"id": "fdae3db7cf06", "cat": "gui", "tip": "Before clicking by pixel, ask the window system or the accessibility tree for the element list; a named button with a known box is found exactly, while a guessed pixel often lands on the border or the label next to it.", "n": 0, "a": "seed"}
+{"id": "2054db0c5dc5", "cat": "gui", "tip": "Click the centre of a button's box, not its text; on many toolkits the text label is a separate child and clicking its edge can miss the button.", "n": 0, "a": "seed"}
+{"id": "dc48455a12fa", "cat": "gui", "tip": "A label next to a text field and the field itself often share the same name in the accessibility tree; prefer the element whose role is entry or text field when you want to type.", "n": 0, "a": "seed"}
+{"id": "d68a7dab6c98", "cat": "gui", "tip": "GTK applications on X11 sometimes report accessibility coordinates as zero relative to the screen; use the window relative coordinates plus the window position from xdotool getwindowgeometry instead.", "n": 0, "a": "seed"}
+{"id": "e52a5c1f778b", "cat": "gui", "tip": "Qt applications publish their accessibility tree only when an assistive technology is running or Qt's always-on accessibility environment variable is set, so a Qt window can look empty to desktop tools.", "n": 0, "a": "seed"}
+{"id": "4abbf498cd70", "cat": "gui", "tip": "Turn on GTK accessibility for newly started programs with gsettings set org.gnome.desktop.interface toolkit-accessibility true; programs that were already open are not affected.", "n": 0, "a": "seed"}
+{"id": "235142ee83ab", "cat": "gui", "tip": "Chromium exposes its page contents to the accessibility tree only with --force-renderer-accessibility; without it a web page looks like one empty pane to desktop tools.", "n": 0, "a": "seed"}
+{"id": "78641ba017e1", "cat": "gui", "tip": "Java and game windows usually have no accessibility tree at all; read them with OCR or by looking at the screenshot and use the keyboard where possible.", "n": 0, "a": "seed"}
+{"id": "8192e7e04a3c", "cat": "gui", "tip": "OCR misses light text on coloured buttons in a plain greyscale pass; a second pass on a thresholded and inverted copy of the screenshot finds it.", "n": 0, "a": "seed"}
+{"id": "085135067fc1", "cat": "gui", "tip": "OCR mixes up similar letters such as Q and G, l and I, rn and m; match the text you are looking for loosely instead of requiring an exact string.", "n": 0, "a": "seed"}
+{"id": "430c497fbe73", "cat": "gui", "tip": "Upscaling a screenshot by about 1.5 to 2 times before OCR makes small interface text readable; very large images only make OCR slower.", "n": 0, "a": "seed"}
+{"id": "e8c9c36a3a8c", "cat": "gui", "tip": "Run tesseract with page segmentation mode 11 for user interfaces; it looks for scattered text instead of paragraphs and finds button labels better.", "n": 0, "a": "seed"}
+{"id": "ea1cd9658196", "cat": "gui", "tip": "Set OMP_THREAD_LIMIT for tesseract when you run several OCR passes in parallel on a small computer, otherwise each pass tries to use every core.", "n": 0, "a": "seed"}
+{"id": "83793931ac43", "cat": "gui", "tip": "Draw numbered boxes over the elements you found on a screenshot; a model can then answer with a number instead of estimating coordinates.", "n": 0, "a": "seed"}
+{"id": "304f32e1d8f8", "cat": "gui", "tip": "After an action, wait until two screenshots in a row look the same instead of sleeping a fixed time; slow devices need longer and fast ones waste time.", "n": 0, "a": "seed"}
+{"id": "57daa051bd9d", "cat": "gui", "tip": "A screen that never stops changing usually shows a video, an animation or a blinking caret; cap the wait for a stable screen at a few seconds.", "n": 0, "a": "seed"}
+{"id": "749d2ff365fc", "cat": "gui", "tip": "Compare small greyscale thumbnails of two screenshots to decide whether anything changed; full size comparisons are slow and react to tiny clock updates.", "n": 0, "a": "seed"}
+{"id": "a5138ffd65ab", "cat": "gui", "tip": "If a click changed nothing on screen, the target was wrong, the window was not focused, or something covers it; do not repeat the same click, look again first.", "n": 0, "a": "seed"}
+{"id": "857317cc1500", "cat": "gui", "tip": "Check the active window title before typing; a terminal that receives text meant for a form can run it as commands.", "n": 0, "a": "seed"}
+{"id": "444548b2afce", "cat": "gui", "tip": "Read back what a text field contains after typing, from the accessibility tree or by looking; dropped or doubled letters are common on slow systems.", "n": 0, "a": "seed"}
+{"id": "e5a2a8b1ab57", "cat": "gui", "tip": "Never read back the content of a password field into logs or messages; report only that it is filled and how many characters it has.", "n": 0, "a": "seed"}
+{"id": "589e1d7e1595", "cat": "gui", "tip": "Use Tab and Shift+Tab to move between form fields in desktop dialogs; it is more reliable than clicking each field by position.", "n": 0, "a": "seed"}
+{"id": "31865fc70b18", "cat": "gui", "tip": "Press Escape to close menus, popups and tooltips that cover the area you want to click.", "n": 0, "a": "seed"}
+{"id": "16684e1c8943", "cat": "gui", "tip": "Disabled buttons look grey and ignore clicks; the accessibility tree reports them as not sensitive, so fill the missing fields first.", "n": 0, "a": "seed"}
+{"id": "feb785b47938", "cat": "gui", "tip": "A window may open off screen or behind another; list windows with their positions using wmctrl -lG before assuming it did not open.", "n": 0, "a": "seed"}
+{"id": "6828e43c62b3", "cat": "gui", "tip": "Maximize a window with wmctrl -r title -b add,maximized_vert,maximized_horz so its contents are larger and easier to read and click.", "n": 0, "a": "seed"}
+{"id": "0aeaa1175ce8", "cat": "gui", "tip": "Close a window politely with wmctrl -c title; it lets the program ask about unsaved work, unlike killing the process.", "n": 0, "a": "seed"}
+{"id": "8e5dfcc6fa55", "cat": "gui", "tip": "Bring a window to the front with xdotool search --name pattern windowactivate --sync; the sync option waits until it really has focus.", "n": 0, "a": "seed"}
+{"id": "38ff67e983b4", "cat": "gui", "tip": "Find the launch command of a desktop program in its .desktop file under /usr/share/applications; the Exec line is the exact command, without the percent placeholders.", "n": 0, "a": "seed"}
+{"id": "10b1ede0572e", "cat": "gui", "tip": "Start desktop programs in the background with DISPLAY set, and wait for their window to appear before taking a screenshot.", "n": 0, "a": "seed"}
+{"id": "3aa63568ce87", "cat": "gui", "tip": "Desktop menus, the panel and the file manager belong to the session user; programs started by root may look different and save settings in the wrong home.", "n": 0, "a": "seed"}
+{"id": "f1fe36b2e9ea", "cat": "gui", "tip": "Right click menus disappear when the pointer leaves them on some toolkits; move straight to the menu item and click.", "n": 0, "a": "seed"}
+{"id": "60ba820fc5c5", "cat": "gui", "tip": "Double click speed matters: two clicks with a long pause count as two single clicks; send them with a short gap.", "n": 0, "a": "seed"}
+{"id": "812e07a579ac", "cat": "gui", "tip": "Drag and drop needs a pause after pressing the button and small intermediate moves; jumping straight to the target is often ignored.", "n": 0, "a": "seed"}
+{"id": "2865d138b38a", "cat": "gui", "tip": "Scroll wheel steps differ between programs; scroll a few steps, look, and scroll again instead of one large scroll.", "n": 0, "a": "seed"}
+{"id": "dd20dd7a67e3", "cat": "gui", "tip": "Combo boxes in GTK open a popup list that is a separate window; take a new screenshot after opening it before choosing an item.", "n": 0, "a": "seed"}
+{"id": "b1bc281bc526", "cat": "gui", "tip": "File chooser dialogs accept a typed path: press ctrl+l to show the location field, type the full path and press Enter.", "n": 0, "a": "seed"}
+{"id": "17213c388979", "cat": "gui", "tip": "Most dialogs have a default button that Enter activates and a cancel button that Escape activates.", "n": 0, "a": "seed"}
+{"id": "3bc1d9d8548f", "cat": "gui", "tip": "Notification bubbles and update popups can steal focus for a moment; check the active window again right before typing.", "n": 0, "a": "seed"}
+{"id": "19934a5f591f", "cat": "gui", "tip": "Screen scaling makes coordinates in screenshots differ from real pixels; compare the image size with the real screen size and convert.", "n": 0, "a": "seed"}
+{"id": "bd18528292d4", "cat": "gui", "tip": "Screenshots taken with scrot do not include the mouse pointer; draw the pointer position yourself if you need to see it.", "n": 0, "a": "seed"}
+{"id": "eea8eaae31a2", "cat": "gui", "tip": "Keep at most one browser window and a few tabs open on a Raspberry Pi; each extra tab costs memory and slows every screenshot and click.", "n": 0, "a": "seed"}
+{"id": "978b8b44023c", "cat": "gui", "tip": "A program that seems frozen may be waiting behind a modal dialog; look for a small window in the window list before killing it.", "n": 0, "a": "seed"}
+{"id": "1f348788a327", "cat": "gui", "tip": "Use the keyboard shortcut shown next to a menu item, such as ctrl+s for save, instead of opening the menu and clicking.", "n": 0, "a": "seed"}
+{"id": "bcf0e05fdc4f", "cat": "gui", "tip": "Hover tooltips need the pointer to stay still for about a second; move there, wait, then take the screenshot.", "n": 0, "a": "seed"}
+{"id": "c6966f4469b0", "cat": "gui", "tip": "Terminal emulators paste with ctrl+shift+v, not ctrl+v; ctrl+v sends a control character to the program instead.", "n": 0, "a": "seed"}
+{"id": "b581d663b46a", "cat": "gui", "tip": "In LibreOffice the Name Box left of the formula bar jumps to any cell when you type its address and press Enter.", "n": 0, "a": "seed"}
+{"id": "08ba836ac550", "cat": "gui", "tip": "Thonny, the Python editor on Raspberry Pi OS, runs the current file with F5 and stops it with ctrl+F2.", "n": 0, "a": "seed"}
+{"id": "4ff671443560", "cat": "gui", "tip": "The Raspberry Pi OS file manager accepts a typed path after ctrl+l, which is faster than clicking through folders.", "n": 0, "a": "seed"}
+{"id": "aefd6bf5884d", "cat": "gui", "tip": "When a full screen program hides the desktop, alt+tab or the window list lets you reach other windows without closing it.", "n": 0, "a": "seed"}
+{"id": "9685ea3b5b79", "cat": "gui", "tip": "Leave the program the person will look at open and in front at the end of a task, so they see the result immediately.", "n": 0, "a": "seed"}
+{"id": "ae6844b6d0f9", "cat": "gui", "tip": "If text typed with xdotool comes out with wrong letters, the keyboard layout differs; paste it through the clipboard instead.", "n": 0, "a": "seed"}
+{"id": "29e2a7e08865", "cat": "gui", "tip": "A click lands where the pointer is when the button goes down; wait a moment after moving so animations and hover effects settle.", "n": 0, "a": "seed"}
+{"id": "d068d718cfaf", "cat": "gui", "tip": "Read the window's own title as well as the screen; many programs show the current file, page or error state in the title.", "n": 0, "a": "seed"}
+{"id": "6f184117cf0c", "cat": "gui", "tip": "Check whether the session is X11 or Wayland first; with Wayland, xdotool, wmctrl and scrot do not see normal windows.", "n": 0, "a": "seed"}
+{"id": "32144500a7be", "cat": "gui", "tip": "Kiosk and full screen modes hide window decorations; use keyboard shortcuts such as F11 or Escape to leave them.", "n": 0, "a": "seed"}
+{"id": "f45d6def3d93", "cat": "gui", "tip": "A white or black window right after start usually means the program is still loading; wait and look again before judging it.", "n": 0, "a": "seed"}
+{"id": "0d6354ea5e43", "cat": "gui", "tip": "Do not judge whether a screenshot is empty by its file size or pixel counts; look at it, because compression and themes fool such measures.", "n": 0, "a": "seed"}
+{"id": "c2d3636fbb82", "cat": "xdotool", "tip": "Use xdotool keyup for Shift, Control and Alt after an interrupted command; a modifier that stays pressed turns later typing into shortcuts.", "n": 0, "a": "seed"}
+{"id": "dae8dc3fd699", "cat": "xdotool", "tip": "Pass --clearmodifiers to xdotool type and key so modifiers held by a person or a stuck key do not change what is sent.", "n": 0, "a": "seed"}
+{"id": "b409cc1cdaf2", "cat": "xdotool", "tip": "xdotool type sends text as it is; end the argument list with -- so text starting with a dash is not read as an option.", "n": 0, "a": "seed"}
+{"id": "37714d2e7d2c", "cat": "xdotool", "tip": "Use xdotool getactivewindow getwindowgeometry --shell to get the focused window's X, Y, WIDTH and HEIGHT as shell variables.", "n": 0, "a": "seed"}
+{"id": "2fadf9dceb0a", "cat": "xdotool", "tip": "xdotool search --onlyvisible avoids matching hidden helper windows that share the title of the real window.", "n": 0, "a": "seed"}
+{"id": "2ac6617f8d8d", "cat": "xdotool", "tip": "Use xdotool search --class name to find a program's window by its class when the title changes with the open document.", "n": 0, "a": "seed"}
+{"id": "7858e484d56c", "cat": "xdotool", "tip": "xdotool windowactivate fails on some window managers without EWMH support; windowfocus works more often there but does not raise the window.", "n": 0, "a": "seed"}
+{"id": "2d6ddee4625a", "cat": "xdotool", "tip": "Chain several xdotool commands in one call, such as mousemove x y click 1; it is faster and keeps the steps together.", "n": 0, "a": "seed"}
+{"id": "111fb0e741ae", "cat": "xdotool", "tip": "Use xdotool sleep between chained steps instead of separate shell sleeps, so the whole action stays in one process.", "n": 0, "a": "seed"}
+{"id": "f78957be6f48", "cat": "xdotool", "tip": "Move the pointer in several small steps before clicking; some programs ignore a pointer that teleports onto a button without hover events.", "n": 0, "a": "seed"}
+{"id": "604f2ab194a7", "cat": "xdotool", "tip": "Use xdotool click --repeat 3 --delay 80 5 to scroll down three steps; button 4 scrolls up and 5 scrolls down.", "n": 0, "a": "seed"}
+{"id": "2e12b41e82ed", "cat": "xdotool", "tip": "Use mousedown and mouseup with a short sleep between them for drag operations and long presses.", "n": 0, "a": "seed"}
+{"id": "7303ae422917", "cat": "xdotool", "tip": "Use xdotool key --window id only for simple programs; many toolkits ignore synthetic events sent to a window that is not focused.", "n": 0, "a": "seed"}
+{"id": "0320e2cef549", "cat": "xdotool", "tip": "When run through sudo, xdotool needs DISPLAY and the right XAUTHORITY file of the running X server, or it cannot connect.", "n": 0, "a": "seed"}
+{"id": "e87b39a17355", "cat": "xdotool", "tip": "Under LightDM the X server's authority file for root is usually at /var/run/lightdm/root/:0; point XAUTHORITY there when running as root.", "n": 0, "a": "seed"}
+{"id": "edbb3f7c8bc0", "cat": "xdotool", "tip": "Key names are X keysyms: Return, BackSpace, Delete, Escape, Tab, Up, Page_Down, Home, End, F1 to F12, super.", "n": 0, "a": "seed"}
+{"id": "6e798c5668c5", "cat": "xdotool", "tip": "Type non ASCII letters such as ç, ş or ğ with care; some layouts need them through the clipboard to arrive correctly.", "n": 0, "a": "seed"}
+{"id": "1572522d4d63", "cat": "xdotool", "tip": "xdotool windowsize and windowmove change a window's size and position, which helps when a dialog is partly off screen.", "n": 0, "a": "seed"}
+{"id": "966d4f6c9791", "cat": "xdotool", "tip": "Use xdotool getwindowpid on the active window to learn which process owns it.", "n": 0, "a": "seed"}
+{"id": "110fc94ceed5", "cat": "xdotool", "tip": "xdotool getmouselocation --shell prints X, Y, SCREEN and WINDOW, useful for checking where a click really went.", "n": 0, "a": "seed"}
+{"id": "cdbe98e80496", "cat": "xdotool", "tip": "Long text typed with a large delay can take minutes; set the command timeout from the text length and the delay.", "n": 0, "a": "seed"}
+{"id": "fbf822fdb318", "cat": "forms", "tip": "Click a field and verify it has focus before typing; a field that did not take focus loses everything typed into it.", "n": 0, "a": "seed"}
+{"id": "dde857256cff", "cat": "forms", "tip": "Clear a field before typing a new value with ctrl+a followed by typing; otherwise the new text is added to the old one.", "n": 0, "a": "seed"}
+{"id": "4fc4bc8fedc8", "cat": "forms", "tip": "Select boxes in desktop dialogs often accept typing the first letters of an option while they have focus.", "n": 0, "a": "seed"}
+{"id": "96024f0e01e8", "cat": "forms", "tip": "Date pickers usually accept the date typed in the format shown in the placeholder; typing is faster than clicking through months.", "n": 0, "a": "seed"}
+{"id": "06df35e8506a", "cat": "forms", "tip": "After pressing submit, look for an inline error message near the fields before assuming the form went through.", "n": 0, "a": "seed"}
+{"id": "6c498ab73543", "cat": "forms", "tip": "Fields with a red border or an error text below them were not accepted; fix them and submit again instead of repeating the same input.", "n": 0, "a": "seed"}
+{"id": "322c5c4d1169", "cat": "forms", "tip": "Autocomplete suggestions can replace what you typed when you press Enter; press Escape to close them before moving on.", "n": 0, "a": "seed"}
+{"id": "619217d0c393", "cat": "forms", "tip": "Number fields may reject text with spaces or a comma decimal separator; enter numbers in the format the field expects.", "n": 0, "a": "seed"}
+{"id": "d61d0c86ee4d", "cat": "forms", "tip": "Checkboxes and radio buttons change state on click; read their checked state from the accessibility tree or look again after clicking.", "n": 0, "a": "seed"}
+{"id": "d5d1c65fb261", "cat": "forms", "tip": "Multi step forms keep earlier answers only if you use their own Back button, not the browser or window close button.", "n": 0, "a": "seed"}
+{"id": "09b063ee0f2a", "cat": "forms", "tip": "CAPTCHAs and phone verification must be done by the person; stop and report them instead of trying to get around them.", "n": 0, "a": "seed"}
+{"id": "d92440010615", "cat": "chromium", "tip": "Start Chromium with --force-renderer-accessibility when desktop tools need to read the page through the accessibility tree.", "n": 0, "a": "seed"}
+{"id": "47c5670d47f0", "cat": "chromium", "tip": "Use ctrl+l to reach the address bar in an existing Chromium window instead of starting a new browser for every page.", "n": 0, "a": "seed"}
+{"id": "8b5fdd4d812e", "cat": "chromium", "tip": "Close finished tabs with ctrl+w; on a Raspberry Pi each open tab keeps tens to hundreds of megabytes of memory.", "n": 0, "a": "seed"}
+{"id": "f4374aab96e3", "cat": "chromium", "tip": "Chromium's task manager, opened with shift+Escape, shows which tab or extension is using the most memory and CPU.", "n": 0, "a": "seed"}
+{"id": "979089d4bef6", "cat": "chromium", "tip": "Use chrome://version in the address bar to see the exact Chromium version, the profile path and the command line it was started with.", "n": 0, "a": "seed"}
+{"id": "d8aaf5f36d50", "cat": "chromium", "tip": "Zoom a page with ctrl+plus and ctrl+minus when text is too small to read on a screenshot; ctrl+0 resets the zoom.", "n": 0, "a": "seed"}
+{"id": "2f4011353018", "cat": "chromium", "tip": "Press F12 or ctrl+shift+i to open developer tools, where the console shows the page's own error messages.", "n": 0, "a": "seed"}
+{"id": "a2949071a913", "cat": "chromium", "tip": "Use ctrl+shift+t to reopen a tab that was closed by mistake.", "n": 0, "a": "seed"}
+{"id": "e52aa5feb497", "cat": "chromium", "tip": "Use ctrl+f to find text on a page; the match count in the find bar tells you quickly whether the text exists at all.", "n": 0, "a": "seed"}
+{"id": "acbe5aeebe41", "cat": "chromium", "tip": "A page that looks blank may still be loading or blocked by a cookie banner; scroll a little and wait before judging it.", "n": 0, "a": "seed"}
+{"id": "ed37b2160690", "cat": "chromium", "tip": "Set --disk-cache-size to limit Chromium's cache on a small SD card used for kiosks.", "n": 0, "a": "seed"}
+{"id": "87d82c5a3826", "cat": "browser", "tip": "Prefer reading a web page through its DOM or text over screenshots; the text is exact and costs far fewer tokens than an image.", "n": 0, "a": "seed"}
+{"id": "1defc58a1208", "cat": "browser", "tip": "Refer to page elements by a stable label or a numbered list from the latest read; numbers from an older read point to the wrong element after the page changes.", "n": 0, "a": "seed"}
+{"id": "32c045f21ba3", "cat": "browser", "tip": "After clicking a link or submitting a form, read the page again; the old element list no longer matches what is shown.", "n": 0, "a": "seed"}
+{"id": "64fef59383f9", "cat": "browser", "tip": "Single page applications change content without a new page load; wait for the expected text to appear instead of waiting for a load event.", "n": 0, "a": "seed"}
+{"id": "ab0edb1d2137", "cat": "browser", "tip": "Cookie and consent banners often cover buttons; dismiss them first, choosing the minimal option when there is one.", "n": 0, "a": "seed"}
+{"id": "112cc1f27891", "cat": "browser", "tip": "Infinite scrolling pages load more items only when you scroll near the bottom; scroll in steps and read again.", "n": 0, "a": "seed"}
+{"id": "461e0018fd32", "cat": "browser", "tip": "Links that open in a new tab leave the old tab active in automation; switch to the new tab before reading.", "n": 0, "a": "seed"}
+{"id": "435e2f6c1417", "cat": "browser", "tip": "Downloads triggered by a page go to the Downloads folder of the profile that runs the browser; check there and verify the file type.", "n": 0, "a": "seed"}
+{"id": "253ff8bef4e7", "cat": "browser", "tip": "Hover menus in web pages need a real pointer move over the menu; reading the DOM may show the items even when they are hidden.", "n": 0, "a": "seed"}
+{"id": "7191bfe7bf88", "cat": "browser", "tip": "Use the page's own search box when it has one; site search usually finds content better than guessing addresses.", "n": 0, "a": "seed"}
+{"id": "297977fc44a2", "cat": "browser", "tip": "Pages behind a login need the person's own session; do not create accounts or guess passwords on their behalf.", "n": 0, "a": "seed"}
+{"id": "4fa5d44d64ab", "cat": "browser", "tip": "When a page shows an error, read its exact text and status; a 404, a 403 and a server error each need a different next step.", "n": 0, "a": "seed"}
+{"id": "7bcc96a8ae59", "cat": "python", "tip": "Use pathlib.Path.read_text and write_text with encoding=\"utf-8\" for small files; it is shorter than open and avoids depending on the system locale.", "n": 0, "a": "seed-verified"}
+{"id": "401dd74cd76e", "cat": "python", "tip": "Path.with_suffix replaces a file extension and Path.stem gives the name without it; avoid splitting file names on dots by hand.", "n": 0, "a": "seed-verified"}
+{"id": "f2091d9c4175", "cat": "python", "tip": "Path.glob('**/*.py') or rglob('*.py') walks subfolders; sort the result because the order is not guaranteed.", "n": 0, "a": "seed-verified"}
+{"id": "81b29d214a14", "cat": "python", "tip": "Use mkdir(parents=True, exist_ok=True) to create a folder tree without errors when it already exists.", "n": 0, "a": "seed-verified"}
+{"id": "d41250a51be0", "cat": "python", "tip": "json.dump with ensure_ascii=False keeps Turkish and other non English letters readable in the file instead of escape codes.", "n": 0, "a": "seed-verified"}
+{"id": "43b19e9d49f1", "cat": "python", "tip": "json.dumps with indent=2 and sort_keys=True gives stable, diff friendly output for config files kept in git.", "n": 0, "a": "seed-verified"}
+{"id": "b65e2faa4a9a", "cat": "python", "tip": "JSON has no tuples or sets; tuples come back as lists and sets raise TypeError, so convert sets to sorted lists before saving.", "n": 0, "a": "seed-verified"}
+{"id": "b211fae43ff0", "cat": "python", "tip": "json.loads raises json.JSONDecodeError with the line and column of the problem; print it instead of a generic error when a config file is broken.", "n": 0, "a": "seed-verified"}
+{"id": "e610a4a233c4", "cat": "python", "tip": "Read a JSON Lines file one line at a time with json.loads per line; a single broken line then does not stop the whole file.", "n": 0, "a": "seed-verified"}
+{"id": "d02254b34970", "cat": "python", "tip": "shlex.quote makes a string safe to place inside a shell command line when you really must build one.", "n": 0, "a": "seed-verified"}
+{"id": "79997d772cb5", "cat": "python", "tip": "shlex.split splits a command line like a shell does, keeping quoted parts together.", "n": 0, "a": "seed-verified"}
+{"id": "62e841dbef2c", "cat": "python", "tip": "Use argparse for scripts with options; it creates --help automatically and reports wrong arguments clearly.", "n": 0, "a": "seed-verified"}
+{"id": "759154505545", "cat": "python", "tip": "Use logging instead of print in long running scripts; basicConfig with a format that includes the time shows when each event happened.", "n": 0, "a": "seed-verified"}
+{"id": "b9c5f12f4209", "cat": "python", "tip": "Use a RotatingFileHandler for logs on an SD card so the log file cannot grow until the disk is full.", "n": 0, "a": "seed-verified"}
+{"id": "f9692b2a8620", "cat": "python", "tip": "datetime.now(timezone.utc) gives an aware UTC time; naive datetimes without a timezone cause wrong results when compared across zones.", "n": 0, "a": "seed-verified"}
+{"id": "60daad184885", "cat": "python", "tip": "zoneinfo.ZoneInfo converts times to a named zone such as Europe/Istanbul without third party packages.", "n": 0, "a": "seed-verified"}
+{"id": "f40840fd8a06", "cat": "python", "tip": "datetime.fromisoformat parses ISO 8601 strings and isoformat writes them; this format sorts correctly as text.", "n": 0, "a": "seed-verified"}
+{"id": "30cd29758114", "cat": "python", "tip": "Use time.monotonic for measuring durations; the wall clock can jump when NTP corrects it, which breaks timers based on time.time.", "n": 0, "a": "seed-verified"}
+{"id": "767e44a22504", "cat": "python", "tip": "Subtracting two datetimes gives a timedelta; total_seconds returns the full difference as a float.", "n": 0, "a": "seed-verified"}
+{"id": "49eb4da3ab00", "cat": "python", "tip": "collections.Counter counts items and most_common returns them sorted by frequency.", "n": 0, "a": "seed-verified"}
+{"id": "935ded007342", "cat": "python", "tip": "collections.defaultdict(list) lets you append to a key that does not exist yet, which simplifies grouping.", "n": 0, "a": "seed-verified"}
+{"id": "528e94f333c1", "cat": "python", "tip": "collections.deque with maxlen keeps only the last N items, ideal for a rolling buffer of recent log lines.", "n": 0, "a": "seed-verified"}
+{"id": "ae60b3407786", "cat": "python", "tip": "dataclasses reduce boilerplate for simple record classes and give a readable repr and equality for free.", "n": 0, "a": "seed-verified"}
+{"id": "6909addf7478", "cat": "python", "tip": "enumerate gives index and value together and accepts a start number, so manual counters are not needed.", "n": 0, "a": "seed-verified"}
+{"id": "a71507fc47ac", "cat": "python", "tip": "zip stops at the shortest input; use itertools.zip_longest when you need every item, or zip(strict=True) to catch length mismatches.", "n": 0, "a": "seed-verified"}
+{"id": "2a778171825e", "cat": "python", "tip": "sorted with a key function sorts by any field; key=lambda r: (r['a'], -r['b']) sorts by a ascending and b descending.", "n": 0, "a": "seed-verified"}
+{"id": "79b419c3154d", "cat": "python", "tip": "any and all with a generator stop early and read clearly: any(x > 10 for x in values).", "n": 0, "a": "seed-verified"}
+{"id": "6d4d3a3d3c49", "cat": "python", "tip": "f-strings format numbers directly: f'{x:.2f}' for two decimals, f'{n:,}' for thousands separators and f'{n:05d}' for zero padding.", "n": 0, "a": "seed-verified"}
+{"id": "a4f62e79ecb2", "cat": "python", "tip": "f'{value=}' prints both the expression and its value, a quick way to debug.", "n": 0, "a": "seed-verified"}
+{"id": "804e988d93b4", "cat": "python", "tip": "str.removeprefix and removesuffix remove an exact prefix or suffix; strip removes any of the given characters, which is a common bug.", "n": 0, "a": "seed-verified"}
+{"id": "3efc66393961", "cat": "python", "tip": "Use casefold instead of lower for case insensitive comparisons of non English text.", "n": 0, "a": "seed-verified"}
+{"id": "a015f55ac999", "cat": "python", "tip": "Turkish dotted and dotless i do not round trip with upper and lower in Python; I.lower() gives i, not ı, so handle Turkish case rules explicitly.", "n": 0, "a": "seed-verified"}
+{"id": "36236bd9d1f5", "cat": "python", "tip": "unicodedata.normalize('NFC', s) makes visually identical strings compare equal when one uses combined characters.", "n": 0, "a": "seed-verified"}
+{"id": "2a1109518d80", "cat": "python", "tip": "re.compile once and reuse the pattern in loops; named groups make matches readable with m.group('name').", "n": 0, "a": "seed-verified"}
+{"id": "f57a1024b192", "cat": "python", "tip": "re.findall returns the groups when the pattern has groups; use a non capturing group (?:...) when you want the whole match.", "n": 0, "a": "seed-verified"}
+{"id": "b240a27e0abe", "cat": "python", "tip": "re.sub accepts a function as the replacement, which lets each match be transformed differently.", "n": 0, "a": "seed-verified"}
+{"id": "52398a30df6c", "cat": "python", "tip": "Use try/except around the narrowest code possible and catch specific exceptions; a bare except also hides typing mistakes and KeyboardInterrupt.", "n": 0, "a": "seed-verified"}
+{"id": "84d04a4787f5", "cat": "python", "tip": "Use try/finally or a with block to release resources; finally runs even when the code inside raises.", "n": 0, "a": "seed-verified"}
+{"id": "ddd402416b22", "cat": "python", "tip": "contextlib.suppress(FileNotFoundError) is a clean way to ignore one expected error, such as deleting a file that may not exist.", "n": 0, "a": "seed-verified"}
+{"id": "a8a65b7580f3", "cat": "python", "tip": "Raise exceptions with from to keep the original cause in the traceback: raise ConfigError('bad file') from e.", "n": 0, "a": "seed-verified"}
+{"id": "92622ff1f6dc", "cat": "python", "tip": "if __name__ == '__main__': lets a file be imported by tests without running its main program.", "n": 0, "a": "seed-verified"}
+{"id": "cd5b44709cc7", "cat": "python", "tip": "A local file named like a standard module, such as json.py or random.py, shadows the real module and causes strange import errors.", "n": 0, "a": "seed-verified"}
+{"id": "fe95ba825200", "cat": "python", "tip": "python3 -m venv .venv creates an isolated environment; run its programs as .venv/bin/python and .venv/bin/pip without activating it.", "n": 0, "a": "seed-verified"}
+{"id": "da3f227c8aaf", "cat": "python", "tip": "sys.executable is the path of the running Python; use it to call pip or another script with the same interpreter.", "n": 0, "a": "seed-verified"}
+{"id": "0bf6f385f43b", "cat": "python", "tip": "Run python3 -m pip instead of pip so packages go into the Python you actually use.", "n": 0, "a": "seed"}
+{"id": "08441ca6f4c7", "cat": "python", "tip": "importlib.util.find_spec('name') tells you whether a module can be imported without importing it.", "n": 0, "a": "seed-verified"}
+{"id": "99fcf2cf9e9c", "cat": "python", "tip": "threading.Event is a simple way to stop a background thread: the thread checks event.is_set() and the main code calls event.set().", "n": 0, "a": "seed-verified"}
+{"id": "f315a53f9592", "cat": "python", "tip": "Protect shared data between threads with a threading.Lock used in a with block.", "n": 0, "a": "seed-verified"}
+{"id": "fa0c701c4198", "cat": "python", "tip": "queue.Queue is thread safe; use it to pass work from producer threads to a consumer instead of a shared list.", "n": 0, "a": "seed-verified"}
+{"id": "0053a98ca0b3", "cat": "python", "tip": "concurrent.futures.ThreadPoolExecutor runs I/O bound tasks in parallel with very little code; map keeps the input order.", "n": 0, "a": "seed-verified"}
+{"id": "b582babd31a6", "cat": "python", "tip": "Daemon threads are killed when the main program ends; use them for background helpers that must not keep the program alive.", "n": 0, "a": "seed-verified"}
+{"id": "1e18de2f7f14", "cat": "python", "tip": "asyncio.run starts an event loop for a coroutine; asyncio.gather runs several coroutines concurrently and returns their results in order.", "n": 0, "a": "seed-verified"}
+{"id": "bdf697702b22", "cat": "python", "tip": "asyncio.wait_for limits how long an awaitable may take and raises TimeoutError when it is too slow.", "n": 0, "a": "seed-verified"}
+{"id": "d6f25559772a", "cat": "python", "tip": "Calling a blocking function such as time.sleep or requests inside async code freezes the whole event loop; use asyncio.sleep or asyncio.to_thread.", "n": 0, "a": "seed-verified"}
+{"id": "333702fa09f5", "cat": "python", "tip": "csv.writer quotes fields with commas or quotes automatically; never join fields with commas by hand.", "n": 0, "a": "seed-verified"}
+{"id": "c64abfc70c43", "cat": "python", "tip": "sqlite3 is built into Python; use ? placeholders for values, never string formatting, to avoid SQL injection.", "n": 0, "a": "seed-verified"}
+{"id": "f2b91efc4376", "cat": "python", "tip": "Use the sqlite3 connection as a context manager to commit on success and roll back on an exception.", "n": 0, "a": "seed-verified"}
+{"id": "70fe2a670248", "cat": "python", "tip": "Set row_factory = sqlite3.Row to access columns by name in query results.", "n": 0, "a": "seed-verified"}
+{"id": "68e16946ce14", "cat": "python", "tip": "Enable WAL mode with PRAGMA journal_mode=WAL when a web app and a background worker use the same SQLite file; readers then do not block the writer.", "n": 0, "a": "seed-verified"}
+{"id": "cba7eb7136ed", "cat": "python", "tip": "hashlib.sha256 of a file read in chunks verifies downloads without loading the whole file into memory.", "n": 0, "a": "seed-verified"}
+{"id": "c714f2e3fadc", "cat": "python", "tip": "secrets.token_urlsafe creates random tokens for sessions and links; the random module is not safe for secrets.", "n": 0, "a": "seed-verified"}
+{"id": "729edef5c850", "cat": "python", "tip": "hmac.compare_digest compares secrets in constant time, which avoids timing attacks on tokens and signatures.", "n": 0, "a": "seed-verified"}
+{"id": "2782d1c45667", "cat": "python", "tip": "urllib.parse.urlencode builds query strings with correct escaping; do not join parameters by hand.", "n": 0, "a": "seed-verified"}
+{"id": "1799e8e6149f", "cat": "python", "tip": "urllib.parse.urlparse splits an address into scheme, host, path and query, and parse_qs turns the query into a dictionary.", "n": 0, "a": "seed-verified"}
+{"id": "52e502cc467c", "cat": "python", "tip": "Use functools.lru_cache to remember the results of an expensive pure function.", "n": 0, "a": "seed-verified"}
+{"id": "8ee1ec070b45", "cat": "python", "tip": "functools.partial fixes some arguments of a function, handy for callbacks.", "n": 0, "a": "seed-verified"}
+{"id": "b0b729d2d9ea", "cat": "python", "tip": "Generators produce items lazily with yield, so you can process large files line by line with little memory.", "n": 0, "a": "seed-verified"}
+{"id": "974b10edcfd7", "cat": "python", "tip": "A generator can be used only once; after the first full loop it is empty, so convert it to a list if you need it twice.", "n": 0, "a": "seed-verified"}
+{"id": "fa175568fff5", "cat": "python", "tip": "Copy nested lists and dictionaries with copy.deepcopy; a plain copy shares the inner objects.", "n": 0, "a": "seed-verified"}
+{"id": "e4a45759372c", "cat": "python", "tip": "[[0]*3]*3 creates three references to the same inner list; build a grid with a comprehension instead.", "n": 0, "a": "seed-verified"}
+{"id": "736f06bf3d73", "cat": "python", "tip": "Use decimal.Decimal built from strings for money; Decimal from a float keeps the float's rounding error.", "n": 0, "a": "seed-verified"}
+{"id": "4a6220287cf7", "cat": "python", "tip": "Integer division with // rounds toward negative infinity, so -7 // 2 is -4; use int(a / b) to truncate toward zero.", "n": 0, "a": "seed-verified"}
+{"id": "db08a852718a", "cat": "python", "tip": "is compares identity and == compares value; use is only for None, True and False.", "n": 0, "a": "seed-verified"}
+{"id": "5ff1ca28b5d2", "cat": "python", "tip": "dict.get with a default avoids KeyError for optional keys, and setdefault inserts the default at the same time.", "n": 0, "a": "seed-verified"}
+{"id": "5f25fd57e1ff", "cat": "python", "tip": "Merge dictionaries with the | operator; values from the right side win.", "n": 0, "a": "seed-verified"}
+{"id": "38b9d5f60acd", "cat": "python", "tip": "Modifying a dictionary while looping over it raises RuntimeError; loop over list(d) when you need to delete keys.", "n": 0, "a": "seed-verified"}
+{"id": "84021af3cb21", "cat": "python", "tip": "Unpack with a star to take the rest of a sequence: first, *rest = items.", "n": 0, "a": "seed-verified"}
+{"id": "faad15e3f9c5", "cat": "python", "tip": "The walrus operator := assigns inside an expression, which shortens loops that read until a sentinel.", "n": 0, "a": "seed-verified"}
+{"id": "be02cfdc3c81", "cat": "python", "tip": "match statements (Python 3.10+) compare structures cleanly, for example dispatching on the type and fields of a parsed command.", "n": 0, "a": "seed-verified"}
+{"id": "23d15f73b587", "cat": "python", "tip": "Type hints do not change behaviour at run time; a wrong type is only reported by a checker such as mypy.", "n": 0, "a": "seed-verified"}
+{"id": "f9ceafc79fb4", "cat": "python", "tip": "Use typing.TypedDict or dataclasses to describe the shape of JSON data in larger programs; it documents the fields and helps editors.", "n": 0, "a": "seed"}
+{"id": "dfee980a0575", "cat": "python", "tip": "textwrap.dedent removes common indentation from triple quoted strings, which keeps embedded text readable in code.", "n": 0, "a": "seed-verified"}
+{"id": "0bb53165b599", "cat": "python", "tip": "shutil.which finds a program on PATH from Python, returning None when it is not installed.", "n": 0, "a": "seed-verified"}
+{"id": "3acfced8713b", "cat": "python", "tip": "shutil.copytree with dirs_exist_ok=True copies into an existing folder instead of failing.", "n": 0, "a": "seed-verified"}
+{"id": "cdf6106fee7e", "cat": "python", "tip": "shutil.make_archive creates zip or tar archives of a folder in one call.", "n": 0, "a": "seed-verified"}
+{"id": "50dc3d42fa06", "cat": "python", "tip": "os.environ.get with a default reads optional settings without crashing when the variable is missing.", "n": 0, "a": "seed-verified"}
+{"id": "d3f1e29cdcc5", "cat": "python", "tip": "Environment variables are always strings; convert them explicitly, and treat values such as '0' and 'false' as false yourself.", "n": 0, "a": "seed-verified"}
+{"id": "ad7fff43f6b6", "cat": "python", "tip": "signal.signal(signal.SIGTERM, handler) lets a script clean up when systemd stops it.", "n": 0, "a": "seed-verified"}
+{"id": "60849bc7bc21", "cat": "python", "tip": "Print to stderr with print(msg, file=sys.stderr) so error messages are not mixed into output that another program reads.", "n": 0, "a": "seed-verified"}
+{"id": "334f59d893fc", "cat": "python", "tip": "Use flush=True in print or run Python with -u when output goes to a pipe or a systemd journal; otherwise lines appear late.", "n": 0, "a": "seed-verified"}
+{"id": "e9520a4a43a7", "cat": "python", "tip": "sys.exit with a non zero number tells the shell that the script failed; scripts that always exit 0 hide errors.", "n": 0, "a": "seed-verified"}
+{"id": "8b05b519fe34", "cat": "python", "tip": "python3 -X importtime shows how long each import takes, which helps find why a script starts slowly on a Raspberry Pi.", "n": 0, "a": "seed-verified"}
+{"id": "d33056009fea", "cat": "python", "tip": "python3 -m cProfile -s cumtime script.py lists the functions that take the most time; measure before optimizing.", "n": 0, "a": "seed-verified"}
+{"id": "18ab6adf5389", "cat": "python", "tip": "python3 -m pdb script.py starts the debugger; breakpoint() in the code stops there when it runs.", "n": 0, "a": "seed"}
+{"id": "07d6af0cde61", "cat": "python", "tip": "Read the last line of a Python traceback first: it names the error type and message; the lines above show where it happened, with your own file names nearest the bottom.", "n": 0, "a": "seed"}
+{"id": "715b10a986cb", "cat": "python", "tip": "ModuleNotFoundError means the module is not installed for the Python you run; check which python3 and python3 -m pip show name.", "n": 0, "a": "seed"}
+{"id": "5d26ac04e447", "cat": "python", "tip": "IndentationError and TabError come from mixing tabs and spaces; configure the editor to insert four spaces.", "n": 0, "a": "seed-verified"}
+{"id": "494b1d4ddc15", "cat": "python", "tip": "UnboundLocalError happens when a function assigns to a name that it also reads from the outer scope; use global or pass the value in.", "n": 0, "a": "seed-verified"}
+{"id": "f02303476fe3", "cat": "python", "tip": "RecursionError means a function called itself too deep; Python's default limit is about 1000 levels, so rewrite deep recursion as a loop.", "n": 0, "a": "seed-verified"}
+{"id": "8ad3d77bd03b", "cat": "python", "tip": "A UnicodeDecodeError when reading a file means it is not UTF-8; open it with the right encoding or errors='replace' to inspect it.", "n": 0, "a": "seed-verified"}
+{"id": "696838dbd8ca", "cat": "python", "tip": "int('08') works in Python 3 but literal 08 in code is a syntax error; leading zeros are not allowed in integer literals.", "n": 0, "a": "seed-verified"}
+{"id": "c118262b4f5d", "cat": "python", "tip": "input() blocks forever in a service or when run without a terminal; scripts run by an agent or systemd must take their values from arguments or files.", "n": 0, "a": "seed"}
+{"id": "295e06319a0f", "cat": "python", "tip": "pip install --break-system-packages installs into the system Python on Raspberry Pi OS Bookworm; prefer the python3-name apt package or a venv when one exists.", "n": 0, "a": "seed"}
+{"id": "21e7a05c5c61", "cat": "python", "tip": "Pin versions in requirements.txt with == for deployments so the same code installs the same libraries next month.", "n": 0, "a": "seed"}
+{"id": "e151d9df7995", "cat": "python", "tip": "pip show name prints the installed version and location of a package, which tells you which environment it is in.", "n": 0, "a": "seed"}
+{"id": "369b7cdec561", "cat": "python", "tip": "pip list --outdated shows which installed packages have newer versions available.", "n": 0, "a": "seed"}
+{"id": "5b7c87022d7a", "cat": "python", "tip": "Wheels for ARM are not available for every package; when pip starts compiling from source on a Raspberry Pi, look for an apt package or a prebuilt wheel first.", "n": 0, "a": "seed"}
+{"id": "471d121e50f3", "cat": "python", "tip": "pip install -e . installs a local project in editable mode, so code changes take effect without reinstalling.", "n": 0, "a": "seed"}
+{"id": "fcaaf144e1f3", "cat": "python", "tip": "Use pathlib Path objects with the / operator to join paths; it is portable and clearer than string concatenation.", "n": 0, "a": "seed-verified"}
+{"id": "0b128f0d4d02", "cat": "python", "tip": "os.path.expanduser turns ~ into the home folder; Python does not expand ~ in paths automatically.", "n": 0, "a": "seed-verified"}
+{"id": "dfed35a4a235", "cat": "python", "tip": "Path.resolve makes a path absolute and removes .. parts; use it before checking that a user given path stays inside an allowed folder.", "n": 0, "a": "seed-verified"}
