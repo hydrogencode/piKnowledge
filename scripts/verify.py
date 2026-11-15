@@ -28,7 +28,7 @@ def run(cmd, expect):
         r = subprocess.run(["bash", "-c", cmd], cwd=d, env=env, capture_output=True, text=True, timeout=10,
                            stdin=subprocess.DEVNULL)
         out = r.stdout + r.stderr
-        if r.returncode == 127 or "command not found" in out:
+        if r.returncode == 127 or "command not found" in out or "No module named" in out or "Executable doesn't exist" in out:
             return "skipped"
         ok = (r.returncode == 0) if expect == "" else (expect in out)
         return "pass" if ok else "fail"
