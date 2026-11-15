@@ -1327,3 +1327,27 @@
 {"id": "02cb7adeb1dd", "cmd": "bash -c 'sqlite3 d.db \"create table t(a); insert into t values (1);\" && sqlite3 d.db \".backup c.db\" && sqlite3 c.db \"select count(*) from t\"'", "expect": "1"}
 {"id": "bdf1998d4f8c", "cmd": "bash -c 'sqlite3 d.db \"create table t(a); create index i on t(a); explain query plan select * from t where a=1\" | grep -c INDEX'", "expect": "1"}
 {"id": "0a1f63e342d7", "cmd": "bash -c 'sqlite3 :memory: \"create table t(id); insert into t values (1),(2),(3),(4); select id from t where id>2 order by id limit 1\"'", "expect": "3"}
+{"id": "bd86ddd8a157", "cmd": "python3 -c \"\nfrom playwright.sync_api import sync_playwright as sp\nwith sp() as p:\n    b=p.chromium.launch(); pg=b.new_page()\n    pg.route('**/*.png', lambda r: r.abort())\n    pg.set_content('<img id=i src=\\\"http://x.test/a.png\\\">'); pg.wait_for_timeout(200)\n    print(pg.locator('#i').evaluate('e => e.complete && e.naturalWidth===0')); b.close()\"", "expect": "True"}
+{"id": "24820c50fd2a", "cmd": "node -e 'console.log(process.argv.slice(1).join())' a b", "expect": "a,b"}
+{"id": "180efad153d9", "cmd": "node -e 'console.log(typeof fetch)'", "expect": "function"}
+{"id": "7a2dc0df4838", "cmd": "node -e '\nconst fs=require(\"fs\"); fs.writeFileSync(\"a.txt\",\"hi\"); fs.promises.readFile(\"a.txt\",\"utf8\").then(console.log)'", "expect": "hi"}
+{"id": "86fd476452e7", "cmd": "node -e 'const p=require(\"path\"); console.log(p.join(\"a\",\"..\",\"b\",\"c.txt\"), p.extname(\"x.tar.gz\"), p.basename(\"/a/b.txt\",\".txt\"))'", "expect": "b/c.txt .gz b"}
+{"id": "9ab25c78c186", "cmd": "PORT=8080 node -e 'console.log(Number(process.env.PORT||3000), Number(process.env.NOPE||3000))'", "expect": "8080 3000"}
+{"id": "96aef529f967", "cmd": "node -e '\nconst h=require(\"http\"); const s=h.createServer((q,r)=>r.end(\"ok\")).listen(0,()=>{h.get({port:s.address().port},r=>{let d=\"\";r.on(\"data\",c=>d+=c);r.on(\"end\",()=>{console.log(d);s.close()})})})'", "expect": "ok"}
+{"id": "571f0319f8ce", "cmd": "node -e 'require(\"child_process\").execFile(\"echo\",[\"a b\"],(e,o)=>console.log(JSON.stringify(o)))'", "expect": "\"a b\\n\""}
+{"id": "edab23e95173", "cmd": "node -e 'process.on(\"unhandledRejection\",e=>console.log(\"caught\",e.message)); Promise.reject(new Error(\"x\"))'", "expect": "caught x"}
+{"id": "76395e74d562", "cmd": "node -e 'try{JSON.parse(\"{bad\")}catch(e){console.log(e.name)}'", "expect": "SyntaxError"}
+{"id": "3222359f8d1c", "cmd": "node -e 'const t=setInterval(()=>{},1000); t.unref(); console.log(\"exit\")'", "expect": "exit"}
+{"id": "587186c288f6", "cmd": "node -e 'const c=require(\"crypto\"); console.log(c.createHash(\"sha256\").update(\"a\").digest(\"hex\").slice(0,8), c.randomBytes(16).toString(\"hex\").length)'", "expect": "ca978112 32"}
+{"id": "14810de4c3ae", "cmd": "node -e 'const c=require(\"crypto\"); console.log(c.timingSafeEqual(Buffer.from(\"ab\"),Buffer.from(\"ab\")))'", "expect": "true"}
+{"id": "84d51c5198df", "cmd": "node -e '\nrequire(\"fs\").writeFileSync(\"l.txt\",\"a\\nb\\n\"); const rl=require(\"readline\").createInterface({input:require(\"fs\").createReadStream(\"l.txt\")}); let n=0; rl.on(\"line\",()=>n++); rl.on(\"close\",()=>console.log(n))'", "expect": "2"}
+{"id": "2f91204450db", "cmd": "node -e 'const o=require(\"os\"); console.log(o.cpus().length>0, o.totalmem()>0)'", "expect": "true true"}
+{"id": "ecd8d7c7015a", "cmd": "node -e 'require(\"fs\").writeFileSync(\"b.js\",\"let x = ;\"); ' ; node --check b.js 2>&1 | grep -c SyntaxError", "expect": "1"}
+{"id": "658d4936c503", "cmd": "bash -c 'npm ci -h 2>&1 | grep -c omit'", "expect": "1"}
+{"id": "18c62162ecba", "cmd": "bash -c 'npm audit -h 2>&1 | head -1 | grep -c audit'", "expect": "1"}
+{"id": "a707b95970b2", "cmd": "bash -c 'echo \"export const a=1; console.log(a)\" > m.mjs; node m.mjs'", "expect": "1"}
+{"id": "66afa9b17b1e", "cmd": "bash -c 'echo \"const v = await Promise.resolve(5); console.log(v)\" > t.mjs; node t.mjs'", "expect": "5"}
+{"id": "9ec995ed115f", "cmd": "node -e '\nconst {pipeline}=require(\"stream\"),zlib=require(\"zlib\"),fs=require(\"fs\"); fs.writeFileSync(\"i.txt\",\"hello\"); pipeline(fs.createReadStream(\"i.txt\"),zlib.createGzip(),fs.createWriteStream(\"o.gz\"),e=>console.log(e?\"err\":\"ok\"))'", "expect": "ok"}
+{"id": "269356506709", "cmd": "node --max-old-space-size=64 -e 'console.log(\"ok\")'", "expect": "ok"}
+{"id": "c73697c97d38", "cmd": "node -e 'console.table([{a:1}])' | head -1 | grep -c \"┌\"", "expect": "1"}
+{"id": "d76ffe2cf937", "cmd": "node -e 'console.log(typeof structuredClone, typeof [].toSorted)'", "expect": "function function"}

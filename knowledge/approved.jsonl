@@ -3460,3 +3460,27 @@
 {"id": "02cb7adeb1dd", "cat": "files", "tip": "sqlite3 file.db '.backup copy.db' makes a safe copy while the database is in use, unlike copying the file, which can catch a half written state.", "n": 0, "a": "seed-verified"}
 {"id": "bdf1998d4f8c", "cat": "files", "tip": "CREATE INDEX on the columns used in WHERE and JOIN speeds up queries; EXPLAIN QUERY PLAN shows whether an index is used.", "n": 0, "a": "seed-verified"}
 {"id": "0a1f63e342d7", "cat": "files", "tip": "LIMIT and OFFSET page results, but a high OFFSET is slow; use WHERE id > last_id ORDER BY id LIMIT n for long lists.", "n": 0, "a": "seed-verified"}
+{"id": "bd86ddd8a157", "cat": "browser", "tip": "Playwright can block requests such as images to make tests faster: page.route('**/*.png', lambda r: r.abort()).", "n": 0, "a": "seed-verified"}
+{"id": "24820c50fd2a", "cat": "browser", "tip": "Node reads command line arguments from process.argv.slice(2), and process.exit(code) sets the exit status for shell scripts.", "n": 0, "a": "seed-verified"}
+{"id": "180efad153d9", "cat": "browser", "tip": "Node 18 and newer has fetch built in, so small scripts need no extra package for HTTP requests.", "n": 0, "a": "seed-verified"}
+{"id": "7a2dc0df4838", "cat": "browser", "tip": "fs.promises with await reads files without callbacks: const text = await fs.promises.readFile(path, \"utf8\").", "n": 0, "a": "seed-verified"}
+{"id": "86fd476452e7", "cat": "browser", "tip": "path.join and path.resolve build paths safely for every system, and path.extname and path.basename split names.", "n": 0, "a": "seed-verified"}
+{"id": "9ab25c78c186", "cat": "browser", "tip": "process.env holds environment variables as text; Number(process.env.PORT || 3000) gives a port with a default.", "n": 0, "a": "seed-verified"}
+{"id": "96aef529f967", "cat": "browser", "tip": "A tiny HTTP server needs only the http module: http.createServer((req, res) => res.end(\"ok\")).listen(port).", "n": 0, "a": "seed-verified"}
+{"id": "571f0319f8ce", "cat": "browser", "tip": "child_process.execFile runs a program with a list of arguments and no shell, which avoids injection; exec runs a shell string and needs care.", "n": 0, "a": "seed-verified"}
+{"id": "edab23e95173", "cat": "browser", "tip": "Unhandled promise rejections end the process in current Node versions, so add catch handlers or a process.on(\"unhandledRejection\") logger.", "n": 0, "a": "seed-verified"}
+{"id": "76395e74d562", "cat": "browser", "tip": "JSON.parse throws on bad input, so wrap it in try and catch when the text comes from users or files.", "n": 0, "a": "seed-verified"}
+{"id": "3222359f8d1c", "cat": "browser", "tip": "setInterval keeps the program alive until you call clearInterval, while timer.unref() lets the process end even if the timer is pending.", "n": 0, "a": "seed-verified"}
+{"id": "587186c288f6", "cat": "browser", "tip": "crypto.createHash(\"sha256\").update(text).digest(\"hex\") makes a checksum and crypto.randomBytes(16).toString(\"hex\") a random token.", "n": 0, "a": "seed-verified"}
+{"id": "14810de4c3ae", "cat": "browser", "tip": "crypto.timingSafeEqual compares secrets without leaking timing, both buffers must have the same length.", "n": 0, "a": "seed-verified"}
+{"id": "84d51c5198df", "cat": "browser", "tip": "readline with for await reads a file line by line with low memory: for await (const line of rl) { ... }.", "n": 0, "a": "seed-verified"}
+{"id": "2f91204450db", "cat": "browser", "tip": "os.cpus().length, os.totalmem() and os.uptime() report the machine state without extra packages.", "n": 0, "a": "seed-verified"}
+{"id": "ecd8d7c7015a", "cat": "browser", "tip": "node --check file.js tests syntax without running, and node --watch file.js restarts a script when it changes in Node 18 and newer.", "n": 0, "a": "seed-verified"}
+{"id": "658d4936c503", "cat": "browser", "tip": "npm ci installs exactly what package-lock.json lists and is faster and safer for servers than npm install; use --omit=dev to skip dev packages.", "n": 0, "a": "seed-verified"}
+{"id": "18c62162ecba", "cat": "browser", "tip": "npm audit lists known problems in packages and npm outdated shows newer versions; update one package at a time and test after each.", "n": 0, "a": "seed-verified"}
+{"id": "a707b95970b2", "cat": "browser", "tip": "Set \"type\": \"module\" in package.json to use import and export in .js files; otherwise use require or name files .mjs.", "n": 0, "a": "seed-verified"}
+{"id": "66afa9b17b1e", "cat": "browser", "tip": "Top level await works in ES modules: await fetch(url) without a wrapper function in a .mjs file.", "n": 0, "a": "seed-verified"}
+{"id": "9ec995ed115f", "cat": "browser", "tip": "A stream pipeline copies large files with low memory: stream.pipeline(read, gzip, write, callback) handles errors and closes everything.", "n": 0, "a": "seed-verified"}
+{"id": "269356506709", "cat": "browser", "tip": "Memory limit: node --max-old-space-size=256 script.js limits the heap, useful on a Raspberry Pi where one script should not take all memory.", "n": 0, "a": "seed-verified"}
+{"id": "c73697c97d38", "cat": "browser", "tip": "console.table prints arrays of objects as a table and console.time and console.timeEnd measure a block, both useful while debugging.", "n": 0, "a": "seed-verified"}
+{"id": "d76ffe2cf937", "cat": "browser", "tip": "structuredClone, Array.prototype.toSorted and Object.groupBy are newer helpers; check your Node version with node -v before using them on an old device.", "n": 0, "a": "seed-verified"}
