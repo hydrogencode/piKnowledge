@@ -2420,3 +2420,31 @@
 {"id": "49087e12c11e", "cmd": "git init -q r && cd r && echo a > f && git add f && git commit -qm a && echo b >> f && git diff --stat | grep -c '1 insertion'", "expect": "1"}
 {"id": "11af5bfa4559", "cmd": "git init -q -b main r && cd r && git commit -q --allow-empty -m a && git branch b && git worktree add -q ../wt b && test -d ../wt && echo wt", "expect": "wt"}
 {"id": "f72704fe4631", "cmd": "git init -q r && cd r && echo findme > f && git add f && git grep -l findme", "expect": "f"}
+{"id": "33260955c581", "cmd": "python3 -c \"from flask import Flask; a=Flask('x'); a.get('/')(lambda: 'hi'); print(a.test_client().get('/').data.decode())\"", "expect": "hi"}
+{"id": "7b3cc9fa50e6", "cmd": "python3 -c \"from flask import Flask; a=Flask('x'); a.get('/')(lambda: {'ok': True}); r=a.test_client().get('/'); print(r.is_json, r.json['ok'])\"", "expect": "True True"}
+{"id": "1674ae198f47", "cmd": "python3 -c \"from flask import Flask; a=Flask('x'); a.get('/')(lambda: ('nope', 404)); print(a.test_client().get('/').status_code)\"", "expect": "404"}
+{"id": "997dd0609e38", "cmd": "python3 -c \"from flask import Flask, request; a=Flask('x')\n@a.post('/')\ndef v():\n    d=request.get_json(silent=True)\n    return ('bad json', 400) if d is None else 'ok'\nprint(a.test_client().post('/', data='{x', content_type='application/json').status_code)\"", "expect": "400"}
+{"id": "5afe5349a98b", "cmd": "python3 -c \"from flask import Flask, request; a=Flask('x'); a.get('/')(lambda: str(request.args.get('n', default=1, type=int))); print(a.test_client().get('/?n=abc').data.decode())\"", "expect": "1"}
+{"id": "249b87068595", "cmd": "python3 -c \"from flask import Flask, url_for; a=Flask('x')\n@a.get('/user/<int:i>')\ndef user(i): return ''\nwith a.test_request_context(): print(url_for('user', i=5))\"", "expect": "/user/5"}
+{"id": "870b59f3769b", "cmd": "python3 -c \"from flask import Flask; a=Flask('x'); a.get('/p/<int:i>')(lambda i: str(i)); print(a.test_client().get('/p/abc').status_code)\"", "expect": "404"}
+{"id": "5d7d38462389", "cmd": "python3 -c \"from flask import Flask; a=Flask('x'); a.errorhandler(404)(lambda e: ({'error':'not found'}, 404)); print(a.test_client().get('/zz').json['error'])\"", "expect": "not found"}
+{"id": "7a634d4fc174", "cmd": "python3 -c \"from flask import Flask, abort; a=Flask('x'); a.get('/')(lambda: abort(403)); print(a.test_client().get('/').status_code)\"", "expect": "403"}
+{"id": "953faceddb52", "cmd": "python3 -c \"from flask import Flask, session; a=Flask('x'); a.secret_key='k'*32\n@a.get('/')\ndef v():\n    session['n']=session.get('n',0)+1; return str(session['n'])\nc=a.test_client(); c.get('/'); print(c.get('/').data.decode())\"", "expect": "2"}
+{"id": "c024f465b79d", "cmd": "python3 -c \"from werkzeug.utils import secure_filename; print(secure_filename('../../etc/x.txt'))\"", "expect": "etc_x.txt"}
+{"id": "f640c7388d87", "cmd": "python3 -c \"from flask import Flask, request; a=Flask('x'); a.config['MAX_CONTENT_LENGTH']=10; a.post('/')(lambda: str(len(request.get_data()))); print(a.test_client().post('/', data='x'*100).status_code)\"", "expect": "413"}
+{"id": "d4a6eaa61239", "cmd": "python3 -c \"from flask import Flask, render_template_string; a=Flask('x')\nwith a.app_context(): print(render_template_string('{{ v }}', v='<b>'))\"", "expect": "&lt;b&gt;"}
+{"id": "d243a5e98f30", "cmd": "python3 -c \"from flask import Flask, request; a=Flask('x')\n@a.before_request\ndef chk():\n    if request.headers.get('X-T')!='s': return ('no', 401)\na.get('/')(lambda: 'in'); c=a.test_client(); print(c.get('/').status_code, c.get('/', headers={'X-T':'s'}).data.decode())\"", "expect": "401 in"}
+{"id": "291629d7f046", "cmd": "python3 -c \"from flask import Flask; a=Flask('x'); a.get('/')(lambda: 'x')\n@a.after_request\ndef h(r):\n    r.headers['X-Frame-Options']='DENY'; return r\nprint(a.test_client().get('/').headers['X-Frame-Options'])\"", "expect": "DENY"}
+{"id": "0bf4194e02cf", "cmd": "python3 -c \"from flask import Flask, Blueprint; b=Blueprint('api', 'x'); b.get('/ping')(lambda: 'pong'); a=Flask('x'); a.register_blueprint(b, url_prefix='/api'); print(a.test_client().get('/api/ping').data.decode())\"", "expect": "pong"}
+{"id": "7bf03e2b6142", "cmd": "python3 -c \"from flask import Flask, jsonify; a=Flask('x'); a.get('/')(lambda: jsonify([1,2])); print(a.test_client().get('/').json)\"", "expect": "[1, 2]"}
+{"id": "bddb36cd186f", "cmd": "python3 -c \"from flask import Flask, request; a=Flask('x'); a.post('/')(lambda: request.form.get('n','none')); print(a.test_client().post('/', data={}).data.decode())\"", "expect": "none"}
+{"id": "fa20a8b91b46", "cmd": "python3 -c \"from flask import Flask, url_for; a=Flask('x')\nwith a.test_request_context(): print(url_for('static', filename='app.js'))\"", "expect": "/static/app.js"}
+{"id": "d9cbf582062f", "cmd": "mkdir -p many && cd many && seq 1 3000 | sed 's/^/f/' | xargs touch && find . -name 'f*' -exec ls {} + | wc -l", "expect": "3000"}
+{"id": "0afd1c367246", "cmd": "ulimit -n | grep -cE '^[0-9]+$'", "expect": "1"}
+{"id": "5f2578e207be", "cmd": "printf 'a=(1 2)\\necho ${a[1]}\\n' > s && bash s", "expect": "2"}
+{"id": "127cb37a46a5", "cmd": "printf 'echo ran\\n' > s && (./s 2>/dev/null || bash s)", "expect": "ran"}
+{"id": "26c509863865", "cmd": "timeout 2 sh -c 'read x < /dev/null; echo \"done:$x\"'", "expect": "done:"}
+{"id": "8e03322e092e", "cmd": "python3 -c \"import re; m=re.search('x','abc'); print('no match' if m is None else m[0])\"", "expect": "no match"}
+{"id": "41b08e6560e9", "cmd": "python3 -c \"import json\ntry: json.loads('<html>')\nexcept json.JSONDecodeError as e: print(e.msg)\"", "expect": "Expecting value"}
+{"id": "37ae3da0e54a", "cmd": "PYTHONIOENCODING=utf-8 LC_ALL=C python3 -c \"print('şğü')\"", "expect": "şğü"}
+{"id": "25d37129e5b5", "cmd": "python3 -c \"stack=[0]; seen=0\nwhile stack:\n    n=stack.pop(); seen+=1\n    if n<5000: stack.append(n+1)\nprint(seen)\"", "expect": "5001"}
