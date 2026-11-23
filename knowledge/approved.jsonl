@@ -4379,7 +4379,7 @@
 {"id": "929eff96dd1e", "cat": "files", "tip": "Use printf '%d' 0xff to convert hex to decimal and printf '%x' 255 for the other way, with no extra program.", "n": 0, "a": "seed-verified"}
 {"id": "ab950f02a96b", "cat": "files", "tip": "Go builds a single static binary: GOOS=windows GOARCH=amd64 go build gives an exe from Linux, and CGO_ENABLED=0 avoids a C compiler and library dependencies.", "n": 0, "a": "seed-verified"}
 {"id": "582873d584da", "cat": "files", "tip": "go build -ldflags \"-s -w\" strips symbol tables and makes smaller binaries, and -X main.version=1.2 sets a string variable at build time.", "n": 0, "a": "seed-verified"}
-{"id": "802834a53535", "cat": "files", "tip": "Go's standard library has an HTTP server, JSON, crypto and WebSocket helpers in x packages, so a small tool needs no frameworks and compiles to one file.", "n": 0, "a": "seed"}
+{"id": "802834a53535", "cat": "files", "tip": "Go's standard library has an HTTP server, JSON, crypto and WebSocket helpers in x packages, so a small tool needs no frameworks and compiles to one file.", "n": 0, "a": "seed-verified"}
 {"id": "24156949bc82", "cat": "files", "tip": "gcc -Wall -O2 file.c -o prog compiles C with common warnings; read every warning, since most of them point to real bugs.", "n": 0, "a": "seed-verified"}
 {"id": "175d664d294a", "cat": "files", "tip": "make runs the first target of a Makefile by default; use .PHONY for targets that are not files and tabs, not spaces, for the command lines.", "n": 0, "a": "seed-verified"}
 {"id": "4efa4142197d", "cat": "files", "tip": "ruby -e or ruby file.rb runs scripts and gem install adds libraries; on a Pi prefer apt packages for system tools written in Ruby to avoid long builds.", "n": 0, "a": "seed-verified"}
